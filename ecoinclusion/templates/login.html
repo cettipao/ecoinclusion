@@ -1,0 +1,74 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{% static 'css-m/materialize.min.css' %}">
+        <script type="text/javascript" src="{% static 'js-m/materialize.min.js' %}"></script>
+        <title>Iniciar Sesion</title>
+    </head>
+
+    <script>
+        $(document).ready(function() {
+            M.updateTextFields();
+        });
+    </script>
+
+    <body>
+    <div style="position: relative; left: 25%; " class="row">
+        <div class="col s12 m6" >
+          <div class="card light-green lighten-2">
+            <div class="card-content white-text">
+              <div class="row">
+                <span class="card-title" style="text-align: center;">Iniciar Sesion</span>
+              </div>
+              <div class="row">
+                <div class="col s3 m6 l6;row">
+                    <div class="row">
+                        <div class="input-field inline">
+                          <input id="email" type="email" class="white-text">
+                          <label for="email" class="white-text">E-mail</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field inline">
+                          <input id="password" type="password" class="white-text">
+                          <label for="password" class="white-text">Password</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <a class="waves-effect waves-light btn">confirmar</a>
+                    </div>
+                </div>
+                <div class="col s3 m6 l6; valign-wrapper;">
+                    <div class="row">
+                        <div class="row">
+                            <a class="waves-effect waves-light btn"><i class="material-icons">google</i></a>
+                        </div>
+                        <div class="row">
+                            <a class="waves-effect waves-light btn"><i class="material-icons">facebook</i></a>
+                        </div>
+                    </div>
+                </div>
+              </div>
+                <div class="col s3 m6 l12">
+                    <div class="row; center">
+                        <div class="row">
+                            <a>¿Olividaste tu contraseña?</a>
+                        </div>
+                        <div class="row">
+                            <a>Registrarse</a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </body>
+</html>
+{% endblock %}
