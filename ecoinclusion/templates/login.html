@@ -42,12 +42,13 @@
                     </div>
                 </div>
                 <div class="col s3 m6 l6; valign-wrapper;">
+                    {% load socialaccount %}
                     <div class="row">
                         <div class="row">
-                            <a class="waves-effect waves-light btn"><i class="material-icons">google</i></a>
+                            <a class="waves-effect waves-light btn" href="{% provider_login_url 'google' %}"><i class="material-icons">google</i></a>
                         </div>
                         <div class="row">
-                            <a class="waves-effect waves-light btn"><i class="material-icons">facebook</i></a>
+                            <a class="waves-effect waves-light btn" href="{% provider_login_url 'facebook' %}"><i class="material-icons">facebook</i></a>
                         </div>
                     </div>
                 </div>

@@ -17,12 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
+from django.conf.urls.static import static
+from config import settings
 
 urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('logout', LogoutView.as_view()),
-
-    path('', TemplateView.as_view(template_name="index.html")),
+    path('', include('ecoinclusion.urls')),
 ]
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
