@@ -1,0 +1,83 @@
+{% load static %}
+{% url 'home' as home_url %}
+{% url 'about' as about_url %}
+{% url 'login' as login_url %}
+{% url 'register' as register_url %}
+{% url 'logout' as logout_url %}
+<ul id="dropdown1" class="dropdown-content">
+
+	{% if request.user.is_authenticated %}
+	<li><a href="{{logout_url}}">Log out</a></li>
+	<li><a href=""><i class="material-icons left">face</i>Profile</a></li>
+	{% else %}
+	<li><a class="black-text" href="{{login_url}}">Log in</a></li>
+	<li><a  href="{{register_url}}">Sign up </a></li>
+	{% endif %}
+</ul>
+<ul id="dropdown2" class="dropdown-content">
+
+	{% if request.user.is_authenticated %}
+	<li><a href="{{logout_url}}">Log out</a></li>
+	<li><a href=""><i class="material-icons top">face</i>Profile</a></li>
+	{% else %}
+	<li><a class="black-text" href="{{login_url}}">Log in</a></li>
+	<li><a  href="{{register_url}}">Sign up </a></li>
+	{% endif %}
+</ul>
+<nav class="white nav-extended" role="navigation">
+	<div class="nav-wrapper container">
+		<a id="logo-container" href="{{home_url}}" class="brand-logo"><img src="{% static '/media/logo-ecoinclusion.png' %}" alt="ecoinclusion" loading="lazy"></a>
+		
+		<ul class="right hide-on-med-and-down">
+			<li><a  class="black-text" href="{{home_url}}"><i class="material-icons left">home</i>Inicio</a></li>
+			<li><a  class="black-text" href="{{about_url}}"><i class="material-icons left">book</i>Somos</a></li>
+			
+			<li><a class="dropdown-trigger black-text" href="#!" data-target="dropdown2"><i class="material-icons right">arrow_drop_down</i>Empezar</a></li>
+	
+			
+			<li><a  class="black-text" href="#"><i class="material-icons left">group</i>Eco Comunidad</a></li>
+		</ul>
+		<a  href="#" data-target="slide-out" class="sidenav-trigger black-text"><i class="material-icons">menu</i></a>
+		
+	</div>
+	
+
+</nav>
+
+
+
+<ul id="slide-out" class="sidenav">
+	<li><a  class="black-text" href="{{home_url}}"><i class="material-icons left">home</i>Inicio</a></li>
+	<li><a  class="black-text" href="{{about_url}}"><i class="material-icons left">book</i>Somos</a></li>
+	<li><a class="dropdown-trigger black-text" href="#!" data-target="dropdown1"><i class="material-icons right">arrow_drop_down</i>Empezar</a></li>
+	
+	<li><a  class="black-text" href="#"><i class="material-icons left">group</i>Eco Comunidad</a></li>
+</ul>
+
+<script>
+
+
+document.addEventListener('DOMContentLoaded', function() {
+	var elems = document.querySelectorAll('.sidenav');
+
+	var instances = M.Sidenav.init(elems, 'left',{
+		edge: 'left',
+		draggable: true,
+		preventScrolling: true
+	});
+});
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems,{coverTrigger: false});
+  });
+
+
+
+
+        
+
+        
+
+  
+</script>
+  

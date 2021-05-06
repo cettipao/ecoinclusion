@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'css-m/materialize.min.css' %}">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Iniciar Sesion</title>
+
+    
+</head>
+<body>
+    {% include 'navbar.html' %}
+    {% block content %}
+    
+
+    
+    
+      
+    {% endblock %}
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red">
+            <i class="large material-icons">dehaze</i>
+        </a>
+        <ul>
+            <li><a class="btn-floating green"><i class="material-icons">message</i></a></li>
+            <li><a class="btn-floating blue"><i class="material-icons">arrow_upward</i></a></li>
+            <li><a class="btn-floating red"><i class="material-icons">arrow_downward</i></a></li>
+            
+        </ul>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        var instances = M.FloatingActionButton.init(elems, {
+            direction: 'top',
+            hoverEnabled: true
+        });
+        
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="{% static 'js-m/materialize.min.js' %}"></script>
+    
+
+
+</body>
