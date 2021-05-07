@@ -18,8 +18,9 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Crear Punto de Acopio</b></span>
-                    <form method="post" name="formNewPunto" id="formNewPunto" >
+                    <form onsubmit="getFields('formNewPunto',function(data){getUrl('http://127.0.0.1:8000/api/',data,'puntos',getCookie('csrftoken'),function(url,data){ajaxRequest(url,getCookie('csrftoken'),'post',data,function(data){console.log('Punto creado');addTd(data,['id','centro','tipo_de_reciclado'],document.getElementById('puntos'))})})}); return false;"  name="formNewPunto" id="formNewPunto" action="">
                         {% csrf_token %}
+                        
                         {{form.as_p}}
                         {{form.error}}
                         <div class="center-align">
@@ -29,7 +30,7 @@
                         </div>
 
                     </form>
-
+                    
                 </div>
             </div>
         </div>
@@ -50,7 +51,7 @@
                         </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody id="puntos">
                         {% for i in puntos_form %}
                             <tr>
                                 <td>{{ i.object.nombre }}</td>
@@ -76,7 +77,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="modal-close waves-effect btn-flat">Cancelar</a>
-                                                <button type="submit" class="waves-effect btn-flat">Guardar</button>
+                                                <button class="waves-effect btn-flat">Guardar</button>
                                             </div>
                                         </div>
                                     </form>

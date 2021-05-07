@@ -34,6 +34,7 @@ class Intermediario(models.Model):
     #dorsoDni = models.ImageField(max_length=100, upload_to='fotos/', blank=True, null=True)
     centro = models.ForeignKey(
         'CentroDeReciclaje',
+        related_name='intermediarios',
         on_delete=models.CASCADE,
     )
     puntos = models.ManyToManyField(
@@ -78,7 +79,6 @@ class CentroDeReciclaje(models.Model):
     nombre = models.CharField(max_length=100, null=True, blank=True)
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     long = models.DecimalField(max_digits=9, decimal_places=6)
-    nombre = models.CharField(max_length=100, null=True, blank=True)
     telefono = PhoneField(blank=True, help_text='Celular', null=True)
     horario_inicio = models.TimeField( null=True, blank=True)
     horario_final = models.TimeField( null=True, blank=True)
@@ -96,6 +96,7 @@ class PuntoDeAcopio(models.Model):
     tipo_de_reciclado = models.ManyToManyField('TipoDeReciclado')
     centro = models.ForeignKey(
         'CentroDeReciclaje',
+        related_name='puntos',
         on_delete=models.CASCADE,
     )
 

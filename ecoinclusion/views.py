@@ -9,13 +9,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.http import Http404
 
 # Django rest framework imports
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication, permissions
-from rest_framework.renderers import TemplateHTMLRenderer
-
+from rest_framework import status, permissions
+from rest_framework.views import APIView
+from rest_framework.decorators import permission_classes
+from rest_framework import permissions, viewsets
+import django_filters.rest_framework
 # Social accounts imports
 from allauth.socialaccount.models import SocialAccount
 
@@ -23,7 +25,8 @@ from allauth.socialaccount.models import SocialAccount
 from .forms import *
 from .models import *
 from .decorators import *
-
+from .serializers import *
+from .filters import *
 
 # Create your views here.
 
@@ -119,6 +122,7 @@ def updateIntermediarioView(request,id):
 def puntosView(request):
     isCentroVerified(request)
     centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
+   
     insatnce = PuntoDeAcopio(centro=centro)
     form = PuntoDeAcopioForm(instance=insatnce)
     if request.method == "POST":
@@ -162,6 +166,7 @@ def deletePuntoView(request, id):
 def updatePuntoView(request,id):
     isCentroVerified(request)
     centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
+
     punto = get_object_or_404(PuntoDeAcopio, id=id)
     
     if request.method == "POST":
@@ -263,27 +268,94 @@ def aboutView(request):
 # Django Rest framework views
 
 
-class ListUsers(APIView):
-    """
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'intermediario_list.html'
-    
-    View to list all users in the system.
 
-    * Requires token authentication.
-    * Only admin users are able to access this view.
-    
-    #authentication_classes = [authentication.TokenAuthentication]
-    #permission_classes = [permissions.IsAdminUser]
-    def get(self, request):
-        queryset = Intermediario.objects.all()
-        return Response({'intermediarios': queryset})
+class IsCentroVerified(permissions.BasePermission):
     """
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAdminUser]
-    def get(self, request, format=None):
+    Custom permission to only allow Centro de reciclajes verificados hacer ciertas funciones.
+    """
+    
+    def has_permission(self, request, view):
+        # Read permissions are allowed to any request,
+        # so we'll always allow GET, HEAD or OPTIONS requests.
+
+        # Write permissions are only allowed to the owner of the snippet.
+        if request.method in permissions.SAFE_METHODS:
+            # Check permissions for read-only request
+            return True
+
+        else:
+            
+            try:
+                
+                centro = CentroDeReciclaje.objects.get(usuario=request.user)
+                return centro.verificado
+            except:
+                return False
+            
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+                # Check permissions for read-only request
+            return True
+
+        else:
+            
+            try:
+                
+                centro = CentroDeReciclaje.objects.get(usuario=request.user)
+                if obj.centro == centro:
+                    return centro.verificado
+                else:
+                    return False
+            except:
+                return False
         
-        #Return a list of all users.
         
-        usernames = [user.username for user in User.objects.all()]
-        return Response(usernames)
+
+class CentroReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `retrieve` actions.
+    """
+    queryset = CentroDeReciclaje.objects.all()
+    serializer_class = CentroSerializer
+
+    
+class PuntoViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions for PuntosDeRecilaje.
+    """
+    queryset = PuntoDeAcopio.objects.all()
+    serializer_class = PuntoSerializer
+    permission_classes = [permissions.IsAuthenticated,IsCentroVerified]
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = PuntoFilter
+
+    def perform_create(self, serializer):
+        centro = get_object_or_404(CentroDeReciclaje, usuario=self.request.user)
+        serializer.save(centro=centro)
+    
+    
+
+class IntermediarioViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    """
+    queryset = Intermediario.objects.all()
+    serializer_class = IntermediarioSerializer
+    permission_classes = [permissions.IsAuthenticated,IsCentroVerified]
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = IntermediarioFilter
+    
+    def perform_create(self, serializer):
+        centro = get_object_or_404(CentroDeReciclaje, usuario=self.request.user)
+        puntos = centro.puntos.all()
+        serializer.save(centro=centro,puntos=puntos)
+
+    
+    
+
+    
+        
+        

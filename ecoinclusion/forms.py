@@ -43,10 +43,10 @@ class IntermediarioForm(ModelForm):
 
         instance = kwargs.get("instance")
         centro = instance.centro
-        puntos = PuntoDeAcopio.objects.filter(centro=centro)
+        
         self.fields['nombre'].required = True
         self.fields['telefono'].required = True
-        self.fields['puntos'].queryset = puntos
+        self.fields['puntos'].queryset = centro.puntos.all()
         self.fields['puntos'].required = True
         self.fields['dias_disponibles'].required = True
 
@@ -77,4 +77,6 @@ class PuntoDeAcopioForm(ModelForm):
         self.fields['lat'].required = True
         self.fields['long'].required = True
         self.fields['nombre'].required = True
-        self.fields['tipo_de_reciclado'].required = True
+        self.fields['tipo_de_reciclado'].required = False
+        self.fields['tipo_de_reciclado'].blank = True
+        self.fields['tipo_de_reciclado'].null = True
