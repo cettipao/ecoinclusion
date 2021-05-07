@@ -1,7 +1,16 @@
 from django.urls import path
 from .views import *
 
+
+from rest_framework import routers, serializers, viewsets
+from django.urls import path, include
+
+
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+
 urlpatterns = [
+     path('api', include(router.urls)),
      path('',homeView, name="home"),
      path('login', loginView, name="login"),
      path('somos', aboutView, name="about"),

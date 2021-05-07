@@ -7,6 +7,10 @@ from .forms import *
 from .decorators import *
 from django.contrib import messages
 
+#Django rest framework imports
+from rest_framework import permissions
+from rest_framework import routers, serializers, viewsets
+from .serializers import *
 # Create your views here.
 
 def logoutView(request):
@@ -61,3 +65,14 @@ def aboutView(request):
     return render(request, 'somos.html')
 
     
+
+
+#Django rest framework views
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
