@@ -37,14 +37,14 @@
                             </div>
                             
                         </div>
-                        <div class="row center valign-wrapper" >
-                            <div class="col s12 m6 l6" style="border-right: 1px grey solid">
+                        <div class="row center" >
+                            <div class="col s12">
                                 <form method="POST" action="">
                                     {% csrf_token %}
                                     {{form.as_p}}
                                         
                                         <div class="row center">
-                                            <button class="btn waves-effect waves-light orange lighten-1" type="submit" name="action">Sign up
+                                            <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Sign up
                                                 <i class="material-icons right">send</i>
                                             </button>
                                         </div>
@@ -58,49 +58,14 @@
                                     
                                 </form>
                             </div>
-                            <div  class="col s12 m6 l6" style="height:100%">
-                                
-                                
-                                    
-                                {% load socialaccount %}
-                                
-                                <div  class="row center">
-                                    <a href="{% provider_login_url 'google' %}" class="btn-large white ">
-                                    
-                                        <div class="col s2 m2 l2">
-                                            <img length="24px" height="24px" style="vertical-align: middle;" src="{% static '/media/logo-google.png' %}" alt="ecoinclusion" loading="lazy">  
-                                        </div>
-                                        <div class="col s10 m10 l10 center">
-                                            <div style="color:black">
-                                                Log in with Google
-                                            </div>
-                                        </div>
-                                    
-                                    </a>
-                                </div>
-                                <div  class="row center">
-                                    <a href="{% provider_login_url 'facebook' %}" class="btn-large white ">
-                                    
-                                        <div class="col s2 m2 l2">
-                                            <img length="24px" height="24px" style="vertical-align: middle;" src="{% static '/media/logo-facebook.png' %}" alt="ecoinclusion" loading="lazy">  
-                                        </div>
-                                        <div class="col s10 m10 l10 center">
-                                            <div style="color:black">
-                                                Log in with Facebook
-                                            </div>
-                                        </div>
-                                    
-                                    </a>
-                                </div>
-                                
-                            </div>  
+
                         </div>
                     </div>
                     
                     <div class="card-action">    
                         
                         <div class="row center">
-                            Already have an account? <a href="{% url 'login' %}" class="ml-2">Log in</a>
+                            Ya tienes Cuenta? <a href="{% url 'login' %}" class="ml-2 green-text">Inicia Sesion</a>
                         </div>
                     </div>
                         

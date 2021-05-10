@@ -1,5 +1,8 @@
 {% extends 'main.html' %}
 {% load static %}
+{% block title %}
+Home
+{% endblock %}
 {% block content %}
 <div class="section white">
 <div class="row container">
@@ -29,14 +32,14 @@
 <div class="section grey lighten-3 hoverable">
     <div class="row container">
         <div class="col s12 m6 l6">
-            <img height="100%" width="100%" src="{% static '/media/imagen-col-600x551.png' %}">
+            <img height="100%" width="100%" src="{% static '/media/Eco-puntos-200x200.png' %}">
         </div>
         <div class="col s12 m6 l6">
-            <h2 class="header show-on-large hide-on-med-and-down">¡Produce tus propios ecoladrillos!</h1>
-            <h3 class="header show-on-medium hide-on-large-only hide-on-small-only">¡Produce tus propios ecoladrillos!</h1>
-            <h4 class="header show-on-small hide-on-med-and-up">¡Produce tus propios ecoladrillos!</h1>
+            <h2 class="header show-on-large hide-on-med-and-down">¡Encuentra tu Eco Punto mas cercano!</h1>
+            <h3 class="header show-on-medium hide-on-large-only hide-on-small-only">¡Encuentra tu Eco Punto mas cercano!</h1>
+            <h4 class="header show-on-small hide-on-med-and-up">¡Encuentra tu Eco Punto mas cercano!</h1>
             
-            <p class="grey-text text-darken-3 lighten-3">Aprende el paso a paso para la producción de ladrillos ecológicos y descubre las claves para iniciar tu propio emprendimiento con una mirada social, económica y ambiental.</p>
+            <p class="grey-text text-darken-3 lighten-3">Busca Eco Puntos cerca de tu barrio o accede a servicios de recoleccion a domicilio</p>
         </div>
         
 
@@ -45,10 +48,6 @@
 <div class="parallax-container">
     <div class="parallax"><img src="{% static '/media/Imagen-portada-800x735.jpg' %}"></div>
 </div>
-<div class="parallax-container">
-    <div class="parallax">
-         <div class="parallax"><img src="images/parallax1.jpg"></div>
-    </div>
-</div>
+
 
 {%endblock%}

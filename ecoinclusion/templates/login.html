@@ -21,20 +21,20 @@
                                     {% csrf_token %}
                                         <div class="row center">
                                             <div class="input-field col s12  ">
-                                                <input name="username" placeholder="nicolas..." id="username" type="text" class="validate">
+                                                <input name="username" id="username" type="text" class="validate">
                                                 <label for="username">Username</label>
                                             </div> 
                                         </div> 
                                         
                                         <div class="row center">
                                             <div class="input-field col s12 ">
-                                                <input name="password"placeholder="password..." id="password" type="password" class="validate">
+                                                <input name="password" id="password" type="password" class="validate">
                                                 <label for="password">Password</label>
                                             </div> 
                                             
                                         </div>
                                         <div class="row">
-                                                <button class="btn waves-effect waves-light orange lighten-1" type="submit" name="action">Log in
+                                                <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Log in
                                                     <i class="material-icons right">send</i>
                                                 </button>
                                         </div>
@@ -55,7 +55,7 @@
                                             <img length="24px" height="24px" style="vertical-align: middle;" src="{% static '/media/logo-google.png' %}" alt="ecoinclusion" loading="lazy">  
                                         </div>
                                         <div class="col s10 m10 l10 center">
-                                            <div style="color:black">
+                                            <div style="color:black; font-size: small">
                                                 Log in with Google
                                             </div>
                                         </div>
@@ -69,7 +69,7 @@
                                             <img length="24px" height="24px" style="vertical-align: middle;" src="{% static '/media/logo-facebook.png' %}" alt="ecoinclusion" loading="lazy">  
                                         </div>
                                         <div class="col s10 m10 l10 center">
-                                            <div style="color:black">
+                                            <div style="color:black; font-size: small">
                                                 Log in with Facebook
                                             </div>
                                         </div>
@@ -83,7 +83,7 @@
                     <div class="card-action">    
                         
                         <div class="row center">
-                            Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
+                            No tienes cuenta? <a href="{% url 'register' %}" class="ml-2 green-text">Registrarse</a>
                         </div>
                     </div>
                         
