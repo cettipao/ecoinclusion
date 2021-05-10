@@ -8,10 +8,10 @@
 
 	{% if request.user.is_authenticated %}
 	<li><a href="{{logout_url}}">Log out</a></li>
-	<li><a href=""><i class="material-icons left">face</i>Profile</a></li>
+	<li><a href=""><i class="material-icons top">face</i>Profile</a></li>
 	{% else %}
-	<li><a class="black-text" href="{{login_url}}">Log in</a></li>
-	<li><a  href="{{register_url}}">Sign up </a></li>
+	<li><a class="black-text" href="{{login_url}}">Iniciar Sesion</a></li>
+	<li><a  href="{{register_url}}">Registrarse</a></li>
 	{% endif %}
 </ul>
 <ul id="dropdown2" class="dropdown-content">
@@ -49,7 +49,6 @@
 	<li><a  class="black-text" href="{{about_url}}"><i class="material-icons left">book</i>Somos</a></li>
 	<li><a class="dropdown-trigger black-text" href="#!" data-target="dropdown1"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>
 	<li><a  class="black-text" href="#"><i class="material-icons left">smartphone</i>App Movil</a></li>
-    <li><a class="dropdown-trigger black-text" href="#!" data-target="dropdown1"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>
 </ul>
 
 <script>
