@@ -9,13 +9,26 @@ from django.contrib import messages
 
 # Create your views here.
 
+
+def dashboardView(request):
+    return render(request, "dashboard.html", {})
+
+def intermediariosView(request):
+    return
+
+def addIntermediarioView(request):
+    return
+
+def perfilView(request):
+    return
+
+def puntosView(request):
+    return
+
 def logoutView(request):
     if request.user.is_authenticated:
         logout(request)
         return redirect("home")
-
-
-
 
 @unauthenticated_user
 def loginView(request):
@@ -27,7 +40,7 @@ def loginView(request):
         if user is not None:
             login(request,user)
             messages.error(request, "Succefully loged in with account " + username)
-            return redirect('home')
+            return redirect('dashboard')
         else :
             messages.error(request, "Username OR password is incorrect " )
             return render(request, 'login.html' , context)
@@ -55,9 +68,5 @@ def registerView(request):
 def homeView(request):
     return render(request, 'home.html')
 
-
-
 def aboutView(request):
     return render(request, 'somos.html')
-
-    

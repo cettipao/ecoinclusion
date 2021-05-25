@@ -7,5 +7,10 @@ urlpatterns = [
      path('somos', aboutView, name="about"),
      path('register', registerView, name="register"),
      path('logout', logoutView, name="logout"),
-     
+     path('perfil', perfilView, name="perfil"),
+     path('dashboard', dashboardView, name="dashboard"),
+     path('puntosdeacopio', puntosView, name="puntosdeacopio"),
+     path('intermediarios', intermediariosView, name="intermediarios"),
+     path('addintermediario', addIntermediarioView, name="addintermediario"),
+
 ]

@@ -7,8 +7,11 @@
 <ul id="dropdown1" class="dropdown-content">
 
 	{% if request.user.is_authenticated %}
-	<li><a href="{{logout_url}}">Log out</a></li>
-	<li><a href=""><i class="material-icons top">face</i>Profile</a></li>
+	<li><a href="dashboard"><i class="material-icons top">insert_chart</i>Dashboard</a></li>
+	<li><a href="intermediarios"><i class="material-icons top">supervisor_account</i>Intermediarios</a></li>
+	<li><a href="puntosdeacopio"><i class="material-icons top">place</i>Puntos de Acopio</a></li>
+	<li><a href="perfil"><i class="material-icons top">account_circle</i>Perfil</a></li>
+        <li><a href="{{logout_url}}"><i class="material-icons top">logout</i>Log out</a></li>
 	{% else %}
 	<li><a class="black-text" href="{{login_url}}">Iniciar Sesion</a></li>
 	<li><a  href="{{register_url}}">Registrarse</a></li>
@@ -17,11 +20,14 @@
 <ul id="dropdown2" class="dropdown-content">
 
 	{% if request.user.is_authenticated %}
-	<li><a href="{{logout_url}}">Log out</a></li>
-	<li><a href=""><i class="material-icons top">face</i>Profile</a></li>
+	<li><a href="dashboard"><i class="material-icons top">insert_chart</i>Dashboard</a></li>
+	<li><a href="intermediarios"><i class="material-icons top">supervisor_account</i>Intermediarios</a></li>
+	<li><a href="puntosdeacopio"><i class="material-icons top">place</i>Puntos de Acopio</a></li>
+	<li><a href="perfil"><i class="material-icons top">account_circle</i>Perfil</a></li>
+        <li><a href="{{logout_url}}"><i class="material-icons top">logout</i>Log out</a></li>
 	{% else %}
 	<li><a class="black-text" href="{{login_url}}">Iniciar Sesion</a></li>
-	<li><a  href="{{register_url}}">Registrarse</a></li>
+	<li><a class="black-text" href="{{register_url}}">Registrarse</a></li>
 	{% endif %}
 </ul>
 <nav class="white nav-extended" role="navigation">
