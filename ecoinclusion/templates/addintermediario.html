@@ -21,30 +21,40 @@
                                 <div class="col s12 m12 l12">
                                     <form method="POST" action="">
                                         {% csrf_token %}
-                                        <div class="row center">
-                                            <div class="input-field col s12  ">
-                                                <input name="nombre" id="nombre" type="text" class="validate">
-                                                <label for="nombre">Nombre</label>
-                                            </div>
+                                        <div class="input-field center">                                      
+                                                <input name="nombre" id="nombre" type="text" class="validate" required="">
+                                                <label for="nombre">Nombre</label>                                           
                                         </div>
 
-                                        <div class="row center">
-                                            <div class="input-field col s12 ">
-                                                <input name="telefono" id="telefono" type="text" class="validate">
-                                                <label for="telefono">Telefono</label>
-                                            </div>
+                                        <div class="input-field center">
+                                                <input name="telefono" id="telefono" type="number" class="validate" required="">
+                                                <label for="telefono">Telefono</label>                                          
+                                        </div>
+                                        <div class="input-field">
+                                            <select multiple required>
+                                              <option value="1">Option 1</option>
+                                              <option value="2">Option 2</option>
+                                              <option value="3">Option 3</option>
+                                            </select>
+                                            <label>Puntos de acopio:</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <select multiple required>
+
+                                              <option value="lunes">Lunes</option>
+                                              <option value="martes">Martes</option>
+                                              <option value="miercoles">Miércoles</option>
+                                              <option value="jueves">Jueves</option>
+                                              <option value="viernes">Viernes</option>
+                                              <option value="sabado">Sábado</option>
+                                              <option value="sabado">Domingo</option>
+                                            </select>
+                                            <label>Días de recolección:</label>
                                         </div>
 
-
-
-
-                                </div>
-                                <div class="row">
-                                    <button class="btn waves-effect waves-light green lighten-1" type="submit"
-                                            name="action">Log in
-                                        <i class="material-icons right">send</i>
-                                    </button>
-                                </div>
+                                        <div class="center-align">
+                                            <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Aceptar</button>
+                                        </div>
                                 </form>
                             </div>
 

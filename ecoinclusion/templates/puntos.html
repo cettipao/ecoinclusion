@@ -6,11 +6,34 @@
 
 {% block content %}
     <div class="row">
-        <h3 class="center-align">Perfil</h3>
+        <h3 class="center-align">Puntos de Acopio</h3>
         <div class="col s12 m6 l6">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Crear Punto de Acopio</b></span>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="input-field">
+                            <input id="nombre_punto" type="text" name="nombre_punto" required="">
+                            <label for="nombre_punto">Nombre del Punto:</label> 
+                        </div>
+                        <div class="input-field">
+                            <input id="ubicacion" type="text" name="ubicacion" required="">
+                            <label for="ubicacion">Ubicación:</label> 
+                        </div>
+                        <div class="input-field">
+                            <select required="">
+                              <option value="" disabled selected>Tipo de reciclado:</option>
+                              <option value="1">Option 1</option>
+                              <option value="2">Option 2</option>
+                              <option value="3">Option 3</option>
+                            </select>
+                        </div>
+                        <div class="center-align">
+                            <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit" name="action">Crear</button>
+                        </div>
+
+                    </form>
 
                 </div>
             </div>
@@ -48,4 +71,6 @@
             </div>
         </div>
     </div>
+
+    
 {% endblock %}
