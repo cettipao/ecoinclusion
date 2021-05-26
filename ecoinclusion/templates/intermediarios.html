@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Intermediarios
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h3 class="center-align">Administrar Intermediarios</h3>
+        <div class="col s12 m12 l12">
+            <div class="card">
+                <div class="card-content">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Numero</th>
+                            <th>Puntos de Acopio</th>
+                            <th>Dias de Recoleccion</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>
+                                <a class="btn-floating btn-small waves-effect waves-light green lighten-1"><i
+                                        class="material-icons">edit</i></a>
+                            </td>
+                            <td><label>
+                                <a class="btn-floating btn-small waves-effect waves-light green lighten-1"><i
+                                        class="material-icons">delete</i></a></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a href="agregarintermediario" class="waves-effect waves-light btn-large green lighten-1">Agregar Intermediario</a>
+        </div>
+    </div>
+{% endblock %}

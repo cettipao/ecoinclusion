@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.shortcuts import render,redirect
@@ -6,24 +7,33 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from .decorators import *
 from django.contrib import messages
+from .models import *
+from allauth.socialaccount.models import SocialAccount
 
 # Create your views here.
 
-
+@login_required
 def dashboardView(request):
     return render(request, "dashboard.html", {})
 
+@login_required
 def intermediariosView(request):
-    return
+    return render(request, "intermediarios.html", {})
 
+@login_required
 def addIntermediarioView(request):
-    return
+    return render(request, "addintermediario.html", {})
 
+@login_required
 def perfilView(request):
-    return
+    social= False
+    if len(SocialAccount.objects.filter(user_id=request.user.id)) > 0:#El Usuario esta logeado con SocialApp
+        social = True
+    return render(request, "perfil.html", {"social":social})
 
+@login_required
 def puntosView(request):
-    return
+    return render(request, "puntos.html", {})
 
 def logoutView(request):
     if request.user.is_authenticated:

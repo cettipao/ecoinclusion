@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Puntos de Acopio
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h3 class="center-align">Perfil</h3>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><b>Crear Punto de Acopio</b></span>
+
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><b>Administrar Puntos de Acopio</b></span>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Punto de Acopio</th>
+                            <th>Ubicacion</th>
+                            <th>Tipo de Reciclado</th>
+                            <th>Intermediarios</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>
+                                <a class="btn-floating btn-small waves-effect waves-light green lighten-1"><i
+                                        class="material-icons">edit</i></a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

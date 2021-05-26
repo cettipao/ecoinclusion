@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+Perfil
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h3 class="center-align">Perfil</h3>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><b>Datos Generales</b></span>
+
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    {% if social %} {# Si Esta Logeado desde SocialApp no tiene Password #}
+                        <span class="card-title"><b>Logeado desde Google o Facebook</b></span>
+                    {% else %}
+                        <span class="card-title"><b>Cambiar Contraseña</b></span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
