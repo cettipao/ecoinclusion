@@ -11,6 +11,28 @@ Perfil
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Datos Generales</b></span>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="input-field center">                                      
+                            <input name="nombre" id="nombre" type="text" class="validate" required="">
+                            <label for="nombre">Nombre de la Cooperativa:</label>                                           
+                        </div>
+                        <div class="input-field center">
+                            <input name="ubicacion" id="ubicacion" type="text" class="validate" required="">
+                            <label for="ubicacion">Ubicación:</label>
+                        </div>
+                        <div class="input-field center"> 
+                            <input name="telefono" id="telefono" type="number" class="validate" required="">
+                            <label for="telefono">Teléfono:</label>
+                        </div>
+                        <div class="input-field center">
+                            <input name="hora" id="hora" type="text" class="validate" required="">
+                            <label for="hora">Horario de atención:</label>
+                        </div>
+                        <div class="center-align">
+                            <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit" name="action">Actualizar</button>
+                        </div>
+                    </form>
 
                 </div>
             </div>
@@ -22,6 +44,25 @@ Perfil
                         <span class="card-title"><b>Logeado desde Google o Facebook</b></span>
                     {% else %}
                         <span class="card-title"><b>Cambiar Contraseña</b></span>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="input-field">
+                                <input name="password" id="password" type="password" class="validate" required="">
+                                <label for="password">Contraseña actual:</label>
+                            </div>
+                            <div class="input-field">
+                                <input name="password1" id="password1" type="password" class="validate" required="">
+                                <label for="password1">Nueva Contraseña:</label>
+                            </div>
+                            <div class="input-field">
+                                <input name="password2" id="password2" type="password" class="validate" required="">
+                                <label for="password2">Confirmar Contraseña:</label>
+                            </div>
+                            <div class="center-align">
+                                <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit" name="action">Confirmar</button>
+                            </div>
+
+                        </form>
                     {% endif %}
                 </div>
             </div>

@@ -60,8 +60,38 @@
                             <td>.</td>
                             <td>.</td>
                             <td>
-                                <a class="btn-floating btn-small waves-effect waves-light green lighten-1"><i
+                                <a class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger" href="#modal1"><i
                                         class="material-icons">edit</i></a>
+                                <div id="modal1" class="modal">
+                                <div class="modal-content">
+                                    <h4>Editar punto de Acopio</h4><br>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="input-field">
+                                        <input id="nombre_punto_modal" type="text" name="nombre_punto_modal" required="">
+                                        <label for="nombre_punto_modal">Nombre del Punto:</label> 
+                                    </div>
+                                    <div class="input-field">
+                                        <input id="ubicacion_modal" type="text" name="ubicacion_modal" required="">
+                                        <label for="ubicacion_modal">Ubicación:</label> 
+                                    </div>
+                                    <div class="input-field">
+                                        <select required="">
+                                          <option value="" disabled selected>Tipo de reciclado:</option>
+                                          <option value="1">Option 1</option>
+                                          <option value="2">Option 2</option>
+                                          <option value="3">Option 3</option>
+                                        </select>
+                                    </div>
+                                
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#!" class="modal-close waves-effect btn-flat">Cancelar</a>
+                                    <button href="#!" type="submit" class="waves-effect btn-flat">Guardar</button>
+                                </div>
+                            </form>
+                                </div>
                             </td>
                         </tr>
 
@@ -71,6 +101,7 @@
             </div>
         </div>
     </div>
+
 
     
 {% endblock %}
