@@ -12,5 +12,10 @@ urlpatterns = [
      path('puntosdeacopio', puntosView, name="puntosdeacopio"),
      path('intermediarios', intermediariosView, name="intermediarios"),
      path('agregarintermediario', addIntermediarioView, name="addintermediario"),
+     path('updateperfil', updatePerfilView, name="updateperfil"),
+     path('changepassword', changePasswordView, name="changepassword"),
+     path('updatepunto', updatePuntoView, name="updatepunto"),
+     path('updateintermediario/delete/<int:id>', deleteIntermediarioView, name="deleteintermedario"),
+     path('updateintermediario', updateIntermediarioView, name="updateintermediario"),
 
 ]

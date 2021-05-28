@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block title %}
-Perfil
+    Perfil
 {% endblock %}
 
 {% block content %}
@@ -11,26 +11,153 @@ Perfil
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Datos Generales</b></span>
-                    <form method="post">
+                    <form method="post" action="/updateperfil">
                         {% csrf_token %}
-                        <div class="input-field center">                                      
-                            <input name="nombre" id="nombre" type="text" class="validate" required="">
-                            <label for="nombre">Nombre de la Cooperativa:</label>                                           
+                        <div class="input-field center">
+                            <input name="nombre" id="nombre" type="text" class="validate" required=""
+                                   {% if centro != None %}value="{{ centro.nombre }}"{% endif %}>
+                            <label for="nombre">Nombre de la Cooperativa</label>
                         </div>
                         <div class="input-field center">
-                            <input name="ubicacion" id="ubicacion" type="text" class="validate" required="">
-                            <label for="ubicacion">Ubicación:</label>
-                        </div>
-                        <div class="input-field center"> 
-                            <input name="telefono" id="telefono" type="number" class="validate" required="">
-                            <label for="telefono">Teléfono:</label>
+                            <input name="ubicacion" id="ubicacion" type="text" class="validate" required=""
+                                   {% if centro != None %}value="{{ centro.ubicacion }}"{% endif %}>
+                            <label for="ubicacion">Ubicación</label>
                         </div>
                         <div class="input-field center">
-                            <input name="hora" id="hora" type="text" class="validate" required="">
-                            <label for="hora">Horario de atención:</label>
+                            <input name="telefono" id="telefono" type="number" class="validate" required=""
+                                   {% if centro != None %}value="{{ centro.telefono }}"{% endif %}>
+                            <label for="telefono">Teléfono</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <select name="horarioInicio">
+                                <option value="" disabled {% if centro != None %}
+                                        {% if centro.horarioInicio == "" %}selected{% endif %}{% else %}selected{% endif %}>
+                                    Elija un horario
+                                </option>
+                                <option value="06:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "06:00" %}selected{% endif %}{% endif %}>06:00
+                                </option>
+                                <option value="07:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "07:00" %}selected{% endif %}{% endif %}>07:00
+                                </option>
+                                <option value="08:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "08:00" %}selected{% endif %}{% endif %}>08:00
+                                </option>
+                                <option value="09:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "09:00" %}selected{% endif %}{% endif %}>09:00
+                                </option>
+                                <option value="10:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "10:00" %}selected{% endif %}{% endif %}>10:00
+                                </option>
+                                <option value="11:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "11:00" %}selected{% endif %}{% endif %}>11:00
+                                </option>
+                                <option value="12:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "12:00" %}selected{% endif %}{% endif %}>12:00
+                                </option>
+                                <option value="13:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "13:00" %}selected{% endif %}{% endif %}>13:00
+                                </option>
+                                <option value="14:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "14:00" %}selected{% endif %}{% endif %}>14:00
+                                </option>
+                                <option value="15:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "15:00" %}selected{% endif %}{% endif %}>15:00
+                                </option>
+                                <option value="16:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "16:00" %}selected{% endif %}{% endif %}>16:00
+                                </option>
+                                <option value="17:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "17:00" %}selected{% endif %}{% endif %}>17:00
+                                </option>
+                                <option value="18:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "18:00" %}selected{% endif %}{% endif %}>18:00
+                                </option>
+                                <option value="19:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "19:00" %}selected{% endif %}{% endif %}>19:00
+                                </option>
+                                <option value="20:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "20:00" %}selected{% endif %}{% endif %}>20:00
+                                </option>
+                                <option value="21:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "21:00" %}selected{% endif %}{% endif %}>21:00
+                                </option>
+                                <option value="22:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "22:00" %}selected{% endif %}{% endif %}>22:00
+                                </option>
+                                <option value="23:00" {% if centro != None %}
+                                        {% if centro.horarioInicio == "23:00" %}selected{% endif %}{% endif %}>23:00
+                                </option>
+                            </select>
+                            <label for="horarioInicio">Inicio de horario de atención:</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <select name="horarioFinal">
+                                <option value="" disabled {% if centro != None %}
+                                        {% if centro.horarioFinal == "" %}selected{% endif %}{% else %}selected{% endif %}>
+                                    Elija un horario
+                                </option>
+                                <option value="06:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "06:00" %}selected{% endif %}{% endif %}>06:00
+                                </option>
+                                <option value="07:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "07:00" %}selected{% endif %}{% endif %}>07:00
+                                </option>
+                                <option value="08:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "08:00" %}selected{% endif %}{% endif %}>08:00
+                                </option>
+                                <option value="09:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "09:00" %}selected{% endif %}{% endif %}>09:00
+                                </option>
+                                <option value="10:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "10:00" %}selected{% endif %}{% endif %}>10:00
+                                </option>
+                                <option value="11:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "11:00" %}selected{% endif %}{% endif %}>11:00
+                                </option>
+                                <option value="12:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "12:00" %}selected{% endif %}{% endif %}>12:00
+                                </option>
+                                <option value="13:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "13:00" %}selected{% endif %}{% endif %}>13:00
+                                </option>
+                                <option value="14:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "14:00" %}selected{% endif %}{% endif %}>14:00
+                                </option>
+                                <option value="15:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "15:00" %}selected{% endif %}{% endif %}>15:00
+                                </option>
+                                <option value="16:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "16:00" %}selected{% endif %}{% endif %}>16:00
+                                </option>
+                                <option value="17:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "17:00" %}selected{% endif %}{% endif %}>17:00
+                                </option>
+                                <option value="18:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "18:00" %}selected{% endif %}{% endif %}>18:00
+                                </option>
+                                <option value="19:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "19:00" %}selected{% endif %}{% endif %}>19:00
+                                </option>
+                                <option value="20:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "20:00" %}selected{% endif %}{% endif %}>20:00
+                                </option>
+                                <option value="21:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "21:00" %}selected{% endif %}{% endif %}>21:00
+                                </option>
+                                <option value="22:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "22:00" %}selected{% endif %}{% endif %}>22:00
+                                </option>
+                                <option value="23:00" {% if centro != None %}
+                                        {% if centro.horarioFinal == "23:00" %}selected{% endif %}{% endif %}>23:00
+                                </option>
+                            </select>
+                            <label for="horarioFinal">Final de horario de atención:</label>
                         </div>
                         <div class="center-align">
-                            <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit" name="action">Actualizar</button>
+                            <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit"
+                            >Actualizar
+                            </button>
                         </div>
                     </form>
 
@@ -44,22 +171,36 @@ Perfil
                         <span class="card-title"><b>Logeado desde Google o Facebook</b></span>
                     {% else %}
                         <span class="card-title"><b>Cambiar Contraseña</b></span>
-                        <form method="POST">
+                        <script>
+                            function validateForm() {
+                                pass1 = document.getElementById("password1")
+                                pass2 = document.getElementById("password2")
+                                if(pass1.value!=pass2.value){
+                                    pass2.className = "validate invalid"
+                                    return false;
+                                }
+                            }
+                        </script>
+                        <form method="post" action="/changepassword" onsubmit="return validateForm()">
                             {% csrf_token %}
                             <div class="input-field">
-                                <input name="password" id="password" type="password" class="validate" required="">
-                                <label for="password">Contraseña actual:</label>
+                                <input name="actual" id="actual" type="password" class="validate" required>
+                                <label for="actual">Contraseña actual</label>
                             </div>
                             <div class="input-field">
-                                <input name="password1" id="password1" type="password" class="validate" required="">
-                                <label for="password1">Nueva Contraseña:</label>
+                                <input name="password1" id="password1" type="password" class="validate" required>
+                                <label for="password1">Nueva Contraseña</label>
                             </div>
                             <div class="input-field">
-                                <input name="password2" id="password2" type="password" class="validate" required="">
-                                <label for="password2">Confirmar Contraseña:</label>
+                                <input name="password2" id="password2" type="password" class="validate" required>
+                                <label for="password2">Confirmar Contraseña</label>
+                                <span id="helper" class="helper-text" data-error="Las contraseñas no coinciden"
+                                      data-success=""></span>
                             </div>
                             <div class="center-align">
-                                <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit" name="action">Confirmar</button>
+                                <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit"
+                                        name="action">Confirmar
+                                </button>
                             </div>
 
                         </form>

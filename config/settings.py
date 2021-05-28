@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'multiselectfield',
     'django.contrib.sites',
+    'phone_field',
     'ecoinclusion',
 
     'allauth',

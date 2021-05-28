@@ -26,13 +26,24 @@
     {% include "navbar.html" %}
 
 <main>
+<div id="cuentaNoVerificadaModal" class="modal">
+    <div class="modal-content">
+      <h4>Cuenta no Verificada</h4>
+        <p>Esta cuenta todavia no ha sido verificada por nuestros administradores. Es decir, tus Puntos de Acopio e Intermediarios no seran visibles al publico.<br>Para acelerar la verificacion <a href="/perfil">Completa los datos de tu perfil</a> o contactenos.</a></p>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+    </div>
+  </div>
 {% if messages %}
     {% for message in messages %}
-        <div style="text-align: center ;background-color: #43DC7E; color: white; font-size: 1.1rem;">
-            {{ message }}
+        <div style="text-align: center ;background-color: #3ac26e; color: white; font-size: 1.1rem;">
+            {{ message|safe }}
         </div>
     {% endfor %}
 {% endif %}
+
+
 
 {% block content %}
     <i class="material-icons">message</i>

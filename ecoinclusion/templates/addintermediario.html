@@ -19,7 +19,7 @@
                             </div>
                             <div class="row valign-wrapper">
                                 <div class="col s12 m12 l12">
-                                    <form method="POST" action="">
+                                    <form method="POST" action="/updateintermediario">
                                         {% csrf_token %}
                                         <div class="input-field center">                                      
                                                 <input name="nombre" id="nombre" type="text" class="validate" required="">
@@ -31,29 +31,28 @@
                                                 <label for="telefono">Telefono</label>                                          
                                         </div>
                                         <div class="input-field">
-                                            <select multiple required>
-                                              <option value="1">Option 1</option>
-                                              <option value="2">Option 2</option>
-                                              <option value="3">Option 3</option>
-                                            </select>
-                                            <label>Puntos de acopio:</label>
+                                            <select multiple required name="puntos">
+                                                    {% for puntoCentro in puntosDelCentro %}
+                                                    <option value="{{ puntoCentro.id }}">{{ puntoCentro.nombre }}</option>
+                                                        {% endfor %}
+                                                </select>
+                                            <label>Puntos de acopio</label>
                                         </div>
                                         <div class="input-field">
-                                            <select multiple required>
-
-                                              <option value="lunes">Lunes</option>
-                                              <option value="martes">Martes</option>
-                                              <option value="miercoles">Miércoles</option>
-                                              <option value="jueves">Jueves</option>
-                                              <option value="viernes">Viernes</option>
-                                              <option value="sabado">Sábado</option>
-                                              <option value="sabado">Domingo</option>
-                                            </select>
-                                            <label>Días de recolección:</label>
+                                            <select multiple required name="diasRecoleccion">
+                                                    <option value="Lunes">Lunes</option>
+                                                    <option value="Martes">Martes</option>
+                                                    <option value="Miercoles">Miércoles</option>
+                                                    <option value="Jueves">Jueves</option>
+                                                    <option value="Viernes">Viernes</option>
+                                                    <option value="Sabado">Sábado</option>
+                                                    <option value="Domingo">Domingo</option>
+                                                </select>
+                                            <label>Días de recolección</label>
                                         </div>
 
                                         <div class="center-align">
-                                            <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Aceptar</button>
+                                            <button class="btn waves-effect waves-light green lighten-1" type="submit">Aceptar</button>
                                         </div>
                                 </form>
                             </div>

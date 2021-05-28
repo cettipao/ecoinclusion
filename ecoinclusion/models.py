@@ -13,41 +13,57 @@ class Contribuyente(models.Model):
 
 
 class Intermediario(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    delanteDni = models.ImageField(max_length=100, upload_to='fotos/', blank=True, null=True)
-    dorsoDni = models.ImageField(max_length=100, upload_to='fotos/', blank=True, null=True)
-    centro = models.ForeignKey(
-        'CentroDeReciclaje',
-        on_delete=models.CASCADE,
+    nombre = models.CharField(max_length=100)
+    telefono = PhoneField(blank=True, help_text='Celular')
+    #usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    #delanteDni = models.ImageField(max_length=100, upload_to='fotos/', blank=True, null=True)
+    #dorsoDni = models.ImageField(max_length=100, upload_to='fotos/', blank=True, null=True)
+    puntos = models.ManyToManyField(
+        'PuntoDeAcopio',
     )
+    diasRecoleccion = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.usuario.username
+        return self.nombre
+
+    def getPuntosName(self):
+        nombresPuntos = ""
+        first = True
+        for punto in self.puntos.all():
+            if first:
+                nombresPuntos += "{}".format(punto.nombre)
+            else:
+                nombresPuntos += ", {}".format(punto.nombre)
+        return nombresPuntos
+
 
 
 class CentroDeReciclaje(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100)
-    coordenadas = models.CharField(max_length=100)
+    ubicacion = models.CharField(max_length=100)
     nombre = models.CharField(max_length=100)
-    celular = PhoneField(blank=True, help_text='Celular')
+    telefono = PhoneField(blank=True, help_text='Celular')
+    horarioInicio = models.CharField(max_length=10, default="")
+    horarioFinal = models.CharField(max_length=10, default="")
+    verificado = models.BooleanField(default=False)
 
     def __str__(self):
         return self.usuario.username
 
-materiales =(
-    ("1", "Secos"),
-    ("2", "Humedos"),
-    ("3", "Alumnio"),
-)
 class PuntoDeAcopio(models.Model):
-    coordenadas = models.CharField(max_length=100)
-    tipoDeReciclado = MultiSelectField(choices=materiales, max_choices=3, max_length=1)
+    nombre = models.CharField(max_length=100)
+    ubicacion = models.CharField(max_length=100)
+    tipoDeReciclado = models.CharField(max_length=100)
     centro = models.ForeignKey(
         'CentroDeReciclaje',
         on_delete=models.CASCADE,
     )
 
+    @property
+    def cant_intermediarios(self):
+        return len(Intermediario.objects.filter(puntos=self))
+
     def __str__(self):
-        return self.usuario.username
+        return self.nombre
 
