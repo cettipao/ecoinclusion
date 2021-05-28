@@ -58,12 +58,13 @@ Dashboard
                         </thead>
 
                         <tbody>
+                        {% for punto in puntos %}
                         <tr>
-                            <td>.</td>
-                            <td>.</td>
-                            <td>.</td>
+                            <td>{{ punto.nombre }}</td>
+                            <td>0</td>
+                            <td>{{ punto.cant_intermediarios }}</td>
                         </tr>
-
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

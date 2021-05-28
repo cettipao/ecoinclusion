@@ -15,17 +15,17 @@
                         {% csrf_token %}
                         <div class="input-field center">
                             <input name="nombre" id="nombre" type="text" class="validate" required=""
-                                   {% if centro != None %}value="{{ centro.nombre }}"{% endif %}>
+                                   {% if centro.nombre != None%}value="{{ centro.nombre }}"{% endif %}>
                             <label for="nombre">Nombre de la Cooperativa</label>
                         </div>
                         <div class="input-field center">
                             <input name="ubicacion" id="ubicacion" type="text" class="validate" required=""
-                                   {% if centro != None %}value="{{ centro.ubicacion }}"{% endif %}>
+                                   {% if centro.ubicacion != None %}value="{{ centro.ubicacion }}"{% endif %}>
                             <label for="ubicacion">Ubicación</label>
                         </div>
                         <div class="input-field center">
                             <input name="telefono" id="telefono" type="number" class="validate" required=""
-                                   {% if centro != None %}value="{{ centro.telefono }}"{% endif %}>
+                                   {% if centro.telefono != None %}value="{{ centro.telefono }}"{% endif %}>
                             <label for="telefono">Teléfono</label>
                         </div>
                         <div class="input-field col s6">

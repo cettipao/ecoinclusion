@@ -9,6 +9,7 @@ from .decorators import *
 from django.contrib import messages
 from .models import *
 from allauth.socialaccount.models import SocialAccount
+import json
 
 
 # Create your views here.
@@ -17,8 +18,9 @@ def isCentroVerified(request):
     # Si no hay cuenta de Centro asociada al User actual
     if len(CentroDeReciclaje.objects.filter(usuario=request.user)) < 1:
         messages.warning(request,
-                         "Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style='color:white;text-decoration: underline' class='modal-trigger' href='#cuentaNoVerificadaModal'>Leer Mas.</a>")
-        return None
+                         "Esta cuenta no esta Verificada como Cooperativa o Empresa.  <a style='color:white;text-decoration: underline' class='modal-trigger' href='#cuentaNoVerificadaModal'>Leer Mas.</a>")
+        centro = CentroDeReciclaje.objects.create(usuario=request.user)
+        return centro
     else:
         #Si hay una cuenta y esta verificada
         if CentroDeReciclaje.objects.get(usuario=request.user).verificado:
@@ -29,17 +31,29 @@ def isCentroVerified(request):
                              "Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style='color:white;text-decoration: underline' class='modal-trigger' href='#cuentaNoVerificadaModal'>Leer Mas.</a>")
             return CentroDeReciclaje.objects.get(usuario=request.user)
 
+def cleanList(lista):
+    string = ""
+    first = True
+    for i in list(lista):
+        if first:
+            string += i
+            first = False
+        else:
+            string += ", {}".format(i)
+    print(string)
+    return string
 
 @login_required
 def dashboardView(request):
     isCentroVerified(request)
-    return render(request, "dashboard.html", {})
+    puntos = PuntoDeAcopio.objects.filter(centro__usuario=request.user)
+    return render(request, "dashboard.html", {"puntos": puntos})
 
 
 @login_required
 def intermediariosView(request):
     isCentroVerified(request)
-    intermediarios = Intermediario.objects.filter(puntos__centro__usuario=request.user)
+    intermediarios = Intermediario.objects.filter(centro=CentroDeReciclaje.objects.get(usuario=request.user))
     puntosDelCentro = PuntoDeAcopio.objects.filter(centro=CentroDeReciclaje.objects.get(usuario=request.user))
     return render(request, "intermediarios.html", {"intermediarios": intermediarios,
                                                    "puntosDelCentro": puntosDelCentro})
@@ -58,7 +72,7 @@ def perfilView(request):
     social = False
     if len(SocialAccount.objects.filter(user_id=request.user.id)) > 0:  # El Usuario esta logeado con SocialApp
         social = True
-    return render(request, "perfil.html", {"social": social, 'centro' : centro})
+    return render(request, "perfil.html", {"social": social, 'centro': centro})
 
 
 @login_required
@@ -112,42 +126,49 @@ def updatePuntoView(request):
                 centro=CentroDeReciclaje.objects.get(usuario=request.user),
                 nombre=request.POST.get("nombre_punto"),
                 ubicacion=request.POST.get("nombre_punto"),
-                tipoDeReciclado=request.POST.get("tipo_reciclado")
+                tipoDeReciclado=cleanList(request.POST.getlist("tipo_reciclado"))
             )
             messages.success(request, "Punto creado con Exito")
         else: #Actualizar Info de Existente
             punto = PuntoDeAcopio.objects.get(id=request.POST.get("id"))
             punto.nombre = request.POST.get("nombre_punto_modal")
             punto.ubicacion = request.POST.get("ubicacion_modal")
-            punto.tipoDeReciclado = request.POST.get("tipo_reciclado_modal")
+            punto.tipoDeReciclado = cleanList(request.POST.getlist("tipo_reciclado_modal"))
             punto.save()
             messages.success(request, "Punto ({}) actualizado con Exito".format(punto.nombre))
     return redirect("/puntosdeacopio")
 
 @login_required
 def updateIntermediarioView(request):
-    #Verificar que le pertenece el intermediario al Centro
     if request.method == "POST":
         if request.POST.get("id") == None: #Crear nuevo Intermediario
             intermediario = Intermediario.objects.create(
                 nombre=request.POST.get("nombre"),
                 telefono=request.POST.get("telefono"),
-                diasRecoleccion=request.POST.get("diasRecoleccion"),
+                diasRecoleccion=cleanList(request.POST.getlist("diasRecoleccion")),
+                centro=CentroDeReciclaje.objects.get(usuario=request.user)
             )
-            for punto in request.POST.get("puntos"):
+            for punto in request.POST.getlist("puntos"):
+                print(punto)
                 intermediario.puntos.add(PuntoDeAcopio.objects.get(id=punto))
             messages.success(request, "Intermediario creado con Exito")
         else: #Actualizar Info del Existente
             intermediario = Intermediario.objects.get(id=request.POST.get("id"))
+
+            # Verifico que el intermediario pertenezca al centro
+            if intermediario.centro != CentroDeReciclaje.objects.get(usuario=request.user):
+                messages.error(request, "Error al actualizar Intermediario")
+                return redirect("/intermediarios")
+
             intermediario.nombre = request.POST.get("nombre")
             intermediario.telefono = request.POST.get("telefono")
-            print(request.POST.get("puntos"))
+            intermediario.diasRecoleccion = request.POST.getlist("diasRecoleccion")
+
             for punto in intermediario.puntos.all():
                 intermediario.puntos.remove(punto)
-            for punto in request.POST.get("puntos"):
+            for punto in request.POST.getlist("puntos"):
                 intermediario.puntos.add(PuntoDeAcopio.objects.get(nombre=punto))
 
-            intermediario.diasRecoleccion = request.POST.get("diasRecoleccion")
             intermediario.save()
             messages.success(request, "Intermediario ({}) actualizado con Exito".format(intermediario.nombre))
     return redirect("/intermediarios")
@@ -156,7 +177,7 @@ def updateIntermediarioView(request):
 def deleteIntermediarioView(request, id):
     intermediario = get_object_or_404(Intermediario, id=id)
     #Verifico que el intermediario pertenezca al centro
-    if intermediario.puntos.first().centro != CentroDeReciclaje.objects.get(usuario=request.user):
+    if intermediario.centro != CentroDeReciclaje.objects.get(usuario=request.user):
         messages.error(request, "Error al eliminar Intermediario")
     else:
         nombre = intermediario.nombre

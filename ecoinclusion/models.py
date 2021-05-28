@@ -18,6 +18,10 @@ class Intermediario(models.Model):
     #usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     #delanteDni = models.ImageField(max_length=100, upload_to='fotos/', blank=True, null=True)
     #dorsoDni = models.ImageField(max_length=100, upload_to='fotos/', blank=True, null=True)
+    centro = models.ForeignKey(
+        'CentroDeReciclaje',
+        on_delete=models.CASCADE,
+    )
     puntos = models.ManyToManyField(
         'PuntoDeAcopio',
     )
@@ -32,6 +36,7 @@ class Intermediario(models.Model):
         for punto in self.puntos.all():
             if first:
                 nombresPuntos += "{}".format(punto.nombre)
+                first = False
             else:
                 nombresPuntos += ", {}".format(punto.nombre)
         return nombresPuntos
@@ -40,12 +45,12 @@ class Intermediario(models.Model):
 
 class CentroDeReciclaje(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=100)
-    ubicacion = models.CharField(max_length=100)
-    nombre = models.CharField(max_length=100)
-    telefono = PhoneField(blank=True, help_text='Celular')
-    horarioInicio = models.CharField(max_length=10, default="")
-    horarioFinal = models.CharField(max_length=10, default="")
+    nombre = models.CharField(max_length=100, null=True, blank=True)
+    ubicacion = models.CharField(max_length=100, null=True, blank=True)
+    nombre = models.CharField(max_length=100, null=True, blank=True)
+    telefono = PhoneField(blank=True, help_text='Celular', null=True)
+    horarioInicio = models.CharField(max_length=10, default="", null=True, blank=True)
+    horarioFinal = models.CharField(max_length=10, default="", null=True, blank=True)
     verificado = models.BooleanField(default=False)
 
     def __str__(self):
