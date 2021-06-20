@@ -1,0 +1,123 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Puntos de Acopio
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h3 class="center-align">Puntos de Acopio</h3>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><b>Crear Punto de Acopio</b></span>
+                    <form method="post" action="/updatepunto">
+                        {% csrf_token %}
+                        <div class="input-field">
+                            <input id="nombre_punto" type="text" name="nombre_punto" required="">
+                            <label for="nombre_punto">Nombre del Punto</label>
+                        </div>
+                        <div class="input-field">
+                            <input id="ubicacion" type="text" name="ubicacion" required="">
+                            <label for="ubicacion">Ubicación</label>
+                        </div>
+                        <div class="input-field">
+                            <select id="tipo_reciclado" name="tipo_reciclado" required multiple>
+                                <option value="Papel y Carton">Papel y Carton</option>
+                                <option value="Residuos Organicos">Residuos Organicos</option>
+                                <option value="Plastico">Plastico</option>
+                                <option value="Vidrio">Vidrio</option>
+                                <option value="Pilas y Baterias">Pilas y Baterias</option>
+                                <option value="Metales">Metales</option>
+                                <option value="Electronica">Electronica</option>
+                            </select>
+                            <label>Tipo de Reciclado</label>
+                        </div>
+                        <div class="center-align">
+                            <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit"
+                                    >Crear
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><b>Administrar Puntos de Acopio</b></span>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Punto de Acopio</th>
+                            <th>Ubicacion</th>
+                            <th>Tipo de Reciclado</th>
+                            <th>Intermediarios</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for punto in puntos %}
+                        <tr>
+                            <td>{{ punto.nombre }}</td>
+                            <td>{{ punto.ubicacion }}</td>
+                            <td>{{ punto.tipoDeReciclado }}</td>
+                            <td>{{ punto.cant_intermediarios }}</td>
+                            <td>
+                                <a class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                                   href="#modal{{ punto.id }}"><i
+                                        class="material-icons">edit</i></a>
+                                <div id="modal{{ punto.id }}" class="modal" style="overflow-y: visible;">
+                                    <div class="modal-content">
+                                        <h4>Editar punto de Acopio</h4><br>
+                                        <form method="POST" action="/updatepunto">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="id" value="{{ punto.id }}">
+                                            <div class="input-field">
+                                                <input id="nombre_punto_modal" type="text" name="nombre_punto_modal"
+                                                       required value="{{ punto.nombre }}">
+                                                <label for="nombre_punto_modal">Nombre del Punto</label>
+                                            </div>
+                                            <div class="input-field">
+                                                <input id="ubicacion_modal" type="text" name="ubicacion_modal"
+                                                       required value="{{ punto.ubicacion }}">
+                                                <label for="ubicacion_modal">Ubicación</label>
+                                            </div>
+                                            <div class="input-field">
+                                                <select name="tipo_reciclado_modal" required multiple>
+                                                    <option {% if "Papel y Carton" in punto.tipoDeReciclado %}selected{% endif %} value="Papel y Carton">Papel y Carton</option>
+                                                    <option {% if "Residuos Organicos" in punto.tipoDeReciclado %}selected{% endif %} value="Residuos Organicos">Residuos Organicos</option>
+                                                    <option {% if "Plastico" in punto.tipoDeReciclado %}selected{% endif %} value="Plastico">Plastico</option>
+                                                    <option {% if "Vidrio" in punto.tipoDeReciclado %}selected{% endif %} value="Vidrio">Vidrio</option>
+                                                    <option {% if "Pilas y Baterias" in punto.tipoDeReciclado %}selected{% endif %} value="Pilas y Baterias">Pilas y Baterias</option>
+                                                    <option {% if "Metales" in punto.tipoDeReciclado %}selected{% endif %} value="Metales">Metales</option>
+                                                    <option {% if "Electronica" in punto.tipoDeReciclado %}selected{% endif %} value="Electronica">Electronica</option>
+                                                </select>
+                                                <label>Tipo de Reciclado</label>
+                                            </div>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="modal-close waves-effect btn-flat">Cancelar</a>
+                                        <button type="submit" class="waves-effect btn-flat">Guardar</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

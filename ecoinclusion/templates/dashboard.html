@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+Dashboard
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><b>Impacto Generado</b></span>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+                    <div>
+                        <canvas id="myChart" height="80%"></canvas>
+                    </div>
+
+                </div>
+                 <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        // The type of chart we want to create
+                        type: 'line',
+
+
+                        // The data for our dataset
+                        data: {
+                            labels: ["XD","XD","XD"],
+
+                            datasets: [{
+                                label: 'Cantidad de Reciclado',
+                                borderColor: '#005249',
+                                data: [1,5,3],
+
+                            },]
+                        },
+
+                        // Configuration options go here
+                        options: {},
+
+                    });
+                });
+
+            </script>
+            </div>
+        </div>
+        <div class="col s12 m6 l6">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><b>Puntos de Acopio</b></span>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Punto de Acopio</th>
+                            <th>Cantidad de Aportantes</th>
+                            <th>Cantidad de Intermediarios</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for punto in puntos %}
+                        <tr>
+                            <td>{{ punto.nombre }}</td>
+                            <td>0</td>
+                            <td>{{ punto.cant_intermediarios }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

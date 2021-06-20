@@ -1,0 +1,73 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Agregar Intermediario
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col s12 ">
+                <div class="card ">
+                    <div class="container">
+                        <div class="card-content black-text">
+                            <div class="row center">
+                                <div class="col s12 ">
+                                    <span class="flow-text">Agregar Intermediario</span>
+                                </div>
+
+                            </div>
+                            <div class="row valign-wrapper">
+                                <div class="col s12 m12 l12">
+                                    <form method="POST" action="/updateintermediario">
+                                        {% csrf_token %}
+                                        <div class="input-field center">                                      
+                                                <input name="nombre" id="nombre" type="text" class="validate" required="">
+                                                <label for="nombre">Nombre</label>                                           
+                                        </div>
+
+                                        <div class="input-field center">
+                                                <input name="telefono" id="telefono" type="number" class="validate" required="">
+                                                <label for="telefono">Telefono</label>                                          
+                                        </div>
+                                        <div class="input-field">
+                                            <select multiple required name="puntos">
+                                                    {% for puntoCentro in puntosDelCentro %}
+                                                    <option value="{{ puntoCentro.id }}">{{ puntoCentro.nombre }}</option>
+                                                        {% endfor %}
+                                                </select>
+                                            <label>Puntos de acopio</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <select multiple required name="diasRecoleccion">
+                                                    <option value="Lunes">Lunes</option>
+                                                    <option value="Martes">Martes</option>
+                                                    <option value="Miercoles">Miércoles</option>
+                                                    <option value="Jueves">Jueves</option>
+                                                    <option value="Viernes">Viernes</option>
+                                                    <option value="Sabado">Sábado</option>
+                                                    <option value="Domingo">Domingo</option>
+                                                </select>
+                                            <label>Días de recolección</label>
+                                        </div>
+
+                                        <div class="center-align">
+                                            <button class="btn waves-effect waves-light green lighten-1" type="submit">Aceptar</button>
+                                        </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+{% endblock %}

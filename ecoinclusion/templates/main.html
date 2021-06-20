@@ -4,45 +4,119 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css-m/materialize.min.css' %}">
-    
+    <link rel="shortcut icon" type="image/png" href="{% static 'media/favicon.png' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Iniciar Sesion</title>
+    <title>{% block title %}{% endblock %}</title>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
 
-    
+        main {
+            flex: 1 0 auto;
+        }
+    </style>
 </head>
 <body>
-    {% include 'navbar.html' %}
-    {% block content %}
-    
 
-    
-    
-      
-    {% endblock %}
-    <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red">
-            <i class="large material-icons">dehaze</i>
-        </a>
-        <ul>
-            <li><a class="btn-floating green"><i class="material-icons">message</i></a></li>
-            <li><a class="btn-floating blue"><i class="material-icons">arrow_upward</i></a></li>
-            <li><a class="btn-floating red"><i class="material-icons">arrow_downward</i></a></li>
-            
-        </ul>
+    {% include "navbar.html" %}
+
+<main>
+<div id="cuentaNoVerificadaModal" class="modal">
+    <div class="modal-content">
+      <h4>Cuenta no Verificada</h4>
+        <p>Esta cuenta todavia no ha sido verificada por nuestros administradores. Es decir, tus Puntos de Acopio e Intermediarios no seran visibles al publico.<br>Para acelerar la verificacion <a href="/perfil">Completa los datos de tu perfil</a> o contactenos.</a></p>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    <div class="modal-footer">
+      <a class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+    </div>
+  </div>
+{% if messages %}
+    {% for message in messages %}
+        <div style="text-align: center ;background-color: #3ac26e; color: white; font-size: 1.1rem;">
+            {{ message|safe }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
+{% block content %}
+    <i class="material-icons">message</i>
+{% endblock %}
+</main>
+</body>
+
+<footer class="page-footer green">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Ecoinclusion</h5>
+                <p class="grey-text text-lighten-4">Propuesta de sistema de reciclaje</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Cooperativas y Empresas</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="ecoinclusion.org">Ecoinclusion</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2021 Copyright
+            <a class="grey-text text-lighten-4 right" href="">Terminos y Condiciones</a>
+        </div>
+    </div>
+</footer>
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large green lighten-1">
+        <i class="large material-icons">dehaze</i>
+    </a>
+    <ul>
+        <li><a class="btn-floating green"><i class="material-icons">message</i></a></li>
+        <li><a class="btn-floating blue"><i class="material-icons">arrow_upward</i></a></li>
+        <li><a class="btn-floating red"><i class="material-icons">arrow_downward</i></a></li>
+
+    </ul>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.fixed-action-btn');
         var instances = M.FloatingActionButton.init(elems, {
             direction: 'top',
             hoverEnabled: true
         });
-        
+
     });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="{% static 'js-m/materialize.min.js' %}"></script>
-    
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.parallax');
+        var instances = M.Parallax.init(elems,);
+    });
+
+     
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
+      });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript" src="{% static 'js-m/materialize.min.js' %}"></script>
+<script> 
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems,);
+  });
+</script>
+<script>document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.timepicker');
+    var instances = M.Timepicker.init(elems,);
+  });</script>
 
 
-</body>
+</html>
