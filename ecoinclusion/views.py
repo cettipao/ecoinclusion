@@ -139,6 +139,18 @@ def updatePuntoView(request):
     return redirect("/puntosdeacopio")
 
 @login_required
+def deletePuntoView(request, id):
+    punto = get_object_or_404(PuntoDeAcopio, id=id)
+    #Verifico que el Punto pertenezca al centro
+    if punto.centro != CentroDeReciclaje.objects.get(usuario=request.user):
+        messages.error(request, "Error al eliminar el Punto de Acopio")
+    else:
+        nombre = punto.nombre
+        punto.delete()
+        messages.success(request, "Punto de Acopio ({}) eliminado con Exito".format(nombre))
+    return redirect("/puntosdeacopio")
+
+@login_required
 def updateIntermediarioView(request):
     if request.method == "POST":
         if request.POST.get("id") == None: #Crear nuevo Intermediario

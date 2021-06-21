@@ -35,7 +35,7 @@
                         </div>
                         <div class="center-align">
                             <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit"
-                                    >Crear
+                            >Crear
                             </button>
                         </div>
 
@@ -56,59 +56,88 @@
                             <th>Tipo de Reciclado</th>
                             <th>Intermediarios</th>
                             <th></th>
+                            <th></th>
                         </tr>
                         </thead>
 
                         <tbody>
                         {% for punto in puntos %}
-                        <tr>
-                            <td>{{ punto.nombre }}</td>
-                            <td>{{ punto.ubicacion }}</td>
-                            <td>{{ punto.tipoDeReciclado }}</td>
-                            <td>{{ punto.cant_intermediarios }}</td>
-                            <td>
-                                <a class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger"
-                                   href="#modal{{ punto.id }}"><i
-                                        class="material-icons">edit</i></a>
-                                <div id="modal{{ punto.id }}" class="modal" style="overflow-y: visible;">
+                            <tr>
+                                <td>{{ punto.nombre }}</td>
+                                <td>{{ punto.ubicacion }}</td>
+                                <td>{{ punto.tipoDeReciclado }}</td>
+                                <td>{{ punto.cant_intermediarios }}</td>
+                                <td>
+                                    <a class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                                       href="#modal{{ punto.id }}"><i
+                                            class="material-icons">edit</i></a>
+                                    <div id="modal{{ punto.id }}" class="modal" style="overflow-y: visible;">
+                                        <div class="modal-content">
+                                            <h4>Editar punto de Acopio</h4><br>
+                                            <form method="POST" action="/updatepunto">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="id" value="{{ punto.id }}">
+                                                <div class="input-field">
+                                                    <input id="nombre_punto_modal" type="text" name="nombre_punto_modal"
+                                                           required value="{{ punto.nombre }}">
+                                                    <label for="nombre_punto_modal">Nombre del Punto</label>
+                                                </div>
+                                                <div class="input-field">
+                                                    <input id="ubicacion_modal" type="text" name="ubicacion_modal"
+                                                           required value="{{ punto.ubicacion }}">
+                                                    <label for="ubicacion_modal">Ubicación</label>
+                                                </div>
+                                                <div class="input-field">
+                                                    <select name="tipo_reciclado_modal" required multiple>
+                                                        <option {% if "Papel y Carton" in punto.tipoDeReciclado %}selected{% endif %}
+                                                                value="Papel y Carton">Papel y Carton
+                                                        </option>
+                                                        <option {% if "Residuos Organicos" in punto.tipoDeReciclado %}selected{% endif %}
+                                                                value="Residuos Organicos">Residuos Organicos
+                                                        </option>
+                                                        <option {% if "Plastico" in punto.tipoDeReciclado %}selected{% endif %}
+                                                                value="Plastico">Plastico
+                                                        </option>
+                                                        <option {% if "Vidrio" in punto.tipoDeReciclado %}selected{% endif %}
+                                                                value="Vidrio">Vidrio
+                                                        </option>
+                                                        <option {% if "Pilas y Baterias" in punto.tipoDeReciclado %}selected{% endif %}
+                                                                value="Pilas y Baterias">Pilas y Baterias
+                                                        </option>
+                                                        <option {% if "Metales" in punto.tipoDeReciclado %}selected{% endif %}
+                                                                value="Metales">Metales
+                                                        </option>
+                                                        <option {% if "Electronica" in punto.tipoDeReciclado %}selected{% endif %}
+                                                                value="Electronica">Electronica
+                                                        </option>
+                                                    </select>
+                                                    <label>Tipo de Reciclado</label>
+                                                </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="modal-close waves-effect btn-flat">Cancelar</a>
+                                            <button type="submit" class="waves-effect btn-flat">Guardar</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </td>
+                                <td><label>
+                                <a href="#modalDelete{{ punto.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger"><i
+                                         class="material-icons">delete</i></a></td>
+                                <div id="modalDelete{{ punto.id }}" class="modal">
                                     <div class="modal-content">
-                                        <h4>Editar punto de Acopio</h4><br>
-                                        <form method="POST" action="/updatepunto">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="id" value="{{ punto.id }}">
-                                            <div class="input-field">
-                                                <input id="nombre_punto_modal" type="text" name="nombre_punto_modal"
-                                                       required value="{{ punto.nombre }}">
-                                                <label for="nombre_punto_modal">Nombre del Punto</label>
-                                            </div>
-                                            <div class="input-field">
-                                                <input id="ubicacion_modal" type="text" name="ubicacion_modal"
-                                                       required value="{{ punto.ubicacion }}">
-                                                <label for="ubicacion_modal">Ubicación</label>
-                                            </div>
-                                            <div class="input-field">
-                                                <select name="tipo_reciclado_modal" required multiple>
-                                                    <option {% if "Papel y Carton" in punto.tipoDeReciclado %}selected{% endif %} value="Papel y Carton">Papel y Carton</option>
-                                                    <option {% if "Residuos Organicos" in punto.tipoDeReciclado %}selected{% endif %} value="Residuos Organicos">Residuos Organicos</option>
-                                                    <option {% if "Plastico" in punto.tipoDeReciclado %}selected{% endif %} value="Plastico">Plastico</option>
-                                                    <option {% if "Vidrio" in punto.tipoDeReciclado %}selected{% endif %} value="Vidrio">Vidrio</option>
-                                                    <option {% if "Pilas y Baterias" in punto.tipoDeReciclado %}selected{% endif %} value="Pilas y Baterias">Pilas y Baterias</option>
-                                                    <option {% if "Metales" in punto.tipoDeReciclado %}selected{% endif %} value="Metales">Metales</option>
-                                                    <option {% if "Electronica" in punto.tipoDeReciclado %}selected{% endif %} value="Electronica">Electronica</option>
-                                                </select>
-                                                <label>Tipo de Reciclado</label>
-                                            </div>
-
-
+                                        <h4>Eliminar Punto de Acopio</h4><br>
+                                        <p>¿Seguro quiere eliminar el punto {{ punto.nombre }}?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a class="modal-close waves-effect btn-flat">Cancelar</a>
-                                        <button type="submit" class="waves-effect btn-flat">Guardar</button>
+                                        <a href="" class="modal-close waves-effect btn-flat">Cancelar</a>
+                                        <a href="updatepunto/delete/{{ punto.id }}" type="submit" class="waves-effect btn-flat red white-text">Eliminar</a>
                                     </div>
                                     </form>
                                 </div>
-                            </td>
-                        </tr>
+                            </tr>
                         {% endfor %}
 
                         </tbody>

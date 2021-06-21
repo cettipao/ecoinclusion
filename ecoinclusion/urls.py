@@ -15,6 +15,7 @@ urlpatterns = [
      path('updateperfil', updatePerfilView, name="updateperfil"),
      path('changepassword', changePasswordView, name="changepassword"),
      path('updatepunto', updatePuntoView, name="updatepunto"),
+     path('updatepunto/delete/<int:id>', deletePuntoView, name="deletepunto"),
      path('updateintermediario/delete/<int:id>', deleteIntermediarioView, name="deleteintermedario"),
      path('updateintermediario', updateIntermediarioView, name="updateintermediario"),
 
