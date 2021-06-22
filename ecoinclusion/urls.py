@@ -14,8 +14,8 @@ urlpatterns = [
      path('dashboard', dashboardView, name="dashboard"),
      
      path('puntosdeacopio', puntosView, name="puntosdeacopio"),
-     path('updatepunto', updatePuntoView, name="updatepunto"),
-     path('updatepunto/delete/<int:id>', deletePuntoView, name="deletepunto"),
+     path('puntosdeacopio/updatepunto', updatePuntoView, name="updatepunto"),
+     path('puntosdeacopio/updatepunto/delete/<int:id>', deletePuntoView, name="deletepunto"),
 
      path('intermediarios', intermediariosView, name="intermediarios"),
      path('intermediarios/agregarintermediario', addIntermediarioView, name="addintermediario"),

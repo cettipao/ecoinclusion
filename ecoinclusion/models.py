@@ -64,8 +64,8 @@ class CentroDeReciclaje(models.Model):
     long = models.DecimalField(max_digits=9, decimal_places=6)
     nombre = models.CharField(max_length=100, null=True, blank=True)
     telefono = PhoneField(blank=True, help_text='Celular', null=True)
-    horarioInicio = models.CharField(max_length=10, default="", null=True, blank=True)
-    horarioFinal = models.CharField(max_length=10, default="", null=True, blank=True)
+    horarioInicio = models.TimeField( null=True, blank=True)
+    horarioFinal = models.TimeField( null=True, blank=True)
     verificado = models.BooleanField(default=False)
     
 

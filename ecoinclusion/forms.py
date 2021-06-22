@@ -52,3 +52,17 @@ class IntermediarioForm(ModelForm):
 
 
         
+class CentroDeReciclajeForm(ModelForm):
+    class Meta:
+        model = CentroDeReciclaje
+        fields = ['nombre','lat','long','telefono','horarioInicio','horarioFinal']
+    def __init__(self, *args, **kwargs):
+        super(CentroDeReciclajeForm, self).__init__(*args, **kwargs)
+        self.fields['lat'].required = True
+        self.fields['long'].required = True
+        self.fields['lat'].hidden = True
+        self.fields['long'].hidden = True
+        self.fields['nombre'].required = True
+        self.fields['telefono'].required = True
+        self.fields['horarioFinal'].required = True
+        self.fields['horarioInicio'].required = True

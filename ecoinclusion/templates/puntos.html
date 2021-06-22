@@ -11,17 +11,17 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Crear Punto de Acopio</b></span>
-                    <form method="post" action="/updatepunto">
+                    <form method="post" action="{% url 'updatepunto' %}">
                         {% csrf_token %}
                         <div class="input-field">
                             <input id="nombre_punto" type="text" name="nombre_punto" required="">
                             <label for="nombre_punto">Nombre del Punto</label>
                         </div>
-                        <input id="longittude" type="text" name="ubicacion_modal"
-                                required value="{{ punto.long }}" hidden>
+                        <input id="longittude" type="text" name="longittude"
+                                required value="0.0" hidden>
                     
-                        <input id="latittude" type="text" name="ubicacion_modal"
-                                required value="{{ punto.lat }}" hidden>
+                        <input id="latittude" type="text" name="latittude"
+                                required value="0.0" hidden>
                     
                         <div class="input-field">
                             
@@ -99,27 +99,26 @@
                                        href="#modal{{ punto.id }}"><i
                                             class="material-icons">edit</i></a>
                                     <div id="modal{{ punto.id }}" class="modal" style="overflow-y: visible;">
-                                        <form method="POST" action="/updatepunto">
+                                        <form method="POST" action="{% url 'updatepunto' %}">
                                             <div class="modal-content">
                                                 <h4>Editar punto de Acopio</h4><br>
-                                                
                                                 {% csrf_token %}
                                                 <input type="hidden" name="id" value="{{ punto.id }}">
                                                 <div class="input-field">
-                                                    <input id="nombre_punto_modal" type="text" name="nombre_punto_modal"
+                                                    <input id="nombre_punto_modal" type="text" name="nombre_punto"
                                                             required value="{{ punto.nombre }}">
                                                     <label for="nombre_punto_modal">Nombre del Punto</label>
                                                 </div>
                                                 
-                                                <input id="longittude_modal" type="text" name="ubicacion_modal"
+                                                <input id="longittude_modal" type="text" name="longittude"
                                                         required value="{{ punto.long }}" hidden>
                                             
-                                                <input id="latittude_modal" type="text" name="ubicacion_modal"
+                                                <input id="latittude_modal" type="text" name="latittude"
                                                         required value="{{ punto.lat }}" hidden>
                                             
                                                 <div class="input-field">
                                                     
-                                                    <a id="map" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                                                    <a  class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
                                                     href="#modalmap{{ punto.id }}"><i
                                                             class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
                                                     
@@ -134,28 +133,21 @@
                                                     </div>
                                                 </div>
                                                 <div class="input-field">
-                                                    <select name="tipo_reciclado_modal" required multiple>
+                                                    <select name="tipo_reciclado" required multiple>
                                                         <option {% if "Papel y Carton" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Papel y Carton">Papel y Carton
-                                                        </option>
+                                                                value="Papel y Carton">Papel y Carton</option>
                                                         <option {% if "Residuos Organicos" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Residuos Organicos">Residuos Organicos
-                                                        </option>
+                                                                value="Residuos Organicos">Residuos Organicos</option>
                                                         <option {% if "Plastico" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Plastico">Plastico
-                                                        </option>
+                                                                value="Plastico">Plastico</option>
                                                         <option {% if "Vidrio" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Vidrio">Vidrio
-                                                        </option>
+                                                                value="Vidrio">Vidrio</option>
                                                         <option {% if "Pilas y Baterias" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Pilas y Baterias">Pilas y Baterias
-                                                        </option>
+                                                                value="Pilas y Baterias">Pilas y Baterias</option>
                                                         <option {% if "Metales" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Metales">Metales
-                                                        </option>
+                                                                value="Metales">Metales</option>
                                                         <option {% if "Electronica" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Electronica">Electronica
-                                                        </option>
+                                                                value="Electronica">Electronica</option>
                                                     </select>
                                                     <label>Tipo de Reciclado</label>
                                                 </div>

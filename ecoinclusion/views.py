@@ -49,7 +49,6 @@ def dashboardView(request):
     puntos = PuntoDeAcopio.objects.filter(centro__usuario=request.user)
     return render(request, "dashboard.html", {"puntos": puntos})
 
-
 class formIntermediario():
     def __init__(self,intermediario,form,choices):
         self.intermediario = intermediario
@@ -66,7 +65,6 @@ def intermediariosView(request):
         "intermediarios": intermediarios
     }
     return render(request, "intermediarios.html", context)
-
 
 @login_required
 def updateIntermediarioView(request,pk_intermediario):
@@ -91,7 +89,6 @@ def updateIntermediarioView(request,pk_intermediario):
     }
     return render(request,'updateintermediario.html',context)
     
-
 @login_required
 def addIntermediarioView(request):
     isCentroVerified(request)
@@ -143,10 +140,10 @@ def updatePuntoView(request):
             messages.success(request, "Punto creado con Exito")
         else: #Actualizar Info de Existente
             punto = PuntoDeAcopio.objects.get(id=request.POST.get("id"))
-            punto.nombre = request.POST.get("nombre_punto_modal")
+            punto.nombre = request.POST.get("nombre_punto")
             punto.lat = request.POST.get("latittude")
             punto.long = request.POST.get("longittude")
-            punto.tipoDeReciclado = cleanList(request.POST.getlist("tipo_reciclado_modal"))
+            punto.tipoDeReciclado = cleanList(request.POST.getlist("tipo_reciclado"))
             punto.save()
             messages.success(request, "Punto ({}) actualizado con Exito".format(punto.nombre))
     return redirect("puntosdeacopio")
@@ -169,34 +166,28 @@ def perfilView(request):
     social = False
     if len(SocialAccount.objects.filter(user_id=request.user.id)) > 0:  # El Usuario esta logeado con SocialApp
         social = True
-    return render(request, "perfil.html", {"social": social, 'centro': centro})
-
+    centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    form = CentroDeReciclajeForm(instance=centro)   
+    context = {
+        'form':form,
+        "social": social,
+    }
+    return render(request, "perfil.html", context)
 
 @login_required
 def updatePerfilView(request):
     if request.method == "POST":
-        # Si no hay cuenta de Centro asociada al User actual creo una
+        form = CentroDeReciclajeForm(request.POST)
         if len(CentroDeReciclaje.objects.filter(usuario=request.user)) < 1:
-            CentroDeReciclaje.objects.create(
-                usuario=request.user,
-                nombre=request.POST.get("nombre"),
-                ubicacion=request.POST.get("ubicacion"),
-                telefono=request.POST.get("telefono"),
-                horarioInicio=request.POST.get("horarioInicio"),
-                horarioFinal=request.POST.get("horarioFinal"),
-            )
+            if form.is_valid():
+                obj = form.save()
         #Sino hago el Update
         else:
-            centro = CentroDeReciclaje.objects.get(usuario=request.user)
-            centro.usuario = request.user
-            centro.nombre = request.POST.get("nombre")
-            centro.ubicacion = request.POST.get("ubicacion")
-            centro.telefono = request.POST.get("telefono")
-            centro.horarioInicio = request.POST.get("horarioInicio")
-            centro.horarioFinal = request.POST.get("horarioFinal")
-            centro.save()
+            form = CentroDeReciclajeForm(request.POST,instance=CentroDeReciclaje.objects.get(usuario=request.user))
+            if form.is_valid():
+                obj = form.save()
         messages.success(request, "Perfil Actualizado con Exito")
-    return redirect("/perfil")
+    return redirect("perfil")
 
 def logoutView(request):
     if request.user.is_authenticated:
@@ -245,7 +236,7 @@ def changePasswordView(request):
                 messages.success(request, "Contraseña Cambiada con Exito")
         else:
             messages.success(request, "CONTRASEÑA ACTUAL INCORRECTA, INTENTE DE NUEVO")
-    return redirect("/perfil")
+    return redirect("perfil")
 
 def homeView(request):
     return render(request, 'home.html')
