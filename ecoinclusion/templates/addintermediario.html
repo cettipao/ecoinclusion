@@ -22,6 +22,7 @@
                                         {% csrf_token %}
                                         {{form.nombre.label}}
                                         {{form.nombre}}
+                                        
                                         {{form.telefono.label}}
                                         {{form.telefono}}
                                         {{form.puntos.label}}
@@ -37,10 +38,9 @@
                                                 </p>
                                             </li> 
                                         {% endfor %}
-                                        
                                         </ul>
-                                        <div class="center-align">
-                                            <button class="btn waves-effect waves-light green lighten-1" type="submit">Aceptar</button>
+                                        <div class="right-align">
+                                            <button data-tooltip="'Click' para crear intermediario" data-position="bottom" class="btn waves-effect waves-light green lighten-1 tooltipped" type="submit">Crear</button>
                                         </div>
                                     </form>
                                 </div>

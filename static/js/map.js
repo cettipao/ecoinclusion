@@ -1,6 +1,6 @@
 
 function setForm(name){
-  document.getElementById("current-form").innerHTML = document.forms[name].name;
+  document.getElementById("current-form").value = document.forms[name].name;
 
   console.log(document.forms[name].name);
 }
@@ -9,7 +9,7 @@ function setPoint(lat,lng){
 
   console.log(lat)
   console.log(lng)
-  var form = document.forms[document.getElementById("current-form").innerHTML]
+  var form = document.forms[document.getElementById("current-form").value]
   form.elements.lat.value = lat;
   form.elements.long.value = lng;
 }

@@ -28,3 +28,14 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.timepicker');
     var instances = M.Timepicker.init(elems,);
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems, );
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.scrollspy');
+    var instances = M.ScrollSpy.init(elems, options);
+  });

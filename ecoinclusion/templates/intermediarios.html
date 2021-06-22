@@ -42,8 +42,8 @@
                                         <p>¿Seguro quiere eliminar a {{ intermediario.nombre }}?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="#" class="modal-close waves-effect btn-flat">Cancelar</a>
-                                        <a href="{% url 'deleteintermediario' intermediario.id  %}" type="submit" class="waves-effect btn-flat red white-text">Eliminar</a>
+                                        <a href="#"data-tooltip="'Click' para cancelar eliminacion"   class="modal-close waves-effect btn-flat tooltipped">Cancelar</a>
+                                        <a href="{% url 'deleteintermediario' intermediario.id  %}" data-tooltip="'Click' para eliminar el intermediario"  class="btn waves-effect waves-light green lighten-1 tooltipped" >Eliminar</a>
                                     </div>
                                 </div>
                             </tr>
@@ -53,7 +53,13 @@
                     </table>
                 </div>
             </div>
-            <a href="{% url 'addintermediario' %}" class="waves-effect waves-light btn-large green lighten-1">Agregar Intermediario</a>
+            
         </div>
+    </div>
+    <div class="row center-align">
+        <div class="col s12">
+            <a href="{% url 'addintermediario' %}" data-tooltip="'Click' para crear un nuevo intermediario" class="waves-effect waves-light btn-large green lighten-1 tooltipped" >Agregar Intermediario<i
+                                                class="material-icons right">add</i></a>
+        </div
     </div>
 {% endblock %}
