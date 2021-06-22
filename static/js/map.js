@@ -1,6 +1,6 @@
 
 function setForm(name){
-  document.getElementById("current-form").innerHTML = document.forms[name];
+  document.getElementById("current-form").innerHTML = document.forms[name].name;
 
   console.log(document.forms[name].name);
 }
@@ -14,9 +14,17 @@ function setPoint(lat,lng){
   form.elements.longittude.value = lng;
 }
 
+let map;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 8,
+  });
+}
 
 function initAutocomplete() {
-  const map = new google.maps.Map(document.getElementById("map"), {
+  let map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -33.8688, lng: 151.2195 },
     zoom: 13,
     mapTypeId: "roadmap",
@@ -75,7 +83,7 @@ function initAutocomplete() {
         infowindow.open({
           anchor: marker,
           map,
-          shouldFocus: true,
+          shouldFocus: false,
         });
       })
       // Create a marker for each place.
