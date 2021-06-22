@@ -133,16 +133,16 @@ def updatePuntoView(request):
             PuntoDeAcopio.objects.create(
                 centro=get_object_or_404(CentroDeReciclaje, usuario=request.user),
                 nombre=request.POST.get("nombre_punto"),
-                lat=request.POST.get("latittude"),
-                long=request.POST.get("longittude"),
+                lat=request.POST.get("lat"),
+                long=request.POST.get("long"),
                 tipoDeReciclado=cleanList(request.POST.getlist("tipo_reciclado"))
             )
             messages.success(request, "Punto creado con Exito")
         else: #Actualizar Info de Existente
             punto = PuntoDeAcopio.objects.get(id=request.POST.get("id"))
             punto.nombre = request.POST.get("nombre_punto")
-            punto.lat = request.POST.get("latittude")
-            punto.long = request.POST.get("longittude")
+            punto.lat = request.POST.get("lat")
+            punto.long = request.POST.get("long")
             punto.tipoDeReciclado = cleanList(request.POST.getlist("tipo_reciclado"))
             punto.save()
             messages.success(request, "Punto ({}) actualizado con Exito".format(punto.nombre))
@@ -171,6 +171,7 @@ def perfilView(request):
     context = {
         'form':form,
         "social": social,
+        'google_api_key':settings.APY_KEY,
     }
     return render(request, "perfil.html", context)
 

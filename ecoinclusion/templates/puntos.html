@@ -20,12 +20,12 @@
                         </div>
                         <span>Coordenadas</span>
                         <div class="input-field">
-                            <input id="latittude" type="text" name="latittude"
+                            <input id="latittude" type="text" name="lat"
                                     required value="0.0">
                             <label for="latittude">Longgitud</label>
                         </div>
                         <div class="input-field">
-                            <input id="longittude" type="text" name="longittude"
+                            <input id="longittude" type="text" name="long"
                                     required value="0.0">
                             <label for="longittude">latitud</label>
                         </div>
@@ -67,7 +67,17 @@
             </div>
             <div class="modal-footer">
                 <a class="modal-close waves-effect btn-flat" >Cancelar</a>
-                <a class="modal-close waves-effect btn-flat" >Guardar</a>
+                <a  class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                            href="#latlong"><i
+                                    class="material-icons right">save</i>Guardar</a>
+            </div>
+        </div>
+        <div id="latlong" class="modal" style="overflow-y: visible;">
+            <div class="modal-content" >
+                latitud y longitud actualizados con exito
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect btn-flat" >Aceptar</a>
             </div>
         </div>
         <div class="col s12 m6 l6">
@@ -110,12 +120,12 @@
                                                 </div>
                                                 <span>Coordenadas</span>
                                                 <div class="input-field">
-                                                    <input id="latittude" type="text" name="latittude"
+                                                    <input id="latittude" type="text" name="lat"
                                                             required value="{{ punto.lat }}">
                                                     <label for="latittude">Longitud</label>
                                                 </div>
                                                 <div class="input-field">
-                                                    <input id="longittude" type="text" name="longittude"
+                                                    <input id="longittude" type="text" name="long"
                                                             required value="{{ punto.long }}">
                                                     <label for="longittude">latitud</label>
                                                 </div>

@@ -10,8 +10,8 @@ function setPoint(lat,lng){
   console.log(lat)
   console.log(lng)
   var form = document.forms[document.getElementById("current-form").innerHTML]
-  form.elements.latittude.value = lat;
-  form.elements.longittude.value = lng;
+  form.elements.lat.value = lat;
+  form.elements.long.value = lng;
 }
 
 let map;

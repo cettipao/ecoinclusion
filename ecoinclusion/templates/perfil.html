@@ -5,16 +5,24 @@
 {% endblock %}
 
 {% block content %}
+    <input type="text" id="current-form">
     <div class="row">
         <h3 class="center-align">Perfil</h3>
         <div class="col s12 m6 l6">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Datos Generales</b></span>
-                    <form method="post" action="/updateperfil">
+                    <form method="post" name="formCentro" action="{% url 'updateperfil' %}">
                         {% csrf_token %}
                         {{form.as_p}}
-                       
+                        <div class="input-field center">
+                            
+                            <a onclick="setForm('formCentro')" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                            href="#modalmap"><i
+                                    class="material-icons right">map</i>o seleccionar Ubicacion en el mapa</a>
+                            
+                        </div>
+                        
                         <div class="center-align">
                             <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit"
                             >Actualizar
@@ -22,6 +30,25 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+        <div id="modalmap" class="modal" style="overflow-y: visible;">
+            <div class="modal-content" >
+                {% include "googleMaps.html" %}
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect btn-flat" >Cancelar</a>
+                <a  class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                            href="#latlong"><i
+                                    class="material-icons right">save</i>Guardar</a>
+            </div>
+        </div>
+        <div id="latlong" class="modal" style="overflow-y: visible;">
+            <div class="modal-content" >
+                latitud y longitud actualizados con exito
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect btn-flat" >Aceptar</a>
             </div>
         </div>
         <div class="col s12 m6 l6">
