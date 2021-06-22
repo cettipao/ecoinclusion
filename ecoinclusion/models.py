@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from phone_field import PhoneField
 from multiselectfield import MultiSelectField
+from django.contrib.postgres.fields import ArrayField
+from django.utils.translation import gettext as _
 
 # Create your models here.
 
@@ -12,6 +14,17 @@ class Contribuyente(models.Model):
         return self.usuario.username
 
 
+
+DAYS_WEEK = (
+    
+    (1,_('lunes')),
+    (2,_('martes')),
+    (3,_('miercoles')),
+    (4,_('jueves')),
+    (5,_('viernes')),
+    (6,_('sabado')),
+    (7,_('domingo')),
+)
 class Intermediario(models.Model):
     nombre = models.CharField(max_length=100)
     telefono = PhoneField(blank=True, help_text='Celular')
@@ -25,8 +38,8 @@ class Intermediario(models.Model):
     puntos = models.ManyToManyField(
         'PuntoDeAcopio',
     )
-    diasRecoleccion = models.CharField(max_length=100)
-
+    diasRecoleccion =  MultiSelectField(choices=DAYS_WEEK)
+   
     def __str__(self):
         return self.nombre
 
@@ -43,22 +56,26 @@ class Intermediario(models.Model):
 
 
 
+
 class CentroDeReciclaje(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100, null=True, blank=True)
-    ubicacion = models.CharField(max_length=100, null=True, blank=True)
+    lat = models.DecimalField(max_digits=9, decimal_places=6)
+    long = models.DecimalField(max_digits=9, decimal_places=6)
     nombre = models.CharField(max_length=100, null=True, blank=True)
     telefono = PhoneField(blank=True, help_text='Celular', null=True)
     horarioInicio = models.CharField(max_length=10, default="", null=True, blank=True)
     horarioFinal = models.CharField(max_length=10, default="", null=True, blank=True)
     verificado = models.BooleanField(default=False)
+    
 
     def __str__(self):
         return self.usuario.username
 
 class PuntoDeAcopio(models.Model):
     nombre = models.CharField(max_length=100)
-    ubicacion = models.CharField(max_length=100)
+    lat = models.DecimalField(max_digits=9, decimal_places=6)
+    long = models.DecimalField(max_digits=9, decimal_places=6)
     tipoDeReciclado = models.CharField(max_length=100)
     centro = models.ForeignKey(
         'CentroDeReciclaje',

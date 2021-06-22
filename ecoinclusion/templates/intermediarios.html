@@ -12,93 +12,48 @@
                 <div class="card-content">
                     <table>
                         <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Telefono</th>
-                            <th>Puntos de Acopio</th>
-                            <th>Dias de Recoleccion</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Telefono</th>
+                                <th>Puntos de Acopio</th>
+                                <th>Dias de Recoleccion</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
                         </thead>
-
                         <tbody>
                         {% for intermediario in intermediarios %}
-                        <tr>
-                            <td>{{ intermediario.nombre }}</td>
-                            <td>{{ intermediario.telefono }}</td>
-                            <td>{{ intermediario.getPuntosName }}</td>
-                            <td>{{ intermediario.diasRecoleccion }}</td>
-                            <td>
-                                <a class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger" href="#modal{{ intermediario.id }}"><i
-                                        class="material-icons">edit</i></a>
-
-                                <div id="modal{{ intermediario.id }}" class="modal modal-fixed-footer">
-                                    <div class="modal-content">
-                                        <h4>Editar Intermediario</h4><br>
-                                        <form method="POST" action="/updateintermediario">
-                                            {% csrf_token %}
-                                        <input type="hidden" name="id" value="{{ intermediario.id }}">
-                                            <div class="input-field center">
-                                                <input name="nombre" id="nombre" type="text" class="validate"
-                                                       required value="{{ intermediario.nombre }}">
-                                                <label for="nombre">Nombre</label>
-                                            </div>
-                                            <div class="input-field center">
-                                                <input name="telefono" id="telefono" type="number" class="validate"
-                                                       required value="{{ intermediario.telefono }}">
-                                                <label for="telefono">Telefono</label>
-                                            </div>
-                                            <div class="input-field">
-                                                <select multiple required name="puntos">
-                                                    {% for puntoCentro in puntosDelCentro %}
-                                                    <option {% if puntoCentro.nombre in intermediario.getPuntosName %}selected{% endif %} value="{{ puntoCentro.nombre }}">{{ puntoCentro.nombre }}</option>
-                                                        {% endfor %}
-                                                </select>
-                                                <label>Puntos de acopio</label>
-                                            </div>
-                                            <div class="input-field">
-                                                <select multiple required name="diasRecoleccion">
-                                                    <option {% if "Lunes" in intermediario.diasRecoleccion %}selected{% endif %} value="Lunes">Lunes</option>
-                                                    <option {% if "Martes" in intermediario.diasRecoleccion %}selected{% endif %} value="Martes">Martes</option>
-                                                    <option {% if "Miercoles" in intermediario.diasRecoleccion %}selected{% endif %} value="Miercoles">Miércoles</option>
-                                                    <option {% if "Jueves" in intermediario.diasRecoleccion %}selected{% endif %} value="Jueves">Jueves</option>
-                                                    <option {% if "Viernes" in intermediario.diasRecoleccion %}selected{% endif %} value="Viernes">Viernes</option>
-                                                    <option {% if "Sabado" in intermediario.diasRecoleccion %}selected{% endif %} value="Sabado">Sábado</option>
-                                                    <option {% if "Domingo" in intermediario.diasRecoleccion %}selected{% endif %} value="Domingo">Domingo</option>
-                                                </select>
-                                                <label>Días de recolección</label>
-                                            </div>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="" class="modal-close waves-effect btn-flat">Cancelar</a>
-                                        <button href="" type="submit" class="waves-effect btn-flat">Guardar</button>
-                                    </div>
-                                    </form>
-                                </div>
-                            </td>
-                            <td><label>
-                                <a href="#modalDelete{{ intermediario.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger"><i
-                                         class="material-icons">delete</i></a></td>
+                            <tr>
+                                <td>{{ intermediario.nombre }}</td>
+                                <td>{{ intermediario.telefono }}</td>
+                                <td>{{ intermediario.getPuntosName }}</td>
+                                <td>{{ intermediario.diasRecoleccion }}</td>
+                                <td>
+                                    <a class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger" href="{% url 'updateintermediario' intermediario.id  %}"><i
+                                            class="material-icons">edit</i></a>
+                                </td>
+                                <td>
+                                    <a href="#modalDelete{{ intermediario.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger"><i
+                                            class="material-icons">delete</i></a>
+                                </td>
                                 <div id="modalDelete{{ intermediario.id }}" class="modal">
                                     <div class="modal-content">
                                         <h4>Eliminar Intermediario</h4><br>
                                         <p>¿Seguro quiere eliminar a {{ intermediario.nombre }}?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="" class="modal-close waves-effect btn-flat">Cancelar</a>
-                                        <a href="updateintermediario/delete/{{ intermediario.id }}" type="submit" class="waves-effect btn-flat red white-text">Eliminar</a>
+                                        <a href="#" class="modal-close waves-effect btn-flat">Cancelar</a>
+                                        <a href="{% url 'deleteintermediario' intermediario.id  %}" type="submit" class="waves-effect btn-flat red white-text">Eliminar</a>
                                     </div>
-                                    </form>
                                 </div>
-                        </tr>
+                            </tr>
+
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-            <a href="agregarintermediario" class="waves-effect waves-light btn-large green lighten-1">Agregar Intermediario</a>
+            <a href="{% url 'addintermediario' %}" class="waves-effect waves-light btn-large green lighten-1">Agregar Intermediario</a>
         </div>
     </div>
 {% endblock %}

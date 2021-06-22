@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 from django.http import request
+from multiselectfield import MultiSelectField
+
 
 class UserForm(ModelForm):
     #last_name = forms.CharField(blank=False)
@@ -18,11 +20,6 @@ class UserForm(ModelForm):
 
     fields = ['basic_field']
 
-
-        
-
-
-
 class CreateUserForm(UserCreationForm):
     #last_name = forms.CharField(blank=False)
     #first_name = forms.CharField(blank=False)
@@ -33,3 +30,25 @@ class CreateUserForm(UserCreationForm):
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.fields['last_name'].required = True
         self.fields['first_name'].required = True
+
+
+
+class IntermediarioForm(ModelForm):
+    class Meta:
+        model = Intermediario
+        fields = ['nombre','telefono','puntos','diasRecoleccion']
+    def __init__(self, *args, **kwargs):
+        super(IntermediarioForm, self).__init__(*args, **kwargs)
+
+
+        instance = kwargs.get("instance")
+        centro = instance.centro
+        puntos = PuntoDeAcopio.objects.filter(centro=centro)
+        self.fields['nombre'].required = True
+        self.fields['telefono'].required = True
+        self.fields['puntos'].queryset = puntos
+        self.fields['puntos'].required = True
+        self.fields['diasRecoleccion'].required = True
+
+
+        

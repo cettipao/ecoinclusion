@@ -17,9 +17,36 @@
                             <input id="nombre_punto" type="text" name="nombre_punto" required="">
                             <label for="nombre_punto">Nombre del Punto</label>
                         </div>
+                        <input id="longittude" type="text" name="ubicacion_modal"
+                                required value="{{ punto.long }}" hidden>
+                    
+                        <input id="latittude" type="text" name="ubicacion_modal"
+                                required value="{{ punto.lat }}" hidden>
+                    
                         <div class="input-field">
-                            <input id="ubicacion" type="text" name="ubicacion" required="">
-                            <label for="ubicacion">Ubicación</label>
+                            
+                            <a  class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                            href="#modalmap"><i
+                                    class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
+                            
+                        </div>
+                        <div id="modalmap" class="modal" style="overflow-y: visible;">
+                            <div class="modal-content row " >
+                                <input
+                                    id="pac-input"
+                                    class="controls"
+                                    type="text"
+                                    placeholder="Search Box"
+                                />
+                                <div id="map" class="col s12"></div>
+                                
+                                <script src="https://maps.googleapis.com/maps/api/js?key={{google_api_key}}&callback=initAutocomplete&libraries=places,drawing" async></script>
+
+                            </div>
+                            <div class="modal-footer">
+                                <a class="modal-close waves-effect btn-flat" >Cancelar</a>
+                                <button class="waves-effect btn-flat" >Guardar</button>
+                            </div>
                         </div>
                         <div class="input-field">
                             <select id="tipo_reciclado" name="tipo_reciclado" required multiple>
@@ -72,20 +99,39 @@
                                        href="#modal{{ punto.id }}"><i
                                             class="material-icons">edit</i></a>
                                     <div id="modal{{ punto.id }}" class="modal" style="overflow-y: visible;">
-                                        <div class="modal-content">
-                                            <h4>Editar punto de Acopio</h4><br>
-                                            <form method="POST" action="/updatepunto">
+                                        <form method="POST" action="/updatepunto">
+                                            <div class="modal-content">
+                                                <h4>Editar punto de Acopio</h4><br>
+                                                
                                                 {% csrf_token %}
                                                 <input type="hidden" name="id" value="{{ punto.id }}">
                                                 <div class="input-field">
                                                     <input id="nombre_punto_modal" type="text" name="nombre_punto_modal"
-                                                           required value="{{ punto.nombre }}">
+                                                            required value="{{ punto.nombre }}">
                                                     <label for="nombre_punto_modal">Nombre del Punto</label>
                                                 </div>
+                                                
+                                                <input id="longittude_modal" type="text" name="ubicacion_modal"
+                                                        required value="{{ punto.long }}" hidden>
+                                            
+                                                <input id="latittude_modal" type="text" name="ubicacion_modal"
+                                                        required value="{{ punto.lat }}" hidden>
+                                            
                                                 <div class="input-field">
-                                                    <input id="ubicacion_modal" type="text" name="ubicacion_modal"
-                                                           required value="{{ punto.ubicacion }}">
-                                                    <label for="ubicacion_modal">Ubicación</label>
+                                                    
+                                                    <a id="map" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                                                    href="#modalmap{{ punto.id }}"><i
+                                                            class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
+                                                    
+                                                </div>
+                                                <div id="modalmap{{ punto.id }}" class="modal" style="overflow-y: visible;">
+                                                    <div class="modal-content">
+                                                        Mapa
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a class="modal-close waves-effect btn-flat" >Cancelar</a>
+                                                        <button class="waves-effect btn-flat" >Guardar</button>
+                                                    </div>
                                                 </div>
                                                 <div class="input-field">
                                                     <select name="tipo_reciclado_modal" required multiple>
@@ -113,13 +159,11 @@
                                                     </select>
                                                     <label>Tipo de Reciclado</label>
                                                 </div>
-
-
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a class="modal-close waves-effect btn-flat">Cancelar</a>
-                                            <button type="submit" class="waves-effect btn-flat">Guardar</button>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="modal-close waves-effect btn-flat">Cancelar</a>
+                                                <button type="submit" class="waves-effect btn-flat">Guardar</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </td>
