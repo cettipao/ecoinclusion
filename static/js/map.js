@@ -1,3 +1,20 @@
+
+function setForm(name){
+  document.getElementById("current-form").innerHTML = document.forms[name];
+
+  console.log(document.forms[name].name);
+}
+function setPoint(lat,lng){
+  
+
+  console.log(lat)
+  console.log(lng)
+  var form = document.forms[document.getElementById("current-form").innerHTML]
+  form.elements.latittude.value = lat;
+  form.elements.longittude.value = lng;
+}
+
+
 function initAutocomplete() {
   const map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: -33.8688, lng: 151.2195 },
@@ -33,22 +50,36 @@ function initAutocomplete() {
         console.log("Returned place contains no geometry");
         return;
       }
-      const icon = {
-        url: place.icon,
-        size: new google.maps.Size(71, 71),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(17, 34),
-        scaledSize: new google.maps.Size(25, 25),
-      };
+      
+      const contentString =
+        '<div id="content">' +
+        '<div id="siteNotice">' +
+        "</div>" +
+        '<h1 id="firstHeading" class="firstHeading">' + place.name + '</h1>' +
+        '<div id="bodyContent">' +
+        "<button class='btn btn-small waves-effect waves-light green lighten-1' onclick='setPoint(" + place.geometry.location.lat() + "," +  place.geometry.location.lng() + ")'>Guardar esta ubicacion</button>" +
+        "</div>" +
+      "</div>";
+      const infowindow = new google.maps.InfoWindow({
+        content: contentString,
+      });
+
       // Create a marker for each place.
-      markers.push(
-        new google.maps.Marker({
+      let marker = new google.maps.Marker({
+        map,
+        title: place.name,
+        position: place.geometry.location,
+      })
+
+      marker.addListener("click", () => {
+        infowindow.open({
+          anchor: marker,
           map,
-          icon,
-          title: place.name,
-          position: place.geometry.location,
-        })
-      );
+          shouldFocus: true,
+        });
+      })
+      // Create a marker for each place.
+      
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -60,6 +91,7 @@ function initAutocomplete() {
     map.fitBounds(bounds);
   });
 }
+
 
 
 var polygonArray = [];

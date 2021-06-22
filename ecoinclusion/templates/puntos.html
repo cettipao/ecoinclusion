@@ -5,48 +5,37 @@
 {% endblock %}
 
 {% block content %}
+    <input type="text" id="current-form">
     <div class="row">
         <h3 class="center-align">Puntos de Acopio</h3>
         <div class="col s12 m6 l6">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Crear Punto de Acopio</b></span>
-                    <form method="post" action="{% url 'updatepunto' %}">
+                    <form method="post" name="formNewPunto" id="formNewPunto"  action="{% url 'updatepunto' %}">
                         {% csrf_token %}
                         <div class="input-field">
                             <input id="nombre_punto" type="text" name="nombre_punto" required="">
                             <label for="nombre_punto">Nombre del Punto</label>
                         </div>
-                        <input id="longittude" type="text" name="longittude"
-                                required value="0.0" hidden>
-                    
-                        <input id="latittude" type="text" name="latittude"
-                                required value="0.0" hidden>
-                    
+                        <span>Coordenadas</span>
                         <div class="input-field">
-                            
-                            <a  class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
-                            href="#modalmap"><i
-                                    class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
-                            
+                            <input id="latittude" type="text" name="latittude"
+                                    required value="0.0">
+                            <label for="latittude">Longgitud</label>
                         </div>
-                        <div id="modalmap" class="modal" style="overflow-y: visible;">
-                            <div class="modal-content row " >
-                                <input
-                                    id="pac-input"
-                                    class="controls"
-                                    type="text"
-                                    placeholder="Search Box"
-                                />
-                                <div id="map" class="col s12"></div>
-                                
-                                <script src="https://maps.googleapis.com/maps/api/js?key={{google_api_key}}&callback=initAutocomplete&libraries=places,drawing" async></script>
-
-                            </div>
-                            <div class="modal-footer">
-                                <a class="modal-close waves-effect btn-flat" >Cancelar</a>
-                                <button class="waves-effect btn-flat" >Guardar</button>
-                            </div>
+                        <div class="input-field">
+                            <input id="longittude" type="text" name="longittude"
+                                    required value="0.0">
+                            <label for="longittude">latitud</label>
+                        </div>
+                    
+                        <div class="input-field center">
+                            
+                            <a onclick="setForm('formNewPunto')" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                            href="#modalmap"><i
+                                    class="material-icons right">map</i>o seleccionar Ubicacion en el mapa</a>
+                            
                         </div>
                         <div class="input-field">
                             <select id="tipo_reciclado" name="tipo_reciclado" required multiple>
@@ -69,6 +58,15 @@
                     </form>
 
                 </div>
+            </div>
+        </div>
+        <div id="modalmap" class="modal" style="overflow-y: visible;">
+            <div class="modal-content" >
+                {% include "googleMaps.html" %}
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect btn-flat" >Cancelar</a>
+                <a class="modal-close waves-effect btn-flat" >Guardar</a>
             </div>
         </div>
         <div class="col s12 m6 l6">
@@ -99,7 +97,7 @@
                                        href="#modal{{ punto.id }}"><i
                                             class="material-icons">edit</i></a>
                                     <div id="modal{{ punto.id }}" class="modal" style="overflow-y: visible;">
-                                        <form method="POST" action="{% url 'updatepunto' %}">
+                                        <form method="POST" name="form{{ punto.id }}" id="form{{ punto.id }}" action="{% url 'updatepunto' %}">
                                             <div class="modal-content">
                                                 <h4>Editar punto de Acopio</h4><br>
                                                 {% csrf_token %}
@@ -109,28 +107,24 @@
                                                             required value="{{ punto.nombre }}">
                                                     <label for="nombre_punto_modal">Nombre del Punto</label>
                                                 </div>
-                                                
-                                                <input id="longittude_modal" type="text" name="longittude"
-                                                        required value="{{ punto.long }}" hidden>
-                                            
-                                                <input id="latittude_modal" type="text" name="latittude"
-                                                        required value="{{ punto.lat }}" hidden>
-                                            
+                                                <span>Coordenadas</span>
                                                 <div class="input-field">
-                                                    
-                                                    <a  class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
-                                                    href="#modalmap{{ punto.id }}"><i
-                                                            class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
-                                                    
+                                                    <input id="latittude" type="text" name="latittude"
+                                                            required value="{{ punto.lat }}">
+                                                    <label for="latittude">Longitud</label>
                                                 </div>
-                                                <div id="modalmap{{ punto.id }}" class="modal" style="overflow-y: visible;">
-                                                    <div class="modal-content">
-                                                        Mapa
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <a class="modal-close waves-effect btn-flat" >Cancelar</a>
-                                                        <button class="waves-effect btn-flat" >Guardar</button>
-                                                    </div>
+                                                <div class="input-field">
+                                                    <input id="longittude" type="text" name="longittude"
+                                                            required value="{{ punto.long }}">
+                                                    <label for="longittude">latitud</label>
+                                                </div>
+                                            
+                                                <div class="input-field center">
+                                                    
+                                                    <a onclick="setForm('form{{ punto.id }}')" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                                                    href="#modalmap"><i
+                                                            class="material-icons right">map</i>o seleccionar Ubicacion en el mapa</a>
+                                                    
                                                 </div>
                                                 <div class="input-field">
                                                     <select name="tipo_reciclado" required multiple>
