@@ -1,16 +1,29 @@
+
+# Django imports
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from .forms import *
-from .decorators import *
 from django.contrib import messages
-from .models import *
+from django.conf import settings
+from django.contrib.auth.models import User
+
+# Django rest framework imports
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
+from rest_framework.renderers import TemplateHTMLRenderer
+
+# Social accounts imports
 from allauth.socialaccount.models import SocialAccount
 
-from django.conf import settings
+# My imports
+from .forms import *
+from .models import *
+from .decorators import *
+
 
 # Create your views here.
 
@@ -244,3 +257,32 @@ def homeView(request):
 
 def aboutView(request):
     return render(request, 'somos.html')
+
+
+# Django Rest framework views
+
+
+class ListUsers(APIView):
+    """
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'intermediario_list.html'
+    
+    View to list all users in the system.
+
+    * Requires token authentication.
+    * Only admin users are able to access this view.
+    
+    #authentication_classes = [authentication.TokenAuthentication]
+    #permission_classes = [permissions.IsAdminUser]
+    def get(self, request):
+        queryset = Intermediario.objects.all()
+        return Response({'intermediarios': queryset})
+    """
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAdminUser]
+    def get(self, request, format=None):
+        
+        #Return a list of all users.
+        
+        usernames = [user.username for user in User.objects.all()]
+        return Response(usernames)

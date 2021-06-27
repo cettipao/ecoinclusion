@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 
 # Create your models here.
 
+
 class Contribuyente(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -67,6 +68,7 @@ class CentroDeReciclaje(models.Model):
     horarioInicio = models.TimeField( null=True, blank=True)
     horarioFinal = models.TimeField( null=True, blank=True)
     verificado = models.BooleanField(default=False)
+    
     
 
     def __str__(self):

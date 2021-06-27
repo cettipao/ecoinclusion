@@ -39,3 +39,18 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.scrollspy');
     var instances = M.ScrollSpy.init(elems, options);
   });
+  
+document.addEventListener('DOMContentLoaded', function() {
+	var elems = document.querySelectorAll('.sidenav');
+
+	var instances = M.Sidenav.init(elems, 'left',{
+		edge: 'left',
+		draggable: true,
+		preventScrolling: true
+	});
+});
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems,{coverTrigger: false});
+  });
+

@@ -22,4 +22,7 @@ urlpatterns = [
      path('intermediarios/deleteintermiediario/<int:id>', deleteIntermediarioView, name="deleteintermediario"),
      path('intermediarios/updateintermediario/<int:pk_intermediario>', updateIntermediarioView, name="updateintermediario"),
 
+     # Url patterns for django rest framework
+     path('api/intermediario', ListUsers.as_view(), name="updateintermediario"),
+
 ]
