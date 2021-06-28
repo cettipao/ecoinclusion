@@ -1,65 +1,118 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block title %}
-    Intermediarios
+    Intermediario
 {% endblock %}
 
 {% block content %}
+    <input type="text" id="current-form" hidden >
     <div class="row">
-        <h3 class="center-align">Administrar Intermediarios</h3>
-        <div class="col s12 m12 l12">
+        <h3 class="center-align">Intermediarios</h3>
+        <div class="col s12 m12 l4">
             <div class="card">
                 <div class="card-content">
-                    <table>
+                    <span class="card-title"><b>Crear Intermediario</b></span>
+                    <form method="post" name="formNewPunto" id="formNewPunto" >
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <div class="center-align">
+                            <button data-tooltip="'Click' para crear un nuevo punto de acopio." class="btn waves-effect waves-light green tooltipped" type="submit">
+                            <i class="material-icons right">add</i>Crear
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div id="modalmap" class="modal" style="overflow-y: visible;">
+            <div class="modal-content scrollspy" >
+                {% include "googleMaps.html" %}
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect btn-flat">Cancelar</a>
+                <a data-tooltip="'Click' para guardar sus cambios" class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
+                href="#latlong"><i
+                        class="material-icons right">save</i>Guardar</a>
+            </div>
+        </div>
+        <div id="latlong" class="modal" style="overflow-y: visible;">
+            <div class="modal-content" >
+                latitud y longitud actualizados con exito
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect btn-flat" >Aceptar</a>
+            </div>
+        </div>
+        <div class="col s12 m12 l8">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><b>Administrar Intermediarios</b></span>
+                    <table class="responsive-table highlight">
                         <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Telefono</th>
-                                <th>Puntos de Acopio</th>
-                                <th>Dias de Recoleccion</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Telefono</th>
+                            <th>puntos</th>
+                            <th>Dias Disponibles</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                         </thead>
+
                         <tbody>
-                        {% for intermediario in intermediarios %}
+                        {% for i in intermediarios_form %}
                             <tr>
-                                <td>{{ intermediario.nombre }}</td>
-                                <td>{{ intermediario.telefono }}</td>
-                                <td>{{ intermediario.getPuntosName }}</td>
-                                <td>{{ intermediario.diasRecoleccion }}</td>
+                                <td>{{ i.object.nombre }}</td>
+                                <td>{{ i.object.telefono }}</td>
+                                <td>{{ i.object.getPuntosName }}</td>
+                                <td>{{ i.object.getDias }}</td>
                                 <td>
-                                    <a class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger" href="{% url 'updateintermediario' intermediario.id  %}"><i
+                                    <a data-tooltip="'Click' para editar el intermediario" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
+                                       href="#modal{{ i.object.id }}"><i
                                             class="material-icons">edit</i></a>
+                                    <form method="POST" name="form{{ punto.id }}" id="form{{ i.object.id }}" >
+                                        <div id="modal{{ i.object.id }}" class="modal" style="overflow-y: visible;">
+                                            <div class="modal-content">
+                                                <h4>Editar intermediario '{{ i.object.nombre }}'</h4><br>
+                                                {% csrf_token %}
+                                                {{i.form.as_p}}
+                                                <div class="input-field center">
+                                                    <a onclick="setForm('formNewPunto')"data-tooltip="'Click' para buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
+                                                    href="#modalmap"><i
+                                                            class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="modal-close waves-effect btn-flat">Cancelar</a>
+                                                <button type="submit" class="waves-effect btn-flat">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </td>
-                                <td>
-                                    <a href="#modalDelete{{ intermediario.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger"><i
-                                            class="material-icons">delete</i></a>
-                                </td>
-                                <div id="modalDelete{{ intermediario.id }}" class="modal">
+                                <td><label>
+                                <a data-tooltip="'Click' para eliminar el intermediario" href="#modalDelete{{ i.object.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"><i
+                                         class="material-icons">delete</i></a></td>
+                                <div id="modalDelete{{ i.object.id }}" class="modal">
                                     <div class="modal-content">
-                                        <h4>Eliminar Intermediario</h4><br>
-                                        <p>¿Seguro quiere eliminar a {{ intermediario.nombre }}?</p>
+                                        <h4>Eliminar intermediario</h4><br>
+                                        <p>¿Seguro quiere eliminar el intermediario {{ i.object.nombre }}?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="#"data-tooltip="'Click' para cancelar eliminacion"   class="modal-close waves-effect btn-flat tooltipped">Cancelar</a>
-                                        <a href="{% url 'deleteintermediario' intermediario.id  %}" data-tooltip="'Click' para eliminar el intermediario"  class="btn waves-effect waves-light green lighten-1 tooltipped" >Eliminar</a>
+                                        <a data-tooltip="'Click' para cancelar eliminacion" class="modal-close waves-effect btn-flat tooltipped">Cancelar</a>
+                                        <a data-tooltip="'Click' para eliminar definitivamente al intermediario" href="{% url 'deleteintermediario' i.object.id %}" class="waves-effect btn-flat red white-text">Eliminar</a>
                                     </div>
                                 </div>
                             </tr>
-
                         {% endfor %}
+
                         </tbody>
                     </table>
                 </div>
             </div>
-            
         </div>
     </div>
-    <div class="row center-align">
-        <div class="col s12">
-            <a href="{% url 'addintermediario' %}" data-tooltip="'Click' para crear un nuevo intermediario" class="waves-effect waves-light btn-large green lighten-1 tooltipped" >Agregar Intermediario<i
-                                                class="material-icons right">add</i></a>
-        </div
-    </div>
+
+
+
 {% endblock %}

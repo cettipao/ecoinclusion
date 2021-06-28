@@ -8,47 +8,16 @@
     <input type="text" id="current-form" hidden >
     <div class="row">
         <h3 class="center-align">Puntos de Acopio</h3>
-        <div class="col s12 m12 l6">
+        <div class="col s12 m12 l4">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Crear Punto de Acopio</b></span>
-                    <form method="post" name="formNewPunto" id="formNewPunto"  action="{% url 'updatepunto' %}">
+                    <form method="post" name="formNewPunto" id="formNewPunto" >
                         {% csrf_token %}
-                        <div class="input-field">
-                            <input id="nombre_punto" type="text" name="nombre_punto" required="">
-                            <label for="nombre_punto">Nombre del Punto</label>
-                        </div>
-                        <span>Coordenadas</span>
-                        <div class="input-field">
-                            <input id="latittude" type="text" name="lat"
-                                    required value="0.0">
-                            <label for="latittude">Longgitud</label>
-                        </div>
-                        <div class="input-field">
-                            <input id="longittude" type="text" name="long"
-                                    required value="0.0">
-                            <label for="longittude">latitud</label>
-                        </div>
-                        <div class="input-field center">
-                            <a onclick="setForm('formNewPunto')"data-tooltip="'Click' para buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                            href="#modalmap"><i
-                                    class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
-                        </div>
-                        <div class="input-field">
-                            <select id="tipo_reciclado" name="tipo_reciclado" required multiple>
-                                <option value="Papel y Carton">Papel y Carton</option>
-                                <option value="Residuos Organicos">Residuos Organicos</option>
-                                <option value="Plastico">Plastico</option>
-                                <option value="Vidrio">Vidrio</option>
-                                <option value="Pilas y Baterias">Pilas y Baterias</option>
-                                <option value="Metales">Metales</option>
-                                <option value="Electronica">Electronica</option>
-                            </select>
-                            <label>Tipo de Reciclado</label>
-                        </div>
+                        {{form.as_p}}
                         <div class="center-align">
-                            <button style="width: 20%;"data-tooltip="'Click' para crear un nuevo punto de acopio." class="btn waves-effect waves-light green tooltipped" type="submit"
-                            >Crear
+                            <button data-tooltip="'Click' para crear un nuevo punto de acopio." class="btn waves-effect waves-light green tooltipped" type="submit">
+                            <i class="material-icons right">add</i>Crear
                             </button>
                         </div>
 
@@ -77,15 +46,16 @@
                 <a class="modal-close waves-effect btn-flat" >Aceptar</a>
             </div>
         </div>
-        <div class="col s12 m12 l6">
+        <div class="col s12 m12 l8">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Administrar Puntos de Acopio</b></span>
-                    <table>
+                    <table class="responsive-table highlight">
                         <thead>
                         <tr>
                             <th>Punto de Acopio</th>
-                            <th>Ubicacion</th>
+                            <th>Latitud</th>
+                            <th>Longitud</th>
                             <th>Tipo de Reciclado</th>
                             <th>Intermediarios</th>
                             <th></th>
@@ -94,85 +64,49 @@
                         </thead>
 
                         <tbody>
-                        {% for punto in puntos %}
+                        {% for i in puntos_form %}
                             <tr>
-                                <form method="POST" name="form{{ punto.id }}" id="form{{ punto.id }}" action="{% url 'updatepunto' %}">
-                                <td>{{ punto.nombre }}</td>
-                                <td>{{ punto.ubicacion }}</td>
-                                <td>{{ punto.tipoDeReciclado }}</td>
-                                <td>{{ punto.cant_intermediarios }}</td>
+                                <td>{{ i.object.nombre }}</td>
+                                <td>{{ i.object.lat }}</td>
+                                <td>{{ i.object.long }}</td>
+                                <td>{{ i.object.tipo_de_reciclado }}</td>
+                                <td>{{ i.object.cant_intermediarios }}</td>
                                 <td>
                                     <a data-tooltip="'Click' para editar el punto de acopio" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                                       href="#modal{{ punto.id }}"><i
+                                       href="#modal{{ i.object.id }}"><i
                                             class="material-icons">edit</i></a>
-                                    <div id="modal{{ punto.id }}" class="modal" style="overflow-y: visible;">
+                                    <form method="POST" name="form{{ punto.id }}" id="form{{ i.object.id }}" >
+                                        <div id="modal{{ i.object.id }}" class="modal" style="overflow-y: visible;">
                                             <div class="modal-content">
-                                                <h4>Editar punto de Acopio</h4><br>
+                                                <h4>Editar punto de Acopio '{{ i.object.nombre }}'</h4><br>
                                                 {% csrf_token %}
-                                                <input type="hidden" name="id" value="{{ punto.id }}">
-                                                <div class="input-field">
-                                                    <input id="nombre_punto_modal" type="text" name="nombre_punto"
-                                                            required value="{{ punto.nombre }}">
-                                                    <label for="nombre_punto_modal">Nombre del Punto</label>
-                                                </div>
-                                                <span>Coordenadas</span>
-                                                <div class="input-field">
-                                                    <input id="latittude" type="text" name="lat"
-                                                            required value="{{ punto.lat }}">
-                                                    <label for="latittude">Longitud</label>
-                                                </div>
-                                                <div class="input-field">
-                                                    <input id="longittude" type="text" name="long"
-                                                            required value="{{ punto.long }}">
-                                                    <label for="longittude">latitud</label>
-                                                </div>
+                                                {{i.form.as_p}}
                                                 <div class="input-field center">
                                                     <a onclick="setForm('formNewPunto')"data-tooltip="'Click' para buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
                                                     href="#modalmap"><i
                                                             class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
-                                                </div>
-                                                <div class="input-field">
-                                                    <select name="tipo_reciclado" required multiple>
-                                                        <option {% if "Papel y Carton" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Papel y Carton">Papel y Carton</option>
-                                                        <option {% if "Residuos Organicos" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Residuos Organicos">Residuos Organicos</option>
-                                                        <option {% if "Plastico" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Plastico">Plastico</option>
-                                                        <option {% if "Vidrio" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Vidrio">Vidrio</option>
-                                                        <option {% if "Pilas y Baterias" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Pilas y Baterias">Pilas y Baterias</option>
-                                                        <option {% if "Metales" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Metales">Metales</option>
-                                                        <option {% if "Electronica" in punto.tipoDeReciclado %}selected{% endif %}
-                                                                value="Electronica">Electronica</option>
-                                                    </select>
-                                                    <label>Tipo de Reciclado</label>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="modal-close waves-effect btn-flat">Cancelar</a>
                                                 <button type="submit" class="waves-effect btn-flat">Guardar</button>
                                             </div>
-                                        
-                                    </div>
+                                        </div>
+                                    </form>
                                 </td>
                                 <td><label>
-                                <a data-tooltip="'Click' para eliminar el punto de acopio" href="#modalDelete{{ punto.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"><i
+                                <a data-tooltip="'Click' para eliminar el punto de acopio" href="#modalDelete{{ i.object.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"><i
                                          class="material-icons">delete</i></a></td>
-                                <div id="modalDelete{{ punto.id }}" class="modal">
+                                <div id="modalDelete{{ i.object.id }}" class="modal">
                                     <div class="modal-content">
                                         <h4>Eliminar Punto de Acopio</h4><br>
                                         <p>¿Seguro quiere eliminar el punto {{ punto.nombre }}?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <a data-tooltip="'Click' para cancelar eliminacion" class="modal-close waves-effect btn-flat tooltipped">Cancelar</a>
-                                        <a data-tooltip="'Click' para eliminar definitivamente al punto"  type="submit" class="waves-effect btn-flat red white-text">Eliminar</a>
+                                        <a data-tooltip="'Click' para eliminar definitivamente al punto" href="{% url 'deletepunto' i.object.id %}" class="waves-effect btn-flat red white-text">Eliminar</a>
                                     </div>
-                                    
                                 </div>
-                                </form>
                             </tr>
                         {% endfor %}
 

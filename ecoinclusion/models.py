@@ -39,23 +39,38 @@ class Intermediario(models.Model):
     puntos = models.ManyToManyField(
         'PuntoDeAcopio',
     )
-    diasRecoleccion =  MultiSelectField(choices=DAYS_WEEK)
+    dias_disponibles =  models.ManyToManyField('Dia',max_length=7)
    
     def __str__(self):
         return self.nombre
 
     def getPuntosName(self):
-        nombresPuntos = ""
+        list = ""
         first = True
-        for punto in self.puntos.all():
+        for i in self.puntos.all():
             if first:
-                nombresPuntos += "{}".format(punto.nombre)
+                list += f"{i.nombre}"
                 first = False
             else:
-                nombresPuntos += ", {}".format(punto.nombre)
-        return nombresPuntos
+                list += f", {i.nombre}"
+        return list
 
+    def getDias(self):
+        list = ""
+        first = True
+        for i in self.dias_disponibles.all():
+            if first:
+                list += f"{i.nombre}"
+                first = False
+            else:
+                list += f", {i.nombre}"
+        return list
 
+class Dia(models.Model):
+    nombre = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.nombre
 
 
 class CentroDeReciclaje(models.Model):
@@ -65,8 +80,8 @@ class CentroDeReciclaje(models.Model):
     long = models.DecimalField(max_digits=9, decimal_places=6)
     nombre = models.CharField(max_length=100, null=True, blank=True)
     telefono = PhoneField(blank=True, help_text='Celular', null=True)
-    horarioInicio = models.TimeField( null=True, blank=True)
-    horarioFinal = models.TimeField( null=True, blank=True)
+    horario_inicio = models.TimeField( null=True, blank=True)
+    horario_final = models.TimeField( null=True, blank=True)
     verificado = models.BooleanField(default=False)
     
     
@@ -78,7 +93,7 @@ class PuntoDeAcopio(models.Model):
     nombre = models.CharField(max_length=100)
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     long = models.DecimalField(max_digits=9, decimal_places=6)
-    tipoDeReciclado = models.CharField(max_length=100)
+    tipo_de_reciclado = models.ManyToManyField('TipoDeReciclado')
     centro = models.ForeignKey(
         'CentroDeReciclaje',
         on_delete=models.CASCADE,
@@ -91,3 +106,8 @@ class PuntoDeAcopio(models.Model):
     def __str__(self):
         return self.nombre
 
+class TipoDeReciclado(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre

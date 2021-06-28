@@ -36,7 +36,7 @@ class CreateUserForm(UserCreationForm):
 class IntermediarioForm(ModelForm):
     class Meta:
         model = Intermediario
-        fields = ['nombre','telefono','puntos','diasRecoleccion']
+        fields = ['nombre','telefono','puntos','dias_disponibles']
     def __init__(self, *args, **kwargs):
         super(IntermediarioForm, self).__init__(*args, **kwargs)
 
@@ -48,14 +48,14 @@ class IntermediarioForm(ModelForm):
         self.fields['telefono'].required = True
         self.fields['puntos'].queryset = puntos
         self.fields['puntos'].required = True
-        self.fields['diasRecoleccion'].required = True
+        self.fields['dias_disponibles'].required = True
 
 
         
 class CentroDeReciclajeForm(ModelForm):
     class Meta:
         model = CentroDeReciclaje
-        fields = ['nombre','lat','long','telefono','horarioInicio','horarioFinal']
+        fields = ['nombre','lat','long','telefono','horario_inicio','horario_final']
     def __init__(self, *args, **kwargs):
         super(CentroDeReciclajeForm, self).__init__(*args, **kwargs)
         self.fields['lat'].required = True
@@ -64,5 +64,17 @@ class CentroDeReciclajeForm(ModelForm):
         self.fields['long'].hidden = True
         self.fields['nombre'].required = True
         self.fields['telefono'].required = True
-        self.fields['horarioFinal'].required = True
-        self.fields['horarioInicio'].required = True
+        self.fields['horario_final'].required = True
+        self.fields['horario_inicio'].required = True
+
+        
+class PuntoDeAcopioForm(ModelForm):
+    class Meta:
+        model = PuntoDeAcopio
+        fields = ['nombre','lat','long','tipo_de_reciclado']
+    def __init__(self, *args, **kwargs):
+        super(PuntoDeAcopioForm, self).__init__(*args, **kwargs)
+        self.fields['lat'].required = True
+        self.fields['long'].required = True
+        self.fields['nombre'].required = True
+        self.fields['tipo_de_reciclado'].required = True

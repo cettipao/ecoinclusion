@@ -62,104 +62,84 @@ def dashboardView(request):
     puntos = PuntoDeAcopio.objects.filter(centro__usuario=request.user)
     return render(request, "dashboard.html", {"puntos": puntos})
 
-class formIntermediario():
-    def __init__(self,intermediario,form,choices):
-        self.intermediario = intermediario
+class FormAndObject():
+    def __init__(self,object,form):
+        self.object = object
         self.form = form
-        self.choices = choices
-        
+       
+   
 @login_required
 def intermediariosView(request):
     isCentroVerified(request)
-    centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
     intermediarios = Intermediario.objects.filter(centro=centro)
-    
+    forms_and_objects = []
+    for intermediario in intermediarios:
+        form = IntermediarioForm(instance=intermediario)
+        form_and_object = FormAndObject(form=form,object=intermediario)
+        forms_and_objects.append(form_and_object)
+
+    instance = Intermediario(centro=centro)
+    form = IntermediarioForm(instance=instance)
+    if request.method == "POST":
+        instance = Intermediario(centro=centro)
+        form = IntermediarioForm(request.POST,instance=instance)
+        if form.is_valid():
+            obj = form.save()
+            messages.success(request, f"Intermediario {obj.nombre} creado con Exito.")
+            form = IntermediarioForm(instance=instance)
+        else:
+            messages.error(request, "El formulario no es valido.")
     context = {
-        "intermediarios": intermediarios
+        "intermediarios_form":forms_and_objects,
+        'form':form,
+        'google_api_key':settings.APY_KEY,
     }
     return render(request, "intermediarios.html", context)
 
 @login_required
-def updateIntermediarioView(request,pk_intermediario):
-    """if not request.user.has_perm('backend.add_artist'):
-        raise PermissionDenied"""
+def deleteIntermediarioView(request,id):
     isCentroVerified(request)
     centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
-    intermediario = get_object_or_404(Intermediario, pk=pk_intermediario)
+    intermediario = get_object_or_404(Intermediario, id=id)
+    #Verifico que el Punto pertenezca al centro
     
-    if request.method == 'POST':
-        form = IntermediarioForm(data=request.POST,instance=intermediario)
-        if form.is_valid():
-            object = form.save()
-            
-            messages.success(request, "Intermediario ({}) actualizado con Exito".format(object.nombre))
-            return redirect('intermediarios')    
-    else:
-        form = IntermediarioForm(instance=intermediario)
-    context = {
-        "form":form,
-        "intermediario":intermediario,
-    }
-    return render(request,'updateintermediario.html',context)
-    
-@login_required
-def addIntermediarioView(request):
-    isCentroVerified(request)
-    centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
-    intermediario = Intermediario(centro=centro)
-    form = IntermediarioForm(data=request.POST,instance=intermediario)
-    if request.method == 'POST':
-        form = IntermediarioForm(data=request.POST,instance=intermediario)
-        if form.is_valid():
-            object = form.save()
-            
-            messages.success(request, "Intermediario ({}) agregado con Exito".format(object.nombre))
-            return redirect('intermediarios')    
-    context = {
-        "form":form
-    }
-    return render(request,'addintermediario.html',context)
-
-@login_required
-def deleteIntermediarioView(request, id):
-    centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
-    intermediario = get_object_or_404(Intermediario,centro=centro,pk=id)
     nombre = intermediario.nombre
     intermediario.delete()
     messages.success(request, "Intermediario ({}) eliminado con Exito".format(nombre))
     return redirect("intermediarios")
 
+
 @login_required
 def puntosView(request):
     isCentroVerified(request)
-    puntos = PuntoDeAcopio.objects.filter(centro__usuario=request.user)
+    centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    puntos = PuntoDeAcopio.objects.filter(centro=centro)
+    forms_and_objects = []
+    for punto in puntos:
+        form = PuntoDeAcopioForm(instance=punto)
+        form_and_object = FormAndObject(form=form,object=punto)
+        forms_and_objects.append(form_and_object)
+
+    punto_de_acopio = PuntoDeAcopio(centro=centro)
+    form = PuntoDeAcopioForm(instance=punto_de_acopio)
+    if request.method == "POST":
+        punto_de_acopio = PuntoDeAcopio(centro=centro)
+        form = PuntoDeAcopioForm(request.POST,instance=punto_de_acopio)
+        
+        if form.is_valid():
+            obj = form.save()
+            messages.success(request, f"Centro {obj.nombre} creado con Exito.")
+            form = PuntoDeAcopioForm(instance=punto_de_acopio)
+        else:
+            messages.error(request, "El formulario no es valido.")
+        
     context = {
-        "puntos":puntos,
+        "puntos_form":forms_and_objects,
+        'form':form,
         'google_api_key':settings.APY_KEY,
     }
     return render(request, "puntos.html", context)
-
-@login_required
-def updatePuntoView(request):
-    if request.method == "POST":
-        if request.POST.get("id") == None: #Crear nuevo Punto
-            PuntoDeAcopio.objects.create(
-                centro=get_object_or_404(CentroDeReciclaje, usuario=request.user),
-                nombre=request.POST.get("nombre_punto"),
-                lat=request.POST.get("lat"),
-                long=request.POST.get("long"),
-                tipoDeReciclado=cleanList(request.POST.getlist("tipo_reciclado"))
-            )
-            messages.success(request, "Punto creado con Exito")
-        else: #Actualizar Info de Existente
-            punto = PuntoDeAcopio.objects.get(id=request.POST.get("id"))
-            punto.nombre = request.POST.get("nombre_punto")
-            punto.lat = request.POST.get("lat")
-            punto.long = request.POST.get("long")
-            punto.tipoDeReciclado = cleanList(request.POST.getlist("tipo_reciclado"))
-            punto.save()
-            messages.success(request, "Punto ({}) actualizado con Exito".format(punto.nombre))
-    return redirect("puntosdeacopio")
 
 @login_required
 def deletePuntoView(request, id):
