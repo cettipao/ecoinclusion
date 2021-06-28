@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Crear Intermediario</b></span>
-                    <form method="post" name="formNewPunto" id="formNewPunto" >
+                    <form method="post" name="formNew" id="formNew" >
                         {% csrf_token %}
                         {{form.as_p}}
                         <div class="center-align">
@@ -71,7 +71,7 @@
                                     <a data-tooltip="'Click' para editar el intermediario" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
                                        href="#modal{{ i.object.id }}"><i
                                             class="material-icons">edit</i></a>
-                                    <form method="POST" name="form{{ punto.id }}" id="form{{ i.object.id }}" >
+                                    <form method="POST" name="form{{ punto.id }}" id="form{{ i.object.id }}" action="{% url 'updateintermediario' i.object.id %}">
                                         <div id="modal{{ i.object.id }}" class="modal" style="overflow-y: visible;">
                                             <div class="modal-content">
                                                 <h4>Editar intermediario '{{ i.object.nombre }}'</h4><br>

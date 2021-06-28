@@ -15,9 +15,11 @@ urlpatterns = [
      
      path('puntosdeacopio', puntosView, name="puntosdeacopio"),
      path('puntosdeacopio/delete/<int:id>', deletePuntoView, name="deletepunto"),
+     path('puntosdeacopio/update/<int:id>', updatePuntoView, name="updatepunto"),
 
      path('intermediarios', intermediariosView, name="intermediarios"),
      path('intermediarios/delete/<int:id>', deleteIntermediarioView, name="deleteintermediario"),
+     path('intermediarios/update/<int:id>', updateIntermediarioView, name="updateintermediario"),
 
      # Url patterns for django rest framework
      path('api/intermediario', ListUsers.as_view(), name="updateintermediario"),

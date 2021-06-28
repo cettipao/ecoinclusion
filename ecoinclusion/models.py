@@ -102,6 +102,17 @@ class PuntoDeAcopio(models.Model):
     @property
     def cant_intermediarios(self):
         return len(Intermediario.objects.filter(puntos=self))
+    
+    def getTiporeciclado(self):
+        list = ""
+        first = True
+        for i in self.tipo_de_reciclado.all():
+            if first:
+                list += f"{i.nombre}"
+                first = False
+            else:
+                list += f", {i.nombre}"
+        return list
 
     def __str__(self):
         return self.nombre

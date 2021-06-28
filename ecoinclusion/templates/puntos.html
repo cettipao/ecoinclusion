@@ -69,13 +69,13 @@
                                 <td>{{ i.object.nombre }}</td>
                                 <td>{{ i.object.lat }}</td>
                                 <td>{{ i.object.long }}</td>
-                                <td>{{ i.object.tipo_de_reciclado }}</td>
+                                <td>{{ i.object.getTiporeciclado }}</td>
                                 <td>{{ i.object.cant_intermediarios }}</td>
                                 <td>
                                     <a data-tooltip="'Click' para editar el punto de acopio" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
                                        href="#modal{{ i.object.id }}"><i
                                             class="material-icons">edit</i></a>
-                                    <form method="POST" name="form{{ punto.id }}" id="form{{ i.object.id }}" >
+                                    <form method="POST" name="form{{ punto.id }}" id="form{{ i.object.id }}" action="{% url 'updatepunto' i.object.id %}">
                                         <div id="modal{{ i.object.id }}" class="modal" style="overflow-y: visible;">
                                             <div class="modal-content">
                                                 <h4>Editar punto de Acopio '{{ i.object.nombre }}'</h4><br>

@@ -44,18 +44,6 @@ def isCentroVerified(request):
                              "Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style='color:white;text-decoration: underline' class='modal-trigger' href='#cuentaNoVerificadaModal'>Leer Mas.</a>")
             return CentroDeReciclaje.objects.get(usuario=request.user)
 
-def cleanList(lista):
-    string = ""
-    first = True
-    for i in list(lista):
-        if first:
-            string += i
-            first = False
-        else:
-            string += ", {}".format(i)
-    print(string)
-    return string
-
 @login_required
 def dashboardView(request):
     isCentroVerified(request)
@@ -90,6 +78,7 @@ def intermediariosView(request):
             form = IntermediarioForm(instance=instance)
         else:
             messages.error(request, "El formulario no es valido.")
+    
     context = {
         "intermediarios_form":forms_and_objects,
         'form':form,
@@ -109,6 +98,21 @@ def deleteIntermediarioView(request,id):
     messages.success(request, "Intermediario ({}) eliminado con Exito".format(nombre))
     return redirect("intermediarios")
 
+@login_required
+def updateIntermediarioView(request,id):
+    isCentroVerified(request)
+    centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    intermediario = get_object_or_404(Intermediario, id=id)
+    
+    if request.method == "POST":
+        form = IntermediarioForm(request.POST,instance=intermediario)
+        if form.is_valid():
+            obj = form.save()
+            messages.success(request, f"Intermediario {obj.nombre} actualizado con Exito.")
+        else:
+            messages.error(request, "El formulario no es valido.")
+    
+    return redirect("intermediarios")
 
 @login_required
 def puntosView(request):
@@ -151,6 +155,22 @@ def deletePuntoView(request, id):
         nombre = punto.nombre
         punto.delete()
         messages.success(request, "Punto de Acopio ({}) eliminado con Exito".format(nombre))
+    return redirect("puntosdeacopio")
+
+@login_required
+def updatePuntoView(request,id):
+    isCentroVerified(request)
+    centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    punto = get_object_or_404(PuntoDeAcopio, id=id)
+    
+    if request.method == "POST":
+        form = PuntoDeAcopioForm(request.POST,instance=punto)
+        if form.is_valid():
+            obj = form.save()
+            messages.success(request, f"Punto de acopio {obj.nombre} actualizado con Exito.")
+        else:
+            messages.error(request, "El formulario no es valido.")
+    
     return redirect("puntosdeacopio")
 
 @login_required
