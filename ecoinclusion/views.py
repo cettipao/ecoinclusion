@@ -60,18 +60,13 @@ class FormAndObject():
 def intermediariosView(request):
     isCentroVerified(request)
     centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
-    intermediarios = Intermediario.objects.filter(centro=centro)
-    forms_and_objects = []
-    for intermediario in intermediarios:
-        form = IntermediarioForm(instance=intermediario)
-        form_and_object = FormAndObject(form=form,object=intermediario)
-        forms_and_objects.append(form_and_object)
+    
 
     instance = Intermediario(centro=centro)
     form = IntermediarioForm(instance=instance)
     if request.method == "POST":
-        instance = Intermediario(centro=centro)
-        form = IntermediarioForm(request.POST,instance=instance)
+        intermediario = Intermediario(centro=centro)
+        form = IntermediarioForm(request.POST,instance=intermediario)
         if form.is_valid():
             obj = form.save()
             messages.success(request, f"Intermediario {obj.nombre} creado con Exito.")
@@ -79,6 +74,12 @@ def intermediariosView(request):
         else:
             messages.error(request, "El formulario no es valido.")
     
+    intermediarios = Intermediario.objects.filter(centro=centro)
+    forms_and_objects = []
+    for intermediario in intermediarios:
+        f = IntermediarioForm(instance=intermediario)
+        form_and_object = FormAndObject(form=f,object=intermediario)
+        forms_and_objects.append(form_and_object)
     context = {
         "intermediarios_form":forms_and_objects,
         'form':form,
@@ -118,15 +119,8 @@ def updateIntermediarioView(request,id):
 def puntosView(request):
     isCentroVerified(request)
     centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
-    puntos = PuntoDeAcopio.objects.filter(centro=centro)
-    forms_and_objects = []
-    for punto in puntos:
-        form = PuntoDeAcopioForm(instance=punto)
-        form_and_object = FormAndObject(form=form,object=punto)
-        forms_and_objects.append(form_and_object)
-
-    punto_de_acopio = PuntoDeAcopio(centro=centro)
-    form = PuntoDeAcopioForm(instance=punto_de_acopio)
+    insatnce = PuntoDeAcopio(centro=centro)
+    form = PuntoDeAcopioForm(instance=insatnce)
     if request.method == "POST":
         punto_de_acopio = PuntoDeAcopio(centro=centro)
         form = PuntoDeAcopioForm(request.POST,instance=punto_de_acopio)
@@ -134,9 +128,16 @@ def puntosView(request):
         if form.is_valid():
             obj = form.save()
             messages.success(request, f"Centro {obj.nombre} creado con Exito.")
-            form = PuntoDeAcopioForm(instance=punto_de_acopio)
+            form = PuntoDeAcopioForm(instance=insatnce)
         else:
             messages.error(request, "El formulario no es valido.")
+
+    puntos = PuntoDeAcopio.objects.filter(centro=centro)
+    forms_and_objects = []
+    for punto in puntos:
+        f = PuntoDeAcopioForm(instance=punto)
+        form_and_object = FormAndObject(form=f,object=punto)
+        forms_and_objects.append(form_and_object)
         
     context = {
         "puntos_form":forms_and_objects,

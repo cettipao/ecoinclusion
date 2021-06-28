@@ -36,10 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.scrollspy');
-    var instances = M.ScrollSpy.init(elems, options);
+    var elems = document.querySelectorAll('.tabs');
+    var instance = M.Tabs.init(elems,);
   });
-  
 document.addEventListener('DOMContentLoaded', function() {
 	var elems = document.querySelectorAll('.sidenav');
 
@@ -54,3 +53,5 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Dropdown.init(elems,{coverTrigger: false});
   });
 
+  
+  

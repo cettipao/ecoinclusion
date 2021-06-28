@@ -4,47 +4,17 @@
     Intermediario
 {% endblock %}
 
-{% block content %}
+{% block content %}        
     <input type="text" id="current-form" hidden >
     <div class="row">
         <h3 class="center-align">Intermediarios</h3>
-        <div class="col s12 m12 l4">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title"><b>Crear Intermediario</b></span>
-                    <form method="post" name="formNew" id="formNew" >
-                        {% csrf_token %}
-                        {{form.as_p}}
-                        <div class="center-align">
-                            <button data-tooltip="'Click' para crear un nuevo punto de acopio." class="btn waves-effect waves-light green tooltipped" type="submit">
-                            <i class="material-icons right">add</i>Crear
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a class="active" href="#administrar">Administrar</a></li>
+                <li class="tab col s6"><a href="#new_object"><i class="material-icons right">add</i>Crear Nuevo</a></li>
+            </ul>
         </div>
-        
-        <div id="modalmap" class="modal" style="overflow-y: visible;">
-            <div class="modal-content scrollspy" >
-                {% include "googleMaps.html" %}
-            </div>
-            <div class="modal-footer">
-                <a class="modal-close waves-effect btn-flat">Cancelar</a>
-                <a data-tooltip="'Click' para guardar sus cambios" class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                href="#latlong"><i
-                        class="material-icons right">save</i>Guardar</a>
-            </div>
-        </div>
-        <div id="latlong" class="modal" style="overflow-y: visible;">
-            <div class="modal-content" >
-                latitud y longitud actualizados con exito
-            </div>
-            <div class="modal-footer">
-                <a class="modal-close waves-effect btn-flat" >Aceptar</a>
-            </div>
-        </div>
-        <div class="col s12 m12 l8">
+        <div id="administrar" class="col s12 m12 l12">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Administrar Intermediarios</b></span>
@@ -74,14 +44,10 @@
                                     <form method="POST" name="form{{ punto.id }}" id="form{{ i.object.id }}" action="{% url 'updateintermediario' i.object.id %}">
                                         <div id="modal{{ i.object.id }}" class="modal" style="overflow-y: visible;">
                                             <div class="modal-content">
-                                                <h4>Editar intermediario '{{ i.object.nombre }}'</h4><br>
+                                                <h6>Editar intermediario '{{ i.object.nombre }}'</h6>
                                                 {% csrf_token %}
                                                 {{i.form.as_p}}
-                                                <div class="input-field center">
-                                                    <a onclick="setForm('formNewPunto')"data-tooltip="'Click' para buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                                                    href="#modalmap"><i
-                                                            class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
-                                                </div>
+                                                
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="modal-close waves-effect btn-flat">Cancelar</a>
@@ -109,6 +75,43 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            
+        </div>
+        <div id="new_object" class="col s12 m12 l12">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title"><b>Crear Intermediario</b></span>
+                    <form method="post" name="formNew" id="formNew" >
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <div class="center-align">
+                            <button data-tooltip="'Click' para crear un nuevo punto de acopio." class="btn waves-effect waves-light green tooltipped" type="submit">
+                            <i class="material-icons right">add</i>Aceptar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div id="modalmap" class="modal" style="overflow-y: visible;">
+            <div class="modal-content scrollspy" >
+                {% include "googleMaps.html" %}
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect btn-flat">Cancelar</a>
+                <a data-tooltip="'Click' para guardar sus cambios" class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
+                href="#latlong"><i
+                        class="material-icons right">save</i>Guardar</a>
+            </div>
+        </div>
+        <div id="latlong" class="modal" style="overflow-y: visible;">
+            <div class="modal-content" >
+                latitud y longitud actualizados con exito
+            </div>
+            <div class="modal-footer">
+                <a class="modal-close waves-effect btn-flat" >Aceptar</a>
             </div>
         </div>
     </div>
