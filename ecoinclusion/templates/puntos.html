@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Crear Punto de Acopio</b></span>
-                    <form onsubmit="getFields('formNewPunto',function(data){getUrl('http://127.0.0.1:8000/api/',data,'puntos',getCookie('csrftoken'),function(url,data){ajaxRequest(url,getCookie('csrftoken'),'post',data,function(data){console.log('Punto creado');addTd(data,['id','centro','tipo_de_reciclado'],document.getElementById('puntos'))})})}); return false;"  name="formNewPunto" id="formNewPunto" action="">
+                    <form onsubmit="getFields('formNewPunto',function(data){getUrl('http://ecoinclusion.herokuapp.com/api/',data,'puntos',getCookie('csrftoken'),function(url,data){ajaxRequest(url,getCookie('csrftoken'),'post',data,function(data){console.log('Punto creado');addTd(data,['id','centro','tipo_de_reciclado'],document.getElementById('puntos'))})})}); return false;"  name="formNewPunto" id="formNewPunto" action="">
                         {% csrf_token %}
                         
                         {{form.as_p}}
