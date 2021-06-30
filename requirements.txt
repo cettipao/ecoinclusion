@@ -6,6 +6,8 @@ cryptography==3.4.7
 defusedxml==0.7.1
 Django==2.2
 django-allauth==0.44.0
+django-cors-headers==3.7.0
+django-filter==2.4.0
 django-google-maps==0.12.4
 django-jet==1.0.8
 django-multiselectfield==0.1.12

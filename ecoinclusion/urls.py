@@ -10,7 +10,7 @@ router.register(r'centros', CentroReadonlyViewSet)
 router.register(r'puntos', PuntoViewSet)
 
 urlpatterns = [
-     path('api-auth/', include('rest_framework.urls')),
+     
      path('',homeView, name="home"),
      path('login/', loginView, name="login"),
      path('somos/', aboutView, name="about"),
@@ -31,7 +31,7 @@ urlpatterns = [
      path('intermediarios/update/<int:id>/', updateIntermediarioView, name="updateintermediario"),
 
      # Url patterns for django rest framework
-     
+     path('api-auth/', include('rest_framework.urls')),
      path('api/', include(router.urls)),
 
 ]

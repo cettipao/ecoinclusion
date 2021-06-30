@@ -28,6 +28,10 @@ from .decorators import *
 from .serializers import *
 from .filters import *
 
+#Django rest framework imports
+from rest_framework import permissions
+from rest_framework import routers, serializers, viewsets
+from .serializers import *
 # Create your views here.
 
 def isCentroVerified(request):
