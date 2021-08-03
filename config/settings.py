@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'phone_field',
     'ecoinclusion',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_filters',
     'allauth',
     'allauth.account',
@@ -99,7 +100,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
 }
 """'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
