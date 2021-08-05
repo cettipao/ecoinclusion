@@ -16,6 +16,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import permission_classes
+from rest_framework.authentication import TokenAuthentication
 from rest_framework import permissions, viewsets
 import django_filters.rest_framework
 # Social accounts imports
@@ -349,6 +350,7 @@ class IntermediarioViewSet(viewsets.ModelViewSet):
     queryset = Intermediario.objects.all()
     serializer_class = IntermediarioSerializer
     permission_classes = [permissions.IsAuthenticated,IsCentroVerified]
+    authentication_classes = (TokenAuthentication,)
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = IntermediarioFilter
     
