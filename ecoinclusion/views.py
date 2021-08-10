@@ -16,7 +16,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import permission_classes
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework import permissions, viewsets
 import django_filters.rest_framework
 # Social accounts imports
@@ -295,6 +295,7 @@ class IsCentroVerified(permissions.BasePermission):
                 centro = CentroDeReciclaje.objects.get(usuario=request.user)
                 return centro.verificado
             except:
+                print("f")
                 return False
             
     def has_object_permission(self, request, view, obj):
@@ -307,7 +308,11 @@ class IsCentroVerified(permissions.BasePermission):
             try:
                 
                 centro = CentroDeReciclaje.objects.get(usuario=request.user)
-                if obj.centro == centro:
+                try :
+                    centro_obj = obj.centro
+                except:
+                    centro_obj = obj
+                if centro_obj == centro:
                     return centro.verificado
                 else:
                     return False
@@ -321,7 +326,7 @@ class CentroReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     This viewset automatically provides `list` and `retrieve` actions.
     """
     queryset = CentroDeReciclaje.objects.all()
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,SessionAuthentication)
     serializer_class = CentroSerializer
 
     
@@ -333,7 +338,7 @@ class PuntoViewSet(viewsets.ModelViewSet):
     queryset = PuntoDeAcopio.objects.all()
     serializer_class = PuntoSerializer
     permission_classes = [permissions.IsAuthenticated,IsCentroVerified]
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,SessionAuthentication)
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = PuntoFilter
 
@@ -352,7 +357,7 @@ class IntermediarioViewSet(viewsets.ModelViewSet):
     queryset = Intermediario.objects.all()
     serializer_class = IntermediarioSerializer
     permission_classes = [permissions.IsAuthenticated,IsCentroVerified]
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,SessionAuthentication)
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = IntermediarioFilter
     
@@ -360,6 +365,9 @@ class IntermediarioViewSet(viewsets.ModelViewSet):
         centro = get_object_or_404(CentroDeReciclaje, usuario=self.request.user)
         puntos = centro.puntos.all()
         serializer.save(centro=centro,puntos=puntos)
+    
+
+   
 
     
     
