@@ -321,6 +321,7 @@ class CentroReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     This viewset automatically provides `list` and `retrieve` actions.
     """
     queryset = CentroDeReciclaje.objects.all()
+    authentication_classes = (TokenAuthentication,)
     serializer_class = CentroSerializer
 
     
@@ -332,6 +333,7 @@ class PuntoViewSet(viewsets.ModelViewSet):
     queryset = PuntoDeAcopio.objects.all()
     serializer_class = PuntoSerializer
     permission_classes = [permissions.IsAuthenticated,IsCentroVerified]
+    authentication_classes = (TokenAuthentication,)
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = PuntoFilter
 
