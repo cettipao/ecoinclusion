@@ -8,7 +8,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 router = DefaultRouter()
 router.register(r'intermediarios', IntermediarioViewSet)
 router.register(r'centros', CentroReadonlyViewSet)
-router.register(r'puntos', PuntoViewSet)
+router.register(r'puntos', PuntoReadonlyViewSet)
 
 urlpatterns = [
      

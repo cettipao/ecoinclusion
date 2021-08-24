@@ -329,12 +329,17 @@ class CentroReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     authentication_classes = (TokenAuthentication,SessionAuthentication)
     serializer_class = CentroSerializer
 
+class PuntoReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `retrieve` actions.
+    """
+    queryset = CentroDeReciclaje.objects.all()
+    authentication_classes = (TokenAuthentication,SessionAuthentication)
+    serializer_class = CentroSerializer
+
     
+"""
 class PuntoViewSet(viewsets.ModelViewSet):
-    """
-    This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions for PuntosDeRecilaje.
-    """
     queryset = PuntoDeAcopio.objects.all()
     serializer_class = PuntoSerializer
     permission_classes = [permissions.IsAuthenticated,IsCentroVerified]
@@ -345,7 +350,7 @@ class PuntoViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         centro = get_object_or_404(CentroDeReciclaje, usuario=self.request.user)
         serializer.save(centro=centro)
-    
+"""
     
 
 class IntermediarioViewSet(viewsets.ModelViewSet):
