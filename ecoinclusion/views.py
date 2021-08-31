@@ -15,10 +15,11 @@ from django.http import Http404
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.views import APIView
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import permission_classes, api_view
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework import permissions, viewsets
 import django_filters.rest_framework
+
 # Social accounts imports
 from allauth.socialaccount.models import SocialAccount
 
@@ -326,15 +327,24 @@ class CentroReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     This viewset automatically provides `list` and `retrieve` actions.
     """
     queryset = CentroDeReciclaje.objects.all()
-    authentication_classes = (TokenAuthentication,SessionAuthentication)
+    authentication_classes = ()
     serializer_class = CentroSerializer
+
+    def get_queryset(self):
+        verificado = self.request.query_params.get('verificado')
+        if verificado == "true":
+            return CentroDeReciclaje.objects.filter(verificado=True)
+        elif verificado == "false":
+            return CentroDeReciclaje.objects.filter(verificado=False)
+        else:
+            return CentroDeReciclaje.objects.all()
 
 class PuntoReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This viewset automatically provides `list` and `retrieve` actions.
     """
     queryset = CentroDeReciclaje.objects.all()
-    authentication_classes = (TokenAuthentication,SessionAuthentication)
+    authentication_classes = ()
     serializer_class = CentroSerializer
 
     
@@ -370,6 +380,8 @@ class IntermediarioViewSet(viewsets.ModelViewSet):
         centro = get_object_or_404(CentroDeReciclaje, usuario=self.request.user)
         puntos = centro.puntos.all()
         serializer.save(centro=centro,puntos=puntos)
+
+
     
 
    
