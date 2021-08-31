@@ -9,6 +9,7 @@ router = DefaultRouter()
 router.register(r'intermediarios', IntermediarioViewSet)
 router.register(r'centros', CentroReadonlyViewSet)
 router.register(r'puntos', PuntoReadonlyViewSet)
+router.register(r'depositos', DepositoViewSet)
 
 urlpatterns = [
      

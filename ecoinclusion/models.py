@@ -89,6 +89,7 @@ class CentroDeReciclaje(models.Model):
     def __str__(self):
         return self.usuario.username
 
+
 class PuntoDeAcopio(models.Model):
     nombre = models.CharField(max_length=100)
     lat = models.DecimalField(max_digits=9, decimal_places=6)
@@ -123,3 +124,10 @@ class TipoDeReciclado(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class Deposito(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    punto_de_acopio = models.OneToOneField(PuntoDeAcopio, on_delete=models.CASCADE)
+    tipo_de_reciclado = models.ManyToManyField('TipoDeReciclado')
+    fecha = models.DateField()
+    verificado = models.BooleanField(default=False)

@@ -15,7 +15,7 @@ from django.http import Http404
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from rest_framework.views import APIView
-from rest_framework.decorators import permission_classes, api_view
+from rest_framework.decorators import permission_classes, api_view, authentication_classes
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework import permissions, viewsets
 import django_filters.rest_framework
@@ -343,9 +343,9 @@ class PuntoReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     """
     This viewset automatically provides `list` and `retrieve` actions.
     """
-    queryset = CentroDeReciclaje.objects.all()
+    queryset = PuntoDeAcopio.objects.all()
     authentication_classes = ()
-    serializer_class = CentroSerializer
+    serializer_class = PuntoSerializer
 
     
 """
@@ -380,6 +380,32 @@ class IntermediarioViewSet(viewsets.ModelViewSet):
         centro = get_object_or_404(CentroDeReciclaje, usuario=self.request.user)
         puntos = centro.puntos.all()
         serializer.save(centro=centro,puntos=puntos)
+
+class DepositoViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    """
+    queryset = Deposito.objects.all()
+    serializer_class = DepositoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = (TokenAuthentication,SessionAuthentication)
+
+    def create(self, request, *args, **kwargs):
+        user = self.request.user
+        request.data._mutable = True
+        request.data['user'] = user.pk
+        request.data._mutable = False
+        return super().create(request, *args, **kwargs)
+
+"""
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+@authentication_classes([TokenAuthentication,SessionAuthentication])
+def getIntermediariosId(request):
+    return Response(list(Intermediario.objects.all().values("id")))
+"""
 
 
     
