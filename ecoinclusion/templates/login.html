@@ -15,9 +15,8 @@ Login
                             <div class="col s12 " >
                                 <span class="flow-text" >Login</span>
                             </div>
-                            
                         </div>
-                        <div class="row valign-wrapper" >
+                        <div class="row " >
                             <div class="col s12 m6 l6" style="border-right: 1px grey solid">
                                 <form method="POST" action="">
                                     {% csrf_token %}
@@ -48,7 +47,6 @@ Login
                                 
                                 <div  class="row center">
                                     <a href="{% provider_login_url 'google' %}" class="btn-large white ">
-                                    
                                         <div class="col s2 m2 l2">
                                             <img length="24px" height="24px" style="vertical-align: middle;" src="{% static '/media/logo-google.png' %}" alt="ecoinclusion" loading="lazy">  
                                         </div>
@@ -57,12 +55,10 @@ Login
                                                 Log in with Google
                                             </div>
                                         </div>
-                                    
                                     </a>
                                 </div>
                                 <div  class="row center">
                                     <a href="{% provider_login_url 'facebook' %}" class="btn-large white ">
-                                    
                                         <div class="col s2 m2 l2">
                                             <img length="24px" height="24px" style="vertical-align: middle;" src="{% static '/media/logo-facebook.png' %}" alt="ecoinclusion" loading="lazy">  
                                         </div>
@@ -71,7 +67,6 @@ Login
                                                 Log in with Facebook
                                             </div>
                                         </div>
-                                    
                                     </a>
                                 </div>
                             </div>
