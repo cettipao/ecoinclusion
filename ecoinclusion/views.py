@@ -13,7 +13,7 @@ from django.http import Http404
 
 # Django rest framework imports
 from rest_framework.response import Response
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
 from rest_framework.views import APIView
 from rest_framework.decorators import permission_classes, api_view, authentication_classes
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
@@ -398,6 +398,11 @@ class DepositoViewSet(viewsets.ModelViewSet):
         request.data['user'] = user.pk
         request.data._mutable = False
         return super().create(request, *args, **kwargs)
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = ()
+    serializer_class = RegisterSerializer
 
 """
 @api_view(['GET'])
