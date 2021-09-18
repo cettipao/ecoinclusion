@@ -126,8 +126,13 @@ class TipoDeReciclado(models.Model):
         return self.nombre
 
 class Deposito(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    punto_de_acopio = models.OneToOneField(PuntoDeAcopio, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='depositos',on_delete=models.CASCADE)
+    punto_de_acopio = models.OneToOneField(PuntoDeAcopio, on_delete=models.CASCADE,null=True, blank=True)
+    centro = models.ForeignKey(
+        'CentroDeReciclaje',
+        related_name='depositos',
+        on_delete=models.CASCADE
+    )
     tipo_de_reciclado = models.ManyToManyField('TipoDeReciclado')
     fecha = models.DateField()
     verificado = models.BooleanField(default=False)

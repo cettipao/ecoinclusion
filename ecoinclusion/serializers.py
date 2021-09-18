@@ -26,8 +26,9 @@ class DepositoSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Deposito
-        fields = ['user', 'tipo_de_reciclado', 'punto_de_acopio','fecha',]
-        optional_fields = ['tipo_de_reciclado']
+        fields = ['id','fecha','punto_de_acopio','centro','tipo_de_reciclado']
+        optional_fields = ['punto_de_acopio']
+
 
 
 class CentroSerializer(serializers.ModelSerializer):

@@ -18,3 +18,12 @@ class PuntoFilter(django_filters.FilterSet):
             'nombre': ['icontains'],
             'centro': ['exact'],
         }
+
+
+class CentroFilter(django_filters.FilterSet):
+    class Meta:
+        model = CentroDeReciclaje
+        fields = {
+            'nombre': ['icontains'],
+            'verificado': ['exact'],
+        }      

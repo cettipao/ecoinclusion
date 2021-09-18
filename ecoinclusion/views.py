@@ -329,15 +329,8 @@ class CentroReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = CentroDeReciclaje.objects.all()
     authentication_classes = ()
     serializer_class = CentroSerializer
-
-    def get_queryset(self):
-        verificado = self.request.query_params.get('verificado')
-        if verificado == "true":
-            return CentroDeReciclaje.objects.filter(verificado=True)
-        elif verificado == "false":
-            return CentroDeReciclaje.objects.filter(verificado=False)
-        else:
-            return CentroDeReciclaje.objects.all()
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = CentroFilter
 
 class PuntoReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -391,13 +384,36 @@ class DepositoViewSet(viewsets.ModelViewSet):
     serializer_class = DepositoSerializer
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = (TokenAuthentication,SessionAuthentication)
-
     def create(self, request, *args, **kwargs):
-        user = self.request.user
-        request.data._mutable = True
-        request.data['user'] = user.pk
-        request.data._mutable = False
+        centro  = get_object_or_404(CentroDeReciclaje,pk=request.data['centro'])
+        try:
+            punto = PuntoDeAcopio.objects.get(pk=request.data['punto_de_acopio'])
+            if punto.centro != centro:
+                data = {
+                    "punto_de_acopio": [
+                        "El punto de acopio debe ser del centro elegido"
+                    ]
+                }
+                return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
+                
+        except:
+            pass
+
+        
+        
         return super().create(request, *args, **kwargs)
+        
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+    
+    def get_queryset(self):
+        user = self.request.user
+        queryset = user.depositos.all()
+        
+        return queryset
+
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
