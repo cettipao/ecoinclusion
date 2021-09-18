@@ -12,6 +12,11 @@ class PuntoSerializer(serializers.ModelSerializer):
         model = PuntoDeAcopio
         fields = ['nombre','lat','long','getTiporeciclado','cant_intermediarios','id','tipo_de_reciclado','centro']
          
+class TipoDeRecicladoSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = TipoDeReciclado
+        fields = '__all__'
 
 class IntermediarioSerializer(serializers.ModelSerializer):
     centro = serializers.ReadOnlyField(source='centro.id')

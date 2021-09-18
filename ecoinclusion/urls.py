@@ -10,6 +10,7 @@ router.register(r'intermediarios', IntermediarioViewSet)
 router.register(r'centros', CentroReadonlyViewSet)
 router.register(r'puntos', PuntoReadonlyViewSet)
 router.register(r'depositos', DepositoViewSet)
+router.register(r'tipos-de-reciclado', TipoDeRecicladoReadonlyViewSet)
 
 urlpatterns = [
      

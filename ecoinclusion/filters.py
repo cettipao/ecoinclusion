@@ -9,6 +9,7 @@ class IntermediarioFilter(django_filters.FilterSet):
         fields = {
             'nombre': ['icontains'],
             'centro': ['exact'],
+            'puntos': ['exact'],
         }
 
 class PuntoFilter(django_filters.FilterSet):
@@ -27,3 +28,15 @@ class CentroFilter(django_filters.FilterSet):
             'nombre': ['icontains'],
             'verificado': ['exact'],
         }      
+
+class DepositoFilter(django_filters.FilterSet):
+    fecha = django_filters.DateFromToRangeFilter()
+    class Meta:
+        model = Deposito
+        fields = {
+            'fecha': [],
+            'centro': ['exact'],
+            'punto_de_acopio': ['exact'],
+            'verificado': ['exact'],
+            'tipo_de_reciclado': ['exact'],
+        }   

@@ -339,6 +339,8 @@ class PuntoReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = PuntoDeAcopio.objects.all()
     authentication_classes = ()
     serializer_class = PuntoSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = PuntoFilter
 
     
 """
@@ -384,6 +386,9 @@ class DepositoViewSet(viewsets.ModelViewSet):
     serializer_class = DepositoSerializer
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = (TokenAuthentication,SessionAuthentication)
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = DepositoFilter
+
     def create(self, request, *args, **kwargs):
         centro  = get_object_or_404(CentroDeReciclaje,pk=request.data['centro'])
         try:
@@ -394,17 +399,12 @@ class DepositoViewSet(viewsets.ModelViewSet):
                         "El punto de acopio debe ser del centro elegido"
                     ]
                 }
-                return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
-
-                
+                return Response(data=data, status=status.HTTP_400_BAD_REQUEST)    
         except:
             pass
 
-        
-        
         return super().create(request, *args, **kwargs)
         
-
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
     
@@ -414,11 +414,18 @@ class DepositoViewSet(viewsets.ModelViewSet):
         
         return queryset
 
-
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = ()
     serializer_class = RegisterSerializer
+
+class TipoDeRecicladoReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `retrieve` actions.
+    """
+    queryset = TipoDeReciclado.objects.all()
+    authentication_classes = ()
+    serializer_class = TipoDeRecicladoSerializer
 
 """
 @api_view(['GET'])
