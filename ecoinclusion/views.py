@@ -382,7 +382,7 @@ class DepositoViewSet(viewsets.ModelViewSet):
     `update` and `destroy` actions.
 
     """
-    queryset = Deposito.objects.all()
+    queryset = Deposito.objects.order_by('-fecha')
     serializer_class = DepositoSerializer
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = (TokenAuthentication,SessionAuthentication)
@@ -410,7 +410,7 @@ class DepositoViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         user = self.request.user
-        queryset = user.depositos.all()
+        queryset = user.depositos.order_by('-fecha')
         
         return queryset
 
