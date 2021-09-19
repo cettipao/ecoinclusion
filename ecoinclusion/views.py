@@ -376,6 +376,50 @@ class IntermediarioViewSet(viewsets.ModelViewSet):
         puntos = centro.puntos.all()
         serializer.save(centro=centro,puntos=puntos)
 
+class CantidadRecicladoViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
+
+    """
+    queryset = CantidadReciclado.objects.all()
+    serializer_class = CantidadRecicladoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = (TokenAuthentication,SessionAuthentication)
+    # filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    # filterset_class = DepositoFilter
+    def create(self, request, *args, **kwargs):
+        deposito  = get_object_or_404(Deposito,pk=request.data['deposito'])
+        tipo_de_reciclado = get_object_or_404(TipoDeReciclado,pk=request.data['tipo_de_reciclado'])
+        if deposito not in self.request.user.depositos.all():
+            data = {
+                "deposito": [
+                    "This filed need to be part of the current user."
+                ]
+            }
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+        for cantidad in deposito.cantidades.all():
+            if cantidad.tipo_de_reciclado == tipo_de_reciclado:
+                data = {
+                "tipo_de_reciclado": [
+                    "This recycle type is already used."
+                ]
+            }
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
+        return super().create(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        user = self.request.user
+        queryset = None
+        for deposito in user.depositos.all():
+            if queryset == None:
+                queryset = deposito.cantidades.all()
+            else:
+                queryset = deposito.cantidades.all() | queryset 
+        
+        return queryset
+
 class DepositoViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
@@ -390,7 +434,11 @@ class DepositoViewSet(viewsets.ModelViewSet):
     filterset_class = DepositoFilter
 
     def create(self, request, *args, **kwargs):
+        
         centro  = get_object_or_404(CentroDeReciclaje,pk=request.data['centro'])
+
+        
+       
         try:
             punto = PuntoDeAcopio.objects.get(pk=request.data['punto_de_acopio'])
             if punto.centro != centro:

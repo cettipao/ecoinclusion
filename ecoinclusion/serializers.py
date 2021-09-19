@@ -31,10 +31,17 @@ class DepositoSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Deposito
-        fields = ['id','fecha','punto_de_acopio','centro','tipo_de_reciclado']
+        fields = ['id','fecha','punto_de_acopio','centro','cantidades','getCantidades']
         optional_fields = ['punto_de_acopio']
 
 
+class CantidadRecicladoSerializer(serializers.ModelSerializer):
+    cantidad = serializers.IntegerField(min_value=1)
+    
+    class Meta:
+        model = CantidadReciclado
+        fields = ['id','deposito','cantidad','peso','tipo_de_reciclado']
+        optional_fields = ['peso']
 
 class CentroSerializer(serializers.ModelSerializer):
     

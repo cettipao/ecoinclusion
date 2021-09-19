@@ -87,7 +87,7 @@ class CentroDeReciclaje(models.Model):
     
 
     def __str__(self):
-        return self.usuario.username
+        return self.nombre
 
 
 class PuntoDeAcopio(models.Model):
@@ -133,6 +133,37 @@ class Deposito(models.Model):
         related_name='depositos',
         on_delete=models.CASCADE
     )
-    tipo_de_reciclado = models.ManyToManyField('TipoDeReciclado')
+
     fecha = models.DateField()
     verificado = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} deposito {self.getCantidades()} en la fecha {self.fecha}"
+
+    def getCantidades(self):
+    
+        cant = 0
+        peso = 0
+        
+        
+        for i in self.cantidades.all():
+            cant += i.cantidad
+            peso += i.peso
+        list = f"cantidad: {cant},peso: {peso}Kg"
+        return list
+
+class CantidadReciclado(models.Model):
+    
+    cantidad = models.IntegerField(default=1,null=True, blank=True)
+    peso = models.DecimalField(max_digits=9, decimal_places=1, null=True, blank=True)
+    tipo_de_reciclado = models.ForeignKey('TipoDeReciclado',related_name="cantidades",on_delete=models.CASCADE)
+    deposito = models.ForeignKey('Deposito', related_name='cantidades', on_delete=models.CASCADE)
+
+    def __str__(self):
+        list = f"deposito: {self.deposito} cantidad: {self.cantidad},peso: {self.peso}Kg, tipo de reciclado: {str(self.tipo_de_reciclado)}"
+        return list
+
+
+
+
+

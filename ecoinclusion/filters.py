@@ -38,5 +38,4 @@ class DepositoFilter(django_filters.FilterSet):
             'centro': ['exact'],
             'punto_de_acopio': ['exact'],
             'verificado': ['exact'],
-            'tipo_de_reciclado': ['exact'],
         }   
