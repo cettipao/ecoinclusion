@@ -127,7 +127,7 @@ class TipoDeReciclado(models.Model):
 
 class Deposito(models.Model):
     user = models.ForeignKey(User, related_name='depositos',on_delete=models.CASCADE)
-    punto_de_acopio = models.OneToOneField(PuntoDeAcopio, on_delete=models.CASCADE,null=True, blank=True)
+    punto_de_acopio = models.ForeignKey(PuntoDeAcopio, on_delete=models.CASCADE,null=True, blank=True)
     centro = models.ForeignKey(
         'CentroDeReciclaje',
         related_name='depositos',

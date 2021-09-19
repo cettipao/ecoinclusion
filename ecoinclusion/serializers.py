@@ -31,7 +31,7 @@ class DepositoSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Deposito
-        fields = ['id','fecha','punto_de_acopio','centro','cantidades','getCantidades']
+        fields = ['id','fecha','punto_de_acopio','centro','getCantidades']
         optional_fields = ['punto_de_acopio']
 
 
