@@ -28,6 +28,7 @@ class IntermediarioSerializer(serializers.ModelSerializer):
 
 
 class DepositoSerializer(serializers.ModelSerializer):
+    
    
     class Meta:
         model = Deposito
@@ -36,12 +37,13 @@ class DepositoSerializer(serializers.ModelSerializer):
 
 
 class CantidadRecicladoSerializer(serializers.ModelSerializer):
-    cantidad = serializers.IntegerField(min_value=1)
+    cantidad = serializers.IntegerField(min_value=1,max_value=100,required=False)
+    peso = serializers.IntegerField(min_value=1,max_value=100,required=False)
     
     class Meta:
         model = CantidadReciclado
         fields = ['id','deposito','cantidad','peso','tipo_de_reciclado']
-        optional_fields = ['peso']
+        optional_fields = ['peso','cantidad']
 
 class CentroSerializer(serializers.ModelSerializer):
     

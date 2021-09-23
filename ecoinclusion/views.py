@@ -404,9 +404,10 @@ class CantidadRecicladoViewSet(viewsets.ModelViewSet):
                 "tipo_de_reciclado": [
                     "This recycle type is already used."
                 ]
-            }
-            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
-
+                
+                }
+                return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+            
         return super().create(request, *args, **kwargs)
     
     def get_queryset(self):

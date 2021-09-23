@@ -147,22 +147,28 @@ class Deposito(models.Model):
         
         
         for i in self.cantidades.all():
-            cant += i.cantidad
-            peso += i.peso
+            try:
+                cant += i.cantidad
+                peso += i.peso
+            except:
+                pass
         list = f"cantidad: {cant},peso: {peso}Kg"
         return list
 
 class CantidadReciclado(models.Model):
     
-    cantidad = models.IntegerField(default=1,null=True, blank=True)
+    cantidad = models.IntegerField(null=True, blank=True)
     peso = models.DecimalField(max_digits=9, decimal_places=1, null=True, blank=True)
     tipo_de_reciclado = models.ForeignKey('TipoDeReciclado',related_name="cantidades",on_delete=models.CASCADE)
     deposito = models.ForeignKey('Deposito', related_name='cantidades', on_delete=models.CASCADE)
 
     def __str__(self):
-        list = f"deposito: {self.deposito} cantidad: {self.cantidad},peso: {self.peso}Kg, tipo de reciclado: {str(self.tipo_de_reciclado)}"
-        return list
-
+        try:
+            list = f"deposito: {self.deposito} cantidad: {self.cantidad},peso: {self.peso}Kg, tipo de reciclado: {str(self.tipo_de_reciclado)}"
+            return list
+        except:
+            list = f"deposito: {self.deposito}, tipo de reciclado: {str(self.tipo_de_reciclado)}"
+            return list
 
 
 
