@@ -36,25 +36,4 @@ Inicio
 <div class="parallax-container">
     <div class="parallax"><img src="{% static '/media/Imagen-portada-800x735.jpg' %}"></div>
 </div>
-<script>
-var dataObject = {
-    "id":83,
-};
-var token = '{{csrf_token}}';
-$.ajax({
-    headers: { "X-CSRFToken": token },
-    url: "http://127.0.0.1:8000/api/intermediarios/20/",
-    dataType: "json",
-    type: 'delete',   
-    //method: 'delete',
-    //data:{'intermediario':JSON.stringify(dataObject)},
-    success: function(data){
-        console.log(data)
-    },
-    error: function(error_data){
-        console.log("error")
-        console.log(error_data)
-    },
-})
-</script>
 {%endblock%}

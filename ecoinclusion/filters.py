@@ -13,18 +13,27 @@ class IntermediarioFilter(django_filters.FilterSet):
         }
 
 class PuntoFilter(django_filters.FilterSet):
+    lat = django_filters.RangeFilter()
+    long = django_filters.RangeFilter()
     class Meta:
         model = PuntoDeAcopio
         fields = {
+            'lat': [],
+            'long': [],
+            'tipo_de_reciclado': ['exact'],
             'nombre': ['icontains'],
             'centro': ['exact'],
         }
 
 
 class CentroFilter(django_filters.FilterSet):
+    lat = django_filters.RangeFilter()
+    long = django_filters.RangeFilter()
     class Meta:
         model = CentroDeReciclaje
         fields = {
+            'lat': [],
+            'long': [],
             'nombre': ['icontains'],
             'verificado': ['exact'],
         }      

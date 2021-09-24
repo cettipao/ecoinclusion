@@ -4,8 +4,9 @@
     Perfil
 {% endblock %}
 
+
 {% block content %}
-    <input type="text" id="current-form">
+    <input type="text" value="formCentro" id="current-form" hidden >
     <div class="row">
         <h3 class="center-align">Perfil</h3>
         <div class="col s12 m6 l6">
@@ -38,7 +39,7 @@
             </div>
             <div class="modal-footer">
                 <a class="modal-close waves-effect btn-flat" >Cancelar</a>
-                <a  class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger"
+                <a  class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger" id="ok"
                             href="#latlong"><i
                                     class="material-icons right">save</i>Guardar</a>
             </div>

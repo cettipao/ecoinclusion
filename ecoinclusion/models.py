@@ -77,8 +77,8 @@ class Dia(models.Model):
 class CentroDeReciclaje(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100, null=True, blank=True)
-    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-    long = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    lat = models.DecimalField(max_digits=23, decimal_places=21, null=True, blank=True)
+    long = models.DecimalField(max_digits=24, decimal_places=21, null=True, blank=True)
     telefono = PhoneField(blank=True, help_text='Celular', null=True)
     horario_inicio = models.TimeField( null=True, blank=True)
     horario_final = models.TimeField( null=True, blank=True)
@@ -92,8 +92,8 @@ class CentroDeReciclaje(models.Model):
 
 class PuntoDeAcopio(models.Model):
     nombre = models.CharField(max_length=100)
-    lat = models.DecimalField(max_digits=9, decimal_places=6)
-    long = models.DecimalField(max_digits=9, decimal_places=6)
+    lat = models.DecimalField(max_digits=23, decimal_places=21, null=True, blank=True)
+    long = models.DecimalField(max_digits=24, decimal_places=21, null=True, blank=True)
     tipo_de_reciclado = models.ManyToManyField('TipoDeReciclado')
     centro = models.ForeignKey(
         'CentroDeReciclaje',

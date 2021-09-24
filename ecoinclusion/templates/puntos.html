@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <input type="text" id="current-form" hidden >
+    <input type="text" value="formNewPunto" id="current-form" hidden >
     <div class="row">
         <h3 class="center-align">Puntos de Acopio</h3>
         <div class="col s12">
@@ -18,11 +18,16 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Crear Punto de Acopio</b></span>
-                    <!---onsubmit="getFields('formNewPunto',function(data){getUrl('http://ecoinclusion.herokuapp.com/api/',data,'puntos',getCookie('csrftoken'),function(url,data){ajaxRequest(url,getCookie('csrftoken'),'post',data,function(data){console.log('Punto creado');addTd(data,['id','centro','tipo_de_reciclado'],document.getElementById('puntos'))})})}); return false;"-->
+
                     <form method="POST"  name="formNewPunto" id="formNewPunto">
                         {% csrf_token %}
                         
                         {{form.as_p}}
+                        <div class="input-field center">
+                            <a onclick="setForm('formNewPunto')"data-tooltip="'Click' para buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
+                            href="#modalmap"><i
+                                    class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
+                        </div>
                         {{form.error}}
                         <div class="center-align">
                             <button data-tooltip="'Click' para crear un nuevo punto de acopio." class="btn waves-effect waves-light green tooltipped" type="submit">
@@ -64,14 +69,14 @@
                                     <a data-tooltip="'Click' para editar el punto de acopio" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
                                        href="#modal{{ i.object.id }}"><i
                                             class="material-icons">edit</i></a>
-                                    <form method="POST" name="form{{ punto.id }}" id="form{{ i.object.id }}" action="{% url 'updatepunto' i.object.id %}">
+                                    <form method="POST" name="form{{ i.object.id }}" id="form{{ i.object.id }}" action="{% url 'updatepunto' i.object.id %}">
                                         <div id="modal{{ i.object.id }}" class="modal" style="overflow-y: visible;">
                                             <div class="modal-content">
                                                 <h6>Editar punto de Acopio '{{ i.object.nombre }}'</h6>
                                                 {% csrf_token %}
                                                 {{i.form.as_p}}
                                                 <div class="input-field center">
-                                                    <a onclick="setForm('formNewPunto')"data-tooltip="'Click' para buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
+                                                    <a onclick="setForm('form{{ i.object.id }}')"data-tooltip="'Click' para buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
                                                     href="#modalmap"><i
                                                             class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
                                                 </div>
@@ -111,7 +116,7 @@
             <div class="modal-footer">
                 <a class="modal-close waves-effect btn-flat">Cancelar</a>
                 <a data-tooltip="'Click' para guardar sus cambios" class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                href="#latlong"><i
+                id="ok"><i
                         class="material-icons right">save</i>Guardar</a>
             </div>
         </div>

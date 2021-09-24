@@ -53,15 +53,19 @@ class IntermediarioForm(ModelForm):
 
         
 class CentroDeReciclajeForm(ModelForm):
+    lat = forms.DecimalField(min_value=-90, max_value=90)
+    long = forms.DecimalField(min_value=-180, max_value=180)
     class Meta:
         model = CentroDeReciclaje
         fields = ['nombre','lat','long','telefono','horario_inicio','horario_final']
     def __init__(self, *args, **kwargs):
         super(CentroDeReciclajeForm, self).__init__(*args, **kwargs)
         self.fields['lat'].required = True
+        self.fields['lat'].max_value = 90
+        self.fields['lat'].min_value = -90
         self.fields['long'].required = True
-        self.fields['lat'].hidden = True
-        self.fields['long'].hidden = True
+        self.fields['long'].max_value = 180
+        self.fields['long'].min_value = -180
         self.fields['nombre'].required = True
         self.fields['telefono'].required = True
         self.fields['horario_final'].required = True
@@ -69,13 +73,19 @@ class CentroDeReciclajeForm(ModelForm):
 
         
 class PuntoDeAcopioForm(ModelForm):
+    lat = forms.DecimalField(min_value=-90, max_value=90)
+    long = forms.DecimalField(min_value=-180, max_value=180)
     class Meta:
         model = PuntoDeAcopio
         fields = ['nombre','lat','long','tipo_de_reciclado']
     def __init__(self, *args, **kwargs):
         super(PuntoDeAcopioForm, self).__init__(*args, **kwargs)
         self.fields['lat'].required = True
+        self.fields['lat'].max_value = 90
+        self.fields['lat'].min_value = -90
         self.fields['long'].required = True
+        self.fields['long'].max_value = 180
+        self.fields['long'].min_value = -180
         self.fields['nombre'].required = True
         self.fields['tipo_de_reciclado'].required = False
         self.fields['tipo_de_reciclado'].blank = True
