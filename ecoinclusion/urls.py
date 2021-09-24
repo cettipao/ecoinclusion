@@ -21,7 +21,6 @@ urlpatterns = [
      path('register', registerView, name="register"),
      path('logout/', logoutView, name="logout"),
      path('perfil/', perfilView, name="perfil"),
-     path('updateperfil/', updatePerfilView, name="updateperfil"),
      path('changepassword/', changePasswordView, name="changepassword"),
 
      path('dashboard/', dashboardView, name="dashboard"),

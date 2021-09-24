@@ -84,7 +84,6 @@ class CentroDeReciclaje(models.Model):
     horario_final = models.TimeField( null=True, blank=True)
     verificado = models.BooleanField(default=False)
     
-    
 
     def __str__(self):
         return self.nombre
@@ -100,7 +99,9 @@ class PuntoDeAcopio(models.Model):
         related_name='puntos',
         on_delete=models.CASCADE,
     )
-
+    @property
+    def cant_depositos(self):
+        return len(self.depositos.all())
     @property
     def cant_intermediarios(self):
         return len(Intermediario.objects.filter(puntos=self))
@@ -127,7 +128,7 @@ class TipoDeReciclado(models.Model):
 
 class Deposito(models.Model):
     user = models.ForeignKey(User, related_name='depositos',on_delete=models.CASCADE)
-    punto_de_acopio = models.ForeignKey(PuntoDeAcopio, on_delete=models.CASCADE,null=True, blank=True)
+    punto_de_acopio = models.ForeignKey(PuntoDeAcopio,related_name='depositos', on_delete=models.CASCADE,null=True, blank=True)
     centro = models.ForeignKey(
         'CentroDeReciclaje',
         related_name='depositos',

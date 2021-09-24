@@ -13,7 +13,7 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Datos Generales</b></span>
-                    <form method="post" name="formCentro" action="{% url 'updateperfil' %}">
+                    <form method="post" name="formCentro" >
                         {% csrf_token %}
                         {{form.as_p}}
                         <div class="input-field center">

@@ -37,21 +37,15 @@ from .serializers import *
 # Create your views here.
 
 def isCentroVerified(request):
-    # Si no hay cuenta de Centro asociada al User actual
-    if len(CentroDeReciclaje.objects.filter(usuario=request.user)) < 1:
-        messages.warning(request,
-                         "Esta cuenta no esta Verificada como Cooperativa o Empresa.  <a style='color:white;text-decoration: underline' class='modal-trigger' href='#cuentaNoVerificadaModal'>Leer Mas.</a>")
-        centro = CentroDeReciclaje.objects.create(usuario=request.user)
+    centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    #Si hay una cuenta y esta verificada
+    if centro.verificado:
         return centro
+    #Si no esta verificada
     else:
-        #Si hay una cuenta y esta verificada
-        if CentroDeReciclaje.objects.get(usuario=request.user).verificado:
-            return CentroDeReciclaje.objects.get(usuario=request.user)
-        #Si no esta verificada
-        else:
-            messages.warning(request,
-                             "Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style='color:white;text-decoration: underline' class='modal-trigger' href='#cuentaNoVerificadaModal'>Leer Mas.</a>")
-            return CentroDeReciclaje.objects.get(usuario=request.user)
+        messages.warning(request,
+                            "Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style='color:white;text-decoration: underline' class='modal-trigger' href='#cuentaNoVerificadaModal'>Leer Mas.</a>")
+        return centro
 
 @login_required
 def dashboardView(request):
@@ -67,8 +61,7 @@ class FormAndObject():
    
 @login_required
 def intermediariosView(request):
-    isCentroVerified(request)
-    centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    centro = isCentroVerified(request)
     
 
     instance = Intermediario(centro=centro)
@@ -98,8 +91,8 @@ def intermediariosView(request):
 
 @login_required
 def deleteIntermediarioView(request,id):
-    isCentroVerified(request)
-    centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    centro = isCentroVerified(request)
+    
     intermediario = get_object_or_404(Intermediario, id=id)
     #Verifico que el Punto pertenezca al centro
     
@@ -110,8 +103,8 @@ def deleteIntermediarioView(request,id):
 
 @login_required
 def updateIntermediarioView(request,id):
-    isCentroVerified(request)
-    centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    centro = isCentroVerified(request)
+    
     intermediario = get_object_or_404(Intermediario, id=id)
     
     if request.method == "POST":
@@ -126,8 +119,8 @@ def updateIntermediarioView(request,id):
 
 @login_required
 def puntosView(request):
-    isCentroVerified(request)
-    centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    centro = isCentroVerified(request)
+    
    
     insatnce = PuntoDeAcopio(centro=centro)
     form = PuntoDeAcopioForm(instance=insatnce)
@@ -170,8 +163,8 @@ def deletePuntoView(request, id):
 
 @login_required
 def updatePuntoView(request,id):
-    isCentroVerified(request)
-    centro =  get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    centro = isCentroVerified(request)
+    
 
     punto = get_object_or_404(PuntoDeAcopio, id=id)
     
@@ -191,29 +184,21 @@ def perfilView(request):
     social = False
     if len(SocialAccount.objects.filter(user_id=request.user.id)) > 0:  # El Usuario esta logeado con SocialApp
         social = True
-    centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
-    form = CentroDeReciclajeForm(instance=centro)   
+    
+    form = CentroDeReciclajeForm(instance=centro)
+    if request.method == "POST":
+        form = CentroDeReciclajeForm(request.POST,instance=centro)
+        if form.is_valid():
+            obj = form.save()
+            messages.success(request, "Perfil Actualizado con Exito") 
+        else:
+            messages.success(request, "Error en el formulario.") 
     context = {
         'form':form,
         "social": social,
         'google_api_key':ApiKeyGoogleMaps.objects.first().key,
     }
     return render(request, "perfil.html", context)
-
-@login_required
-def updatePerfilView(request):
-    if request.method == "POST":
-        form = CentroDeReciclajeForm(request.POST)
-        if len(CentroDeReciclaje.objects.filter(usuario=request.user)) < 1:
-            if form.is_valid():
-                obj = form.save()
-        #Sino hago el Update
-        else:
-            form = CentroDeReciclajeForm(request.POST,instance=CentroDeReciclaje.objects.get(usuario=request.user))
-            if form.is_valid():
-                obj = form.save()
-        messages.success(request, "Perfil Actualizado con Exito")
-    return redirect("perfil")
 
 def logoutView(request):
     if request.user.is_authenticated:
@@ -245,9 +230,11 @@ def registerView(request):
         if form.is_valid():
             user = form.save()
             username = form.cleaned_data.get('username')
-
+            centro = CentroDeReciclaje.objects.create(usuario=user)
+            
             messages.success(request, "Account was created for " + username)
-            return redirect('login')
+            login(request, user)
+            return redirect('dashboard')
     context = {
         'form': form
     }
