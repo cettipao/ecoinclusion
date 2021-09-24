@@ -40,6 +40,7 @@ def isCentroVerified(request):
     try:
         centro = CentroDeReciclaje.objects.get(usuario=request.user)
     except:
+        logout(request)
         return Response(status=404, message="You have to register yor cooperative in the register page")
     #Si hay una cuenta y esta verificada
     if centro.verificado:
@@ -219,6 +220,7 @@ def loginView(request):
         if user is not None:
             login(request, user)
             centro = isCentroVerified(request)
+            
             messages.success(request, "Login Exitoso")
             return redirect('dashboard')
         else:
