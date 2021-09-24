@@ -92,7 +92,7 @@ def intermediariosView(request):
     context = {
         "intermediarios_form":forms_and_objects,
         'form':form,
-        'google_api_key':settings.APY_KEY,
+        'google_api_key':ApiKeyGoogleMaps.objects.first().key,
     }
     return render(request, "intermediarios.html", context)
 
@@ -152,7 +152,7 @@ def puntosView(request):
     context = {
         "puntos_form":forms_and_objects,
         'form':form,
-        'google_api_key':settings.APY_KEY,
+        'google_api_key':ApiKeyGoogleMaps.objects.first().key,
     }
     return render(request, "puntos.html", context)
 
@@ -196,7 +196,7 @@ def perfilView(request):
     context = {
         'form':form,
         "social": social,
-        'google_api_key':settings.APY_KEY,
+        'google_api_key':ApiKeyGoogleMaps.objects.first().key,
     }
     return render(request, "perfil.html", context)
 
