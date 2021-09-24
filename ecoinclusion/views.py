@@ -37,7 +37,10 @@ from .serializers import *
 # Create your views here.
 
 def isCentroVerified(request):
-    centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
+    try:
+        centro = CentroDeReciclaje.objects.get(usuario=request.user)
+    except:
+        return Response(status=404, message="You have to register yor cooperative in the register page")
     #Si hay una cuenta y esta verificada
     if centro.verificado:
         return centro
@@ -212,8 +215,10 @@ def loginView(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
+        centro = isCentroVerified(request)
         if user is not None:
             login(request, user)
+            centro = isCentroVerified(request)
             messages.success(request, "Login Exitoso")
             return redirect('dashboard')
         else:
