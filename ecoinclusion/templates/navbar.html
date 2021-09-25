@@ -43,7 +43,9 @@
 			<li><a  class="black-text" href="{{about_url}}"><i class="material-icons left">book</i>Somos</a></li>
 			<li><a  class="black-text" href=""><i class="material-icons left">smartphone</i>App Movil</a></li>
 		    <li><a class="dropdown-trigger black-text" href="#!" data-target="dropdown2"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>
-
+			{% if request.user.is_authenticated %}
+				<li><a  class="black-text" href=""><i class="material-icons left">tag_faces</i>!Hola {{request.user.username}}!</a></li>
+			{% endif %}
         </ul>
 		<a  href="#" data-target="slide-out" class="sidenav-trigger black-text"><i class="material-icons">menu</i></a>
 		
@@ -55,6 +57,9 @@
 
 
 <ul id="slide-out" class="sidenav">
+	{% if request.user.is_authenticated %}
+		<li><a  class="black-text" href=""><i class="material-icons left">tag_faces</i>!Hola {{request.user.username}}!</a></li>
+	{% endif %}
 	<li><a  class="black-text" href="{{home_url}}"><i class="material-icons left">home</i>Inicio</a></li>
 	<li><a  class="black-text" href="{{about_url}}"><i class="material-icons left">book</i>Somos</a></li>
 	<li><a class="dropdown-trigger black-text" href="#!" data-target="dropdown1"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>

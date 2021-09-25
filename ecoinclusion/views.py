@@ -24,36 +24,22 @@ import django_filters.rest_framework
 from allauth.socialaccount.models import SocialAccount
 
 # My imports
-from .forms import *
-from .models import *
-from .decorators import *
-from .serializers import *
-from .filters import *
+from .forms import CentroDeReciclajeForm, CreateUserForm, IntermediarioForm, PuntoDeAcopioForm
+from .models import ApiKeyGoogleMaps, CantidadReciclado, CentroDeReciclaje, Deposito, Intermediario, PuntoDeAcopio, TipoDeReciclado
+from .decorators import cooperative_verified_required, unauthenticated_user
+from .serializers import CantidadRecicladoSerializer, CentroSerializer, DepositoSerializer, IntermediarioSerializer, PuntoSerializer, RegisterSerializer, TipoDeRecicladoSerializer
+from .filters import CentroFilter, DepositoFilter, IntermediarioFilter, PuntoFilter
 
 #Django rest framework imports
 from rest_framework import permissions
 from rest_framework import routers, serializers, viewsets
-from .serializers import *
 # Create your views here.
 
-def isCentroVerified(request):
-    try:
-        centro = CentroDeReciclaje.objects.get(usuario=request.user)
-    except:
-        logout(request)
-        return Response(status=404, message="You have to register yor cooperative in the register page")
-    #Si hay una cuenta y esta verificada
-    if centro.verificado:
-        return centro
-    #Si no esta verificada
-    else:
-        messages.warning(request,
-                            "Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style='color:white;text-decoration: underline' class='modal-trigger' href='#cuentaNoVerificadaModal'>Leer Mas.</a>")
-        return centro
 
 @login_required
+@cooperative_verified_required
 def dashboardView(request):
-    isCentroVerified(request)
+
     puntos = PuntoDeAcopio.objects.filter(centro__usuario=request.user)
     return render(request, "dashboard.html", {"puntos": puntos})
 
@@ -64,8 +50,9 @@ class FormAndObject():
        
    
 @login_required
+@cooperative_verified_required
 def intermediariosView(request):
-    centro = isCentroVerified(request)
+    centro = get_object_or_404(CentroDeReciclaje,usuario=request.user)
     
 
     instance = Intermediario(centro=centro)
@@ -94,8 +81,10 @@ def intermediariosView(request):
     return render(request, "intermediarios.html", context)
 
 @login_required
+@unauthenticated_user
+@cooperative_verified_required
 def deleteIntermediarioView(request,id):
-    centro = isCentroVerified(request)
+    centro = get_object_or_404(CentroDeReciclaje,usuario=request.user)
     
     intermediario = get_object_or_404(Intermediario, id=id)
     #Verifico que el Punto pertenezca al centro
@@ -106,8 +95,9 @@ def deleteIntermediarioView(request,id):
     return redirect("intermediarios")
 
 @login_required
+@cooperative_verified_required
 def updateIntermediarioView(request,id):
-    centro = isCentroVerified(request)
+    centro = get_object_or_404(CentroDeReciclaje,usuario=request.user)
     
     intermediario = get_object_or_404(Intermediario, id=id)
     
@@ -122,8 +112,9 @@ def updateIntermediarioView(request,id):
     return redirect("intermediarios")
 
 @login_required
+@cooperative_verified_required
 def puntosView(request):
-    centro = isCentroVerified(request)
+    centro = get_object_or_404(CentroDeReciclaje,usuario=request.user)
     
    
     insatnce = PuntoDeAcopio(centro=centro)
@@ -134,7 +125,7 @@ def puntosView(request):
         
         if form.is_valid():
             obj = form.save()
-            messages.success(request, f"Centro {obj.nombre} creado con Exito.")
+            messages.success(request, f"Punto de acopio '{obj.nombre}' creado con Exito.")
             form = PuntoDeAcopioForm(instance=insatnce)
         else:
             messages.error(request, "El formulario no es valido.")
@@ -154,6 +145,7 @@ def puntosView(request):
     return render(request, "puntos.html", context)
 
 @login_required
+@cooperative_verified_required
 def deletePuntoView(request, id):
     punto = get_object_or_404(PuntoDeAcopio, id=id)
     #Verifico que el Punto pertenezca al centro
@@ -166,10 +158,9 @@ def deletePuntoView(request, id):
     return redirect("puntosdeacopio")
 
 @login_required
+@cooperative_verified_required
 def updatePuntoView(request,id):
-    centro = isCentroVerified(request)
     
-
     punto = get_object_or_404(PuntoDeAcopio, id=id)
     
     if request.method == "POST":
@@ -183,8 +174,9 @@ def updatePuntoView(request,id):
     return redirect("puntosdeacopio")
 
 @login_required
+@cooperative_verified_required
 def perfilView(request):
-    centro = isCentroVerified(request)
+    centro = get_object_or_404(CentroDeReciclaje,usuario=request.user)
     social = False
     if len(SocialAccount.objects.filter(user_id=request.user.id)) > 0:  # El Usuario esta logeado con SocialApp
         social = True
@@ -196,7 +188,7 @@ def perfilView(request):
             obj = form.save()
             messages.success(request, "Perfil Actualizado con Exito") 
         else:
-            messages.success(request, "Error en el formulario.") 
+            messages.error(request, "Error en el formulario.") 
     context = {
         'form':form,
         "social": social,
@@ -216,11 +208,8 @@ def loginView(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        centro = isCentroVerified(request)
         if user is not None:
             login(request, user)
-            centro = isCentroVerified(request)
-            
             messages.success(request, "Login Exitoso")
             return redirect('dashboard')
         else:
@@ -255,7 +244,7 @@ def changePasswordView(request):
                 request.user.set_password(request.POST.get("password1"))
                 messages.success(request, "Contraseña Cambiada con Exito")
         else:
-            messages.success(request, "CONTRASEÑA ACTUAL INCORRECTA, INTENTE DE NUEVO")
+            messages.error(request, "CONTRASEÑA ACTUAL INCORRECTA, INTENTE DE NUEVO")
     return redirect("perfil")
 
 def homeView(request):

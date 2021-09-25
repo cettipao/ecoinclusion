@@ -51,7 +51,6 @@ class IntermediarioForm(ModelForm):
         self.fields['dias_disponibles'].required = True
 
 
-        
 class CentroDeReciclajeForm(ModelForm):
     lat = forms.DecimalField(min_value=-90, max_value=90)
     long = forms.DecimalField(min_value=-180, max_value=180)

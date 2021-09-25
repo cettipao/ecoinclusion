@@ -25,25 +25,17 @@
 <main>
 <div id="cuentaNoVerificadaModal" class="modal">
     <div class="modal-content">
-      <h4>Cuenta no Verificada</h4>
+        <h4>Cuenta no Verificada</h4>
         <p>Esta cuenta todavia no ha sido verificada por nuestros administradores. Es decir, tus Puntos de Acopio e Intermediarios no seran visibles al publico.<br>Para acelerar la verificacion <a href="/perfil">Completa los datos de tu perfil</a> o contactenos.</a></p>
     </div>
     <div class="modal-footer">
-      <a class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
+        <a class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
     </div>
-  </div>
-{% if messages %}
-    {% for message in messages %}
-        <div style="text-align: center ;background-color: #3ac26e; color: white; font-size: 1.1rem;">
-            {{ message|safe }}
-        </div>
-    {% endfor %}
-{% endif %}
-
-
+</div>
 
 {% block content %}
-    <i class="material-icons">message</i>
+<i class="material-icons">message</i>
+    
 {% endblock %}
 </main>
 </body>
@@ -87,4 +79,27 @@
 <script type="text/javascript" src="{% static 'js-m/materialize.min.js' %}"></script>
 <script type="text/javascript"  src="{% static 'js/index.js' %}"></script>
 
+<style>
+.success{
+    background-color: green;
+}
+.error{
+    background-color: red;
+    color: black;
+}
+.warning{
+    background-color: red;
+    color: black;
+}
+</style>
+{% if messages %}
+    {% for message in messages %}
+        
+        <script>
+            M.toast({html: '{{ message|safe }}',classes: 'rounded center {%  if message.tags %}{{ message.tags }}{% endif %}',displayLength:20000});
+        </script>
+    
+    {% endfor %}
+
+{% endif %}
 </html>
