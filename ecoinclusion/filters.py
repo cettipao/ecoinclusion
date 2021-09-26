@@ -8,8 +8,7 @@ class IntermediarioFilter(django_filters.FilterSet):
         model = Intermediario
         fields = {
             'nombre': ['icontains'],
-            'centro': ['exact'],
-            'puntos': ['exact'],
+            'lugares': ['exact'],
         }
 
 class PuntoFilter(django_filters.FilterSet):
@@ -44,7 +43,6 @@ class DepositoFilter(django_filters.FilterSet):
         model = Deposito
         fields = {
             'fecha': [],
-            'centro': ['exact'],
-            'punto_de_acopio': ['exact'],
+            'lugar': ['exact'],
             'verificado': ['exact'],
         }   

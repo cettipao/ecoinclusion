@@ -5,51 +5,42 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-
-class PuntoSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = PuntoDeAcopio
-        fields = ['nombre','lat','long','getTiporeciclado','cant_intermediarios','id','tipo_de_reciclado','centro']
-         
 class TipoDeRecicladoSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = TipoDeReciclado
         fields = '__all__'
 
+class CentroSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = CentroDeReciclaje
+        fields =  ['url','id','usuario','nombre','tipo_de_reciclado','lat','long','telefono','horario_inicio','horario_final','verificado']
+
+class PuntoSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = PuntoDeAcopio
+        fields = ['url','id','centro','nombre','tipo_de_reciclado','lat','long','getTiporeciclado','cant_intermediarios']
+
 class IntermediarioSerializer(serializers.ModelSerializer):
     centro = serializers.ReadOnlyField(source='centro.id')
    
     class Meta:
         model = Intermediario
-        fields = ['url','id','nombre', 'telefono', 'centro', 'puntos', 'dias_disponibles']
+        fields = ['url','id','nombre', 'telefono','lugares', 'dias_disponibles']
         optional_fields = ['puntos']
 
-
 class DepositoSerializer(serializers.ModelSerializer):
-    
-   
-    class Meta:
-        model = Deposito
-        fields = ['id','fecha','punto_de_acopio','centro','getCantidades']
-        optional_fields = ['punto_de_acopio']
-
-
-class CantidadRecicladoSerializer(serializers.ModelSerializer):
     cantidad = serializers.IntegerField(min_value=1,max_value=100,required=False)
     peso = serializers.IntegerField(min_value=1,max_value=100,required=False)
-    
-    class Meta:
-        model = CantidadReciclado
-        fields = ['id','deposito','cantidad','peso','tipo_de_reciclado']
-        optional_fields = ['peso','cantidad']
+    fecha_deposito = serializers.DateTimeField(read_only=True)
+    verificado = serializers.BooleanField(read_only=True)
 
-class CentroSerializer(serializers.ModelSerializer):
-    
     class Meta:
-        model = CentroDeReciclaje
-        fields =  ['url','id','usuario','nombre','lat','long','telefono','horario_inicio','horario_final','verificado']
+        model = Deposito
+        fields = ['id','lugar','cantidad','peso','tipo_de_reciclado','fecha','fecha_deposito','verificado']
+        optional_fields = ['peso','cantidad']
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -81,8 +72,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name']
         )
-
-        
         user.set_password(validated_data['password'])
         user.save()
 

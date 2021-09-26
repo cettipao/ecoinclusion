@@ -36,7 +36,7 @@ class CreateUserForm(UserCreationForm):
 class IntermediarioForm(ModelForm):
     class Meta:
         model = Intermediario
-        fields = ['nombre','telefono','puntos','dias_disponibles']
+        fields = ['nombre','telefono','lugares','dias_disponibles']
     def __init__(self, *args, **kwargs):
         super(IntermediarioForm, self).__init__(*args, **kwargs)
 
@@ -46,8 +46,8 @@ class IntermediarioForm(ModelForm):
         
         self.fields['nombre'].required = True
         self.fields['telefono'].required = True
-        self.fields['puntos'].queryset = centro.puntos.all()
-        self.fields['puntos'].required = True
+        self.fields['lugares'].queryset = centro.puntos.all()
+        self.fields['lugares'].required = True
         self.fields['dias_disponibles'].required = True
 
 
