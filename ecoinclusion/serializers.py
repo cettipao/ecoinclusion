@@ -30,12 +30,10 @@ class PuntoSerializer(serializers.ModelSerializer):
         fields = ['url','id','centro','nombre','tipo_de_reciclado','lat','long','getTiporeciclado','cant_intermediarios']
 
 class IntermediarioSerializer(serializers.ModelSerializer):
-    centro = serializers.ReadOnlyField(source='centro.id')
-   
+
     class Meta:
         model = Intermediario
-        fields = ['url','id','nombre', 'telefono','lugares', 'dias_disponibles']
-        optional_fields = ['puntos']
+        fields = ['url','id','nombre', 'telefono','centro','lugares', 'dias_disponibles']
 
 class DepositoSerializer(serializers.ModelSerializer):
     cantidad = serializers.IntegerField(min_value=1,max_value=100,required=False)
