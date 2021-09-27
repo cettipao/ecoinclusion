@@ -36,8 +36,8 @@ class IntermediarioSerializer(serializers.ModelSerializer):
         fields = ['url','id','nombre', 'telefono','centro','lugares', 'dias_disponibles']
 
 class DepositoSerializer(serializers.ModelSerializer):
-    cantidad = serializers.IntegerField(min_value=1,max_value=100,required=False)
-    peso = serializers.IntegerField(min_value=1,max_value=100,required=False)
+    cantidad = serializers.IntegerField(min_value=1,max_value=100,allow_null=True)
+    peso = serializers.DecimalField(min_value=1,max_value=100,max_digits=9,decimal_places=1,allow_null=True)
     fecha_deposito = serializers.DateTimeField(read_only=True)
     verificado = serializers.BooleanField(read_only=True)
 
