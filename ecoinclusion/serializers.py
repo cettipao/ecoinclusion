@@ -11,6 +11,12 @@ class TipoDeRecicladoSerializer(serializers.ModelSerializer):
         model = TipoDeReciclado
         fields = '__all__'
 
+class LugarDeRecicladoSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = LugarDeReciclado
+        fields =  '__all__'
+
 class CentroSerializer(serializers.ModelSerializer):
     
     class Meta:

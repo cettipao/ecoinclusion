@@ -27,8 +27,8 @@ from allauth.socialaccount.models import SocialAccount
 from .forms import CentroDeReciclajeForm, CreateUserForm, IntermediarioForm, PuntoDeAcopioForm
 from .models import ApiKeyGoogleMaps, CentroDeReciclaje, Deposito, Intermediario, LugarDeReciclado, PuntoDeAcopio, TipoDeReciclado
 from .decorators import cooperative_verified_required, unauthenticated_user
-from .serializers import CentroSerializer, DepositoSerializer, IntermediarioSerializer, PuntoSerializer, RegisterSerializer, TipoDeRecicladoSerializer
-from .filters import CentroFilter, DepositoFilter, IntermediarioFilter, PuntoFilter
+from .serializers import CentroSerializer, DepositoSerializer, IntermediarioSerializer, PuntoSerializer, RegisterSerializer, TipoDeRecicladoSerializer,LugarDeRecicladoSerializer
+from .filters import CentroFilter, DepositoFilter, IntermediarioFilter, PuntoFilter, LugarDeRecicladoFilter
 
 #Django rest framework imports
 from rest_framework import permissions
@@ -304,6 +304,15 @@ class IsCentroVerified(permissions.BasePermission):
                 return False
         
         
+class LugarDeRecicladoViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `retrieve` actions.
+    """
+    queryset = LugarDeReciclado.objects.all()
+    authentication_classes = ()
+    serializer_class = LugarDeRecicladoSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = LugarDeRecicladoFilter
 
 class CentroReadonlyViewSet(viewsets.ReadOnlyModelViewSet):
     """

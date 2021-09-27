@@ -1,6 +1,6 @@
 import django_filters
 
-from .models import *
+from .models import CentroDeReciclaje, Deposito, Intermediario, LugarDeReciclado, PuntoDeAcopio
 
 
 class IntermediarioFilter(django_filters.FilterSet):
@@ -22,6 +22,18 @@ class PuntoFilter(django_filters.FilterSet):
             'tipo_de_reciclado': ['exact'],
             'nombre': ['icontains'],
             'centro': ['exact'],
+        }
+
+class LugarDeRecicladoFilter(django_filters.FilterSet):
+    lat = django_filters.RangeFilter()
+    long = django_filters.RangeFilter()
+    class Meta:
+        model = LugarDeReciclado
+        fields = {
+            'lat': [],
+            'long': [],
+            'tipo_de_reciclado': ['exact'],
+            'nombre': ['icontains'],
         }
 
 
