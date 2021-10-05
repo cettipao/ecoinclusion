@@ -14,8 +14,6 @@
 	<li><a href="{{dashboard}}"><i class="material-icons top">insert_chart</i>Dashboard</a></li>
 	<li><a href="{{intermediarios}}"><i class="material-icons top">supervisor_account</i>Intermediarios</a></li>
 	<li><a href="{{puntosdeacopio}}"><i class="material-icons top">place</i>Puntos de Acopio</a></li>
-	<li><a href="{{perfil}}"><i class="material-icons top">account_circle</i>Perfil</a></li>
-        <li><a href="{{logout_url}}"><i class="material-icons top">logout</i>Log out</a></li>
 	{% else %}
 	<li><a class="black-text" href="{{login_url}}">Iniciar Sesion</a></li>
 	<li><a  href="{{register_url}}">Registrarse</a></li>
@@ -27,24 +25,38 @@
 	<li><a href="{{dashboard}}"><i class="material-icons top">insert_chart</i>Dashboard</a></li>
 	<li><a href="{{intermediarios}}"><i class="material-icons top">supervisor_account</i>Intermediarios</a></li>
 	<li><a href="{{puntosdeacopio}}"><i class="material-icons top">place</i>Puntos de Acopio</a></li>
-	<li><a href="{{perfil}}"><i class="material-icons top">account_circle</i>Perfil</a></li>
-        <li><a href="{{logout_url}}"><i class="material-icons top">logout</i>Log out</a></li>
 	{% else %}
 	<li><a class="black-text" href="{{login_url}}">Iniciar Sesion</a></li>
 	<li><a class="black-text" href="{{register_url}}">Registrarse</a></li>
 	{% endif %}
 </ul>
+
+<ul id="dropdown3" class="dropdown-content">
+
+	{% if request.user.is_authenticated %}
+	<li><a href="{{perfil}}"><i class="material-icons top">account_circle</i>Perfil</a></li>
+        <li><a href="{{logout_url}}"><i class="material-icons top">logout</i>Log out</a></li>
+	{% endif %}
+</ul>
+
+<ul id="dropdown4" class="dropdown-content">
+
+	{% if request.user.is_authenticated %}
+	<li><a href="{{perfil}}"><i class="material-icons top">account_circle</i>Perfil</a></li>
+        <li><a href="{{logout_url}}"><i class="material-icons top">logout</i>Log out</a></li>
+	{% endif %}
+</ul>
+
 <nav class="white nav-extended" role="navigation">
-	<div class="nav-wrapper container">
+	<div class="nav-wrapper ">
 		<a id="logo-container" href="{{home_url}}" class="brand-logo"><img src="{% static '/media/logo-ecoinclusion.png' %}" alt="ecoinclusion" loading="lazy"></a>
 		
 		<ul class="right hide-on-med-and-down">
-			<li><a  class="black-text" href="{{home_url}}"><i class="material-icons left">home</i>Inicio</a></li>
 			<li><a  class="black-text" href="{{about_url}}"><i class="material-icons left">book</i>Somos</a></li>
 			<li><a  class="black-text" href=""><i class="material-icons left">smartphone</i>App Movil</a></li>
-		    <li><a class="dropdown-trigger black-text" href="#!" data-target="dropdown2"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>
+		    <li><a class="dropdown-trigger black-text" href="" data-target="dropdown2"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>
 			{% if request.user.is_authenticated %}
-				<li><a  class="black-text" href=""><i class="material-icons left">tag_faces</i>!Hola {{request.user.username}}!</a></li>
+				<li><a  class="dropdown-trigger black-text" href="" data-target="dropdown4"><i class="material-icons left">tag_faces</i><i class="material-icons right">arrow_drop_down</i>¡Hola {{request.user.username}}!</a></li>
 			{% endif %}
         </ul>
 		<a  href="#" data-target="slide-out" class="sidenav-trigger black-text"><i class="material-icons">menu</i></a>
@@ -58,11 +70,10 @@
 
 <ul id="slide-out" class="sidenav">
 	{% if request.user.is_authenticated %}
-		<li><a  class="black-text" href=""><i class="material-icons left">tag_faces</i>!Hola {{request.user.username}}!</a></li>
+		<li><a  class="dropdown-trigger black-text" href="" data-target="dropdown3"><i class="material-icons left">tag_faces</i><i class="material-icons right">arrow_drop_down</i>¡Hola {{request.user.username}}!</a></li>
 	{% endif %}
-	<li><a  class="black-text" href="{{home_url}}"><i class="material-icons left">home</i>Inicio</a></li>
+	<li><a class="dropdown-trigger black-text" href="" data-target="dropdown1"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>
 	<li><a  class="black-text" href="{{about_url}}"><i class="material-icons left">book</i>Somos</a></li>
-	<li><a class="dropdown-trigger black-text" href="#!" data-target="dropdown1"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>
 	<li><a  class="black-text" href="#"><i class="material-icons left">smartphone</i>App Movil</a></li>
 </ul>
 

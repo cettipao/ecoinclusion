@@ -124,4 +124,5 @@ function changePoint(marker,location,name,infoWindow,map){
 
   bounds.extend(location);
   map.fitBounds(bounds);
+  map.setZoom(15);
 }

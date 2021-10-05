@@ -1,7 +1,7 @@
 from ecoinclusion.models import LugarDeReciclado
 from ecoinclusion.serializers import IntermediarioSerializer, LugarDeRecicladoSerializer
 from django.urls import path
-from .views import DepositoViewSet, IntermediarioViewSet,LugarDeRecicladoViewSet, PuntoReadonlyViewSet,  CentroReadonlyViewSet, RegisterView, TipoDeRecicladoReadonlyViewSet, aboutView, changePasswordView, dashboardView, deleteIntermediarioView, deletePuntoView, homeView, loginView, logoutView, perfilView, puntosView, registerView, updateIntermediarioView, updatePuntoView
+from .views import DepositoViewSet, IntermediarioViewSet, intermediariosView, LugarDeRecicladoViewSet, PuntoReadonlyViewSet,  CentroReadonlyViewSet, RegisterView, TipoDeRecicladoReadonlyViewSet, aboutView, changePasswordView, dashboardView, deleteIntermediarioView, deletePuntoView, homeView, loginView, logoutView, perfilView, puntosView, registerView, updateIntermediarioView, updatePuntoView
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
@@ -32,7 +32,7 @@ urlpatterns = [
      path('puntosdeacopio/delete/<int:id>/', deletePuntoView, name="deletepunto"),
      path('puntosdeacopio/update/<int:id>/', updatePuntoView, name="updatepunto"),
 
-     path('intermediarios/', IntermediarioSerializer, name="intermediarios"),
+     path('intermediarios/', intermediariosView, name="intermediarios"),
      path('intermediarios/delete/<int:id>/', deleteIntermediarioView, name="deleteintermediario"),
      path('intermediarios/update/<int:id>/', updateIntermediarioView, name="updateintermediario"),
 
