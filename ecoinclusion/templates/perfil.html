@@ -69,7 +69,7 @@
                                 }
                             }
                         </script>
-                        <form method="post" action="/changepassword" onsubmit="return validateForm()">
+                        <form method="post" action="/changepassword/" onsubmit="return validateForm()">
                             {% csrf_token %}
                             <div class="input-field">
                                 <input name="actual" id="actual" type="password" class="validate" required>

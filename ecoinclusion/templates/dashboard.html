@@ -24,12 +24,12 @@ Dashboard
 
                         // The data for our dataset
                         data: {
-                            labels: ["XD","XD","XD"],
+                            labels: {{meses|safe}},
 
                             datasets: [{
                                 label: 'Cantidad de Reciclado',
                                 borderColor: '#005249',
-                                data: [1,5,3],
+                                data: {{depositosYear|safe}},
 
                             },]
                         },

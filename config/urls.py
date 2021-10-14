@@ -21,11 +21,11 @@ from django.conf.urls.static import static
 from config import settings
 
 urlpatterns = [
-    path('jet/', include('jet.urls', 'jet')),
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
-    path('logout', LogoutView.as_view()),
-    path('', include('ecoinclusion.urls')),
+    path("jet/", include("jet.urls", "jet")),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls")),
+    path("logout", LogoutView.as_view()),
+    path("", include("ecoinclusion.urls")),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
