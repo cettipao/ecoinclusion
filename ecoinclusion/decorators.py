@@ -1,16 +1,19 @@
+from datetime import datetime
+
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.contrib import messages
 
+
 def unauthenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('home')
+            return redirect("home")
         else:
             return view_func(request, *args, **kwargs)
-    return wrapper_func
 
+    return wrapper_func
 
 
 def cooperative_verified_required(view_func):
@@ -30,4 +33,3 @@ def cooperative_verified_required(view_func):
             messages.error(request,"Se necesita una cooperativa para acceder a este sitio.")
             return redirect('register')
 
-    return wrapper_func

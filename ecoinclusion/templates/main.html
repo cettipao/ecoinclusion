@@ -50,7 +50,7 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Cooperativas y Empresas</h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="ecoinclusion.org">Ecoinclusion</a></li>
+                    <li><a class="grey-text text-lighten-3">Ecoinclusion</a></li>
                 </ul>
             </div>
         </div>
@@ -58,21 +58,10 @@
     <div class="footer-copyright">
         <div class="container">
             © 2021 Copyright
-            <a class="grey-text text-lighten-4 right" href="">Terminos y Condiciones</a>
         </div>
     </div>
 </footer>
 
-<div class="fixed-action-btn">
-    <a class="btn-floating btn-large green lighten-1">
-        <i class="large material-icons">dehaze</i>
-    </a>
-    <ul>
-        <li><a class="btn-floating green"><i class="material-icons">message</i></a></li>
-        <li><a class="btn-floating blue"><i class="material-icons">arrow_upward</i></a></li>
-        <li><a class="btn-floating red"><i class="material-icons">arrow_downward</i></a></li>
-    </ul>
-</div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -82,24 +71,40 @@
 <style>
 .success{
     background-color: green;
+    font-weight: bold;
 }
 .error{
     background-color: red;
-    color: black;
+    color: white;
+    font-weight: bold;
 }
 .warning{
     background-color: red;
-    color: black;
+    color: white;
+    font-weight: bold;
 }
+.phone-field-ext { display: none; }
 </style>
 {% if messages %}
     {% for message in messages %}
         
         <script>
-            M.toast({html: '{{ message|safe }}',classes: 'rounded center {%  if message.tags %}{{ message.tags }}{% endif %}',displayLength:20000});
+            M.toast({html: '{{ message|safe }}',classes: 'rounded center {%  if message.tags %}{{ message.tags }}{% endif %}',displayLength:3000});
         </script>
     
     {% endfor %}
 
 {% endif %}
+
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+        <script>
+            M.toast({html: '{{ error|escape }}',classes: 'rounded center warning',displayLength:3000});
+        </script>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
 </html>
