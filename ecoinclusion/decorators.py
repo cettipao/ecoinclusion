@@ -18,20 +18,18 @@ def unauthenticated_user(view_func):
 
 def cooperative_verified_required(view_func):
     def wrapper_func(request, *args, **kwargs):
-
-        cooperative = request.user.cooperativa
-        if not request.user.cooperativa.verificado:
-            messages.warning(request,
-                        "Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style=\"color:white;text-decoration: underline\" class=\"modal-trigger\" href=\"#cuentaNoVerificadaModal\">Leer Mas.</a>")
-            
-    
-        return view_func(request, *args, **kwargs)
-
-    
-    
-        logout(request)
-        messages.error(request,"Se necesita una cooperativa para acceder a este sitio.")
-        return redirect('register')
+        try:
+            cooperative = request.user.cooperativa
+            if not request.user.cooperativa.verificado:
+                messages.warning(request,
+                            "Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style=\"color:white;text-decoration: underline\" class=\"modal-trigger\" href=\"#cuentaNoVerificadaModal\">Leer Mas.</a>")
+                
+        
+            return view_func(request, *args, **kwargs)
+        except:
+            logout(request)
+            messages.error(request,"Se necesita una cooperativa para acceder a este sitio.")
+            return redirect('register')
     return wrapper_func
 
 def orderInteranual(lista):
