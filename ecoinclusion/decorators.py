@@ -32,6 +32,7 @@ def cooperative_verified_required(view_func):
             logout(request)
             messages.error(request,"Se necesita una cooperativa para acceder a este sitio.")
             return redirect('register')
+    return wrapper_func
 
 def orderInteranual(lista):
     if datetime.now().month == 1:

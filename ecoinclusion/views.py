@@ -95,44 +95,11 @@ def dashboardView(request):
         "Diciembre",
     ]
 
-    depositos = Deposito.objects.none()
+    depositos = puntos.depositos.all()
 
-    for punto in puntos:
-        depositos_punto = Deposito.objects.filter(
-            lugar=punto,
-            fecha__gt=timezone.now().replace(
-                year=timezone.now().year - 1, month=timezone.now().month + 1
-            ),
-        )
-        depositos.union(depositos_punto)
+    
 
-    for deposito in depositos:
-        if deposito.fecha.month == 1:
-            # print(ausentismo.id)
-            ausentismosYear[0] += 1
-        elif deposito.fecha.month == 2:
-            ausentismosYear[1] += 1
-        elif deposito.fecha.month == 3:
-            ausentismosYear[2] += 1
-        elif deposito.fecha.month == 4:
-            ausentismosYear[3] += 1
-        elif deposito.fecha.month == 5:
-            ausentismosYear[4] += 1
-        elif deposito.fecha.month == 6:
-            ausentismosYear[5] += 1
-        elif deposito.fecha.month == 7:
-            ausentismosYear[6] += 1
-        elif deposito.fecha.month == 8:
-            ausentismosYear[7] += 1
-        elif deposito.fecha.month == 9:
-            ausentismosYear[8] += 1
-        elif deposito.fecha.month == 10:
-            ausentismosYear[9] += 1
-        elif deposito.fecha.month == 11:
-            ausentismosYear[10] += 1
-        elif deposito.fecha.month == 12:
-            ausentismosYear[11] += 1
-
+    
     depositosYear = orderInteranual(depositosYear)
     meses = orderInteranual(meses)
 
