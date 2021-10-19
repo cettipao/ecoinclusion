@@ -210,7 +210,7 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 }
 
-SITE_ID = 5
+SITE_ID = 7
 
 LOGIN_URL = "/login/"
 LOGOUT_REDIRECT_URL = "/"
