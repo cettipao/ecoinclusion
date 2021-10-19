@@ -33,7 +33,7 @@ class CentroDeReciclaje(LugarDeReciclado):
     verificado = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Cooperativa " + self.nombre
+        return "Cooperativa " + self.nombre + " Usuario: " + self.usuario.username
 
 class PuntoDeAcopio(LugarDeReciclado):
     centro = models.ForeignKey('CentroDeReciclaje',related_name='puntos',on_delete=models.CASCADE,)
