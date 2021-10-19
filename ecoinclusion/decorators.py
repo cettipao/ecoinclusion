@@ -33,3 +33,184 @@ def cooperative_verified_required(view_func):
             messages.error(request,"Se necesita una cooperativa para acceder a este sitio.")
             return redirect('register')
 
+def orderInteranual(lista):
+    if datetime.now().month == 1:
+        return [
+            lista[1],
+            lista[2],
+            lista[3],
+            lista[4],
+            lista[5],
+            lista[6],
+            lista[7],
+            lista[8],
+            lista[9],
+            lista[10],
+            lista[11],
+            lista[0],
+        ]
+    elif datetime.now().month == 2:
+        return [
+            lista[2],
+            lista[3],
+            lista[4],
+            lista[5],
+            lista[6],
+            lista[7],
+            lista[8],
+            lista[9],
+            lista[10],
+            lista[11],
+            lista[0],
+            lista[1],
+        ]
+    elif datetime.now().month == 3:
+        return [
+            lista[3],
+            lista[4],
+            lista[5],
+            lista[6],
+            lista[7],
+            lista[8],
+            lista[9],
+            lista[10],
+            lista[11],
+            lista[0],
+            lista[1],
+            lista[2],
+        ]
+    elif datetime.now().month == 4:
+        return [
+            lista[4],
+            lista[5],
+            lista[6],
+            lista[7],
+            lista[8],
+            lista[9],
+            lista[10],
+            lista[11],
+            lista[0],
+            lista[1],
+            lista[2],
+            lista[3],
+        ]
+    elif datetime.now().month == 5:
+        return [
+            lista[5],
+            lista[6],
+            lista[7],
+            lista[8],
+            lista[9],
+            lista[10],
+            lista[11],
+            lista[0],
+            lista[1],
+            lista[2],
+            lista[3],
+            lista[4],
+        ]
+    elif datetime.now().month == 6:
+        return [
+            lista[6],
+            lista[7],
+            lista[8],
+            lista[9],
+            lista[10],
+            lista[11],
+            lista[0],
+            lista[1],
+            lista[2],
+            lista[3],
+            lista[4],
+            lista[5],
+        ]
+    elif datetime.now().month == 7:
+        return [
+            lista[7],
+            lista[8],
+            lista[9],
+            lista[10],
+            lista[11],
+            lista[0],
+            lista[1],
+            lista[2],
+            lista[3],
+            lista[4],
+            lista[5],
+            lista[6],
+        ]
+    elif datetime.now().month == 8:
+        return [
+            lista[8],
+            lista[9],
+            lista[10],
+            lista[11],
+            lista[0],
+            lista[1],
+            lista[2],
+            lista[3],
+            lista[4],
+            lista[5],
+            lista[6],
+            lista[7],
+        ]
+    elif datetime.now().month == 9:
+        return [
+            lista[9],
+            lista[10],
+            lista[11],
+            lista[0],
+            lista[1],
+            lista[2],
+            lista[3],
+            lista[4],
+            lista[5],
+            lista[6],
+            lista[7],
+            lista[8],
+        ]
+    elif datetime.now().month == 10:
+        return [
+            lista[10],
+            lista[11],
+            lista[0],
+            lista[1],
+            lista[2],
+            lista[3],
+            lista[4],
+            lista[5],
+            lista[6],
+            lista[7],
+            lista[8],
+            lista[9],
+        ]
+    elif datetime.now().month == 11:
+        return [
+            lista[11],
+            lista[0],
+            lista[1],
+            lista[2],
+            lista[3],
+            lista[4],
+            lista[5],
+            lista[6],
+            lista[7],
+            lista[8],
+            lista[9],
+            lista[10],
+        ]
+    elif datetime.now().month == 12:
+        return [
+            lista[0],
+            lista[1],
+            lista[2],
+            lista[3],
+            lista[4],
+            lista[5],
+            lista[6],
+            lista[7],
+            lista[8],
+            lista[9],
+            lista[10],
+            lista[11],
+        ]
