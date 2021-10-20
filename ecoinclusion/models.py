@@ -34,8 +34,8 @@ class CentroDeReciclaje(LugarDeReciclado):
         User, related_name="cooperativa", on_delete=models.CASCADE
     )
     telefono = models.CharField(max_length=50, null=True, blank=True)
-    horario_inicio = models.TimeField(null=True, blank=True)
-    horario_final = models.TimeField(null=True, blank=True)
+    horario_apertura = models.TimeField(null=True, blank=True)
+    horario_cierre = models.TimeField(null=True, blank=True)
     verificado = models.BooleanField(default=False)
 
     def __str__(self):

@@ -71,8 +71,8 @@ class CentroDeReciclajeForm(ModelForm):
             "lat",
             "long",
             "telefono",
-            "horario_inicio",
-            "horario_final",
+            "horario_apertura",
+            "horario_cierre",
         ]
 
     def __init__(self, *args, **kwargs):
@@ -85,8 +85,8 @@ class CentroDeReciclajeForm(ModelForm):
         self.fields["long"].min_value = -180
         self.fields["nombre"].required = True
         self.fields["telefono"].required = True
-        self.fields["horario_final"].required = True
-        self.fields["horario_inicio"].required = True
+        self.fields["horario_apertura"].required = True
+        self.fields["horario_cierre"].required = True
 
 
 class PuntoDeAcopioForm(ModelForm):
