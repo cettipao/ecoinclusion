@@ -243,7 +243,7 @@ def puntosView(request):
         if form.is_valid():
             obj = form.save()
             messages.success(
-                request, f"Punto de acopio '{obj.nombre}' creado con Exito."
+                request, "Punto de acopio {} creado con Exito.".format(obj.nombre)
             )
             form = PuntoDeAcopioForm(instance=insatnce)
         else:
