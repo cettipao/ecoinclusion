@@ -56,6 +56,7 @@ class IntermediarioForm(ModelForm):
         self.fields["nombre"].required = True
         self.fields["telefono"].required = True
         self.fields["lugares"].queryset = centro.puntos.all()
+        self.fields["lugares"].label = "Puntos de acopio"
         self.fields["lugares"].required = True
         self.fields["dias_disponibles"].required = True
 
