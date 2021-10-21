@@ -6,45 +6,30 @@ Somos
 {% block content %}
 
     <div class="section white">
-        <div class="row container center-align">
-            <div class="col s12 m10 l10 offset-l1 offset-m1">
-                <div class="row ">
-                    <img src="{% static '/media/Icono-somos.png' %}">
+        <div class="row">
+            <div class="col s12 m6 l6  offset-m1 offset-l1">
+                    <p style="font-size: 30px; line-height:36,57; margin-bottom:6px;">Descubrí</p>
+                    <h1 style="font-weight: bold; margin-bottom:15px;text-shadow: 0 3px 0 grey;" class="">APP Ecoinclusión</h1>
+                    <p style="font-size:22px; line-heigh:30px; margin-bottom:15px;" >Registrate con tu usuario y contraseña <br> y empezá a hacer el cambio. </p>
+                    <img src="{% static '/media/googleplay.png' %}" width="30%">
                 </div>
-                <div class="row ">
-                    <h1 class="header">MOBILE</h1>
 
-                    <p class="grey-text text-darken-3 lighten-3 left-align">La problemática de los desechos plásticos
-                        convoca a un estado de emergencia climática y social a nivel mundial, donde nuestros hábitos
-                        individuales y acciones colectivas necesitan ser redireccionadas hacia un paradigma de
-                        sustentabilidad y triple impacto. Por eso queremos facilitar a que cada vez mas usuarios
-                        reciclen.</p>
-                </div>
+            <div class="col s12 l5 m5"> 
+                <img src="{% static '/media/celular.png' %}" width="65%">
             </div>
+            </div>
+        </div>
+    <div class="section grey lighten-2">
+        <div class="row container">
+            <h3 class="green-text">¿Qué puedo hacer en la app?</h3>
+            <ul class="grey-text" style="font-size: 21px;">
+                <li>- Encontrar los puntos de acopio mas cercanos a vos.</li>
+                <li>- Agendar un encuentro con un intermediario para que retire tus ecoladrillos.</li>
+                <li>- Ver todas tus estadísticas acerca de tus donaciones.</li>
+                <li>- Informarte sobre las cooperativas asociadas a ecoinclusion</li>
+                <li>¡Y mucho más!</li>
+            </ul>
         </div>
     </div>
-    <div class="section grey lighten-4">
-        <div class="row container center-align valign-wrapper">
-            <div class="col s12 m6 l6">
-                <div class="row container center-align">
-                    <img width="100%" src="{% static '/media/logo-ecoinclusion.png' %}">
-                </div>
-            </div>
-            <div class="col s12 m6 l6">
-                <img width="40%" src="{% static '/media/villada.png' %}">
-            </div>
-        </div>
-        <div class="row container center-align valign-wrapper">
-            <div class="col s12 m12 l12">
-                <p class="grey-text text-darken-3 lighten-3">Ecoinclusion junto a Estudiantes del ITS Villada
-                    desarrollan esta propuesta de reciclaje.</p>
-            </div>
-        </div>
-    </div>
-    <div class="parallax-container">
-        <div class="parallax">
-            <div class="parallax"><img src="{% static '/media/Imagen-portada-800x735.jpg' %}"></div>
-        </div>
-    </div>
-
+            
 {% endblock %}
