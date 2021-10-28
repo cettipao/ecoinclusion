@@ -29,8 +29,8 @@ class CentroSerializer(serializers.ModelSerializer):
             "lat",
             "long",
             "telefono",
-            "horario_inicio",
-            "horario_final",
+            "horario_apertura",
+            "horario_cierre",
             "verificado",
         ]
 
