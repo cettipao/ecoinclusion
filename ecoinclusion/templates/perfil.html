@@ -7,9 +7,9 @@
 
 {% block content %}
     <input type="text" value="formCentro" id="current-form" hidden >
-    <div class="row">
+    <div class="row center">
         <h3 class="center-align">Perfil</h3>
-        <div class="col s12 m6 l6">
+        <div class="col s12 m6 l6 offset-m3 offset-l3">
             <div class="card">
                 <div class="card-content">
                     <span class="card-title"><b>Datos Generales</b></span>
@@ -33,68 +33,25 @@
                 </div>
             </div>
         </div>
-        <div id="modalmap" class="modal" style="overflow-y: visible;">
-            <div class="modal-content" >
-                {% include "googleMaps.html" %}
-            </div>
-            <div class="modal-footer">
-                <a class="modal-close waves-effect btn-flat" >Cancelar</a>
-                <a  class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger" id="ok"
-                            href="#latlong"><i
-                                    class="material-icons right">save</i>Guardar</a>
-            </div>
+        
+    </div>
+    <div id="modalmap" class="modal" style="overflow-y: visible;">
+        <div class="modal-content" >
+            {% include "googleMaps.html" %}
         </div>
-        <div id="latlong" class="modal" style="overflow-y: visible;">
-            <div class="modal-content" >
-                latitud y longitud actualizados con exito
-            </div>
-            <div class="modal-footer">
-                <a class="modal-close waves-effect btn-flat" >Aceptar</a>
-            </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect btn-flat" >Cancelar</a>
+            <a  class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger" id="ok"
+                        href="#latlong"><i
+                                class="material-icons right">save</i>Guardar</a>
         </div>
-        <div class="col s12 m6 l6">
-            <div class="card">
-                <div class="card-content">
-                    {% if social %} {# Si Esta Logeado desde SocialApp no tiene Password #}
-                        <span class="card-title"><b>Logeado desde Google o Facebook</b></span>
-                    {% else %}
-                        <span class="card-title"><b>Cambiar Contraseña</b></span>
-                        <script>
-                            function validateForm() {
-                                pass1 = document.getElementById("password1")
-                                pass2 = document.getElementById("password2")
-                                if(pass1.value!=pass2.value){
-                                    pass2.className = "validate invalid"
-                                    return false;
-                                }
-                            }
-                        </script>
-                        <form method="post" action="/changepassword/" onsubmit="return validateForm()">
-                            {% csrf_token %}
-                            <div class="input-field">
-                                <input name="actual" id="actual" type="password" class="validate" required>
-                                <label for="actual">Contraseña actual</label>
-                            </div>
-                            <div class="input-field">
-                                <input name="password1" id="password1" type="password" class="validate" required>
-                                <label for="password1">Nueva Contraseña</label>
-                            </div>
-                            <div class="input-field">
-                                <input name="password2" id="password2" type="password" class="validate" required>
-                                <label for="password2">Confirmar Contraseña</label>
-                                <span id="helper" class="helper-text" data-error="Las contraseñas no coinciden"
-                                      data-success=""></span>
-                            </div>
-                            <div class="center-align">
-                                <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit"
-                                        name="action">Confirmar
-                                </button>
-                            </div>
-
-                        </form>
-                    {% endif %}
-                </div>
-            </div>
+    </div>
+    <div id="latlong" class="modal" style="overflow-y: visible;">
+        <div class="modal-content" >
+            latitud y longitud actualizados con exito
+        </div>
+        <div class="modal-footer">
+            <a class="modal-close waves-effect btn-flat" >Aceptar</a>
         </div>
     </div>
 {% endblock %}

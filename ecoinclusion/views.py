@@ -47,6 +47,7 @@ from .models import (
 )
 from .decorators import (
     cooperative_verified_required,
+    cooperative_verified_required_for_perfil,
     unauthenticated_user,
     orderInteranual,
 )
@@ -169,7 +170,7 @@ def intermediariosView(request):
     intermediarios = Intermediario.objects.filter(centro=centro)
     forms_and_objects = []
     for intermediario in intermediarios:
-        f = IntermediarioForm(instance=instance)
+        f = IntermediarioForm(instance=intermediario)
         form_and_object = FormAndObject(form=f, object=intermediario)
         forms_and_objects.append(form_and_object)
     context = {
@@ -300,7 +301,7 @@ def updatePuntoView(request, id):
 
 
 @login_required
-@cooperative_verified_required
+@cooperative_verified_required_for_perfil
 def perfilView(request):
     centro = get_object_or_404(CentroDeReciclaje, usuario=request.user)
     social = False

@@ -27,6 +27,7 @@ class PuntoFilter(django_filters.FilterSet):
         fields = {
             "lat": [],
             "long": [],
+            "direccion": ["icontains"],  
             "tipo_de_reciclado": ["exact"],
             "nombre": ["icontains"],
             "centro": ["exact"],
@@ -56,6 +57,7 @@ class CentroFilter(django_filters.FilterSet):
         fields = {
             "lat": [],
             "long": [],
+            "direccion": ["icontains"], 
             "nombre": ["icontains"],
             "verificado": ["exact"],
         }

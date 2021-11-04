@@ -28,6 +28,7 @@ class CentroSerializer(serializers.ModelSerializer):
             "tipo_de_reciclado",
             "lat",
             "long",
+            "direccion",
             "telefono",
             "horario_apertura",
             "horario_cierre",
@@ -46,6 +47,7 @@ class PuntoSerializer(serializers.ModelSerializer):
             "tipo_de_reciclado",
             "lat",
             "long",
+            "direccion",
             "getTiporeciclado",
             "cant_intermediarios",
         ]
