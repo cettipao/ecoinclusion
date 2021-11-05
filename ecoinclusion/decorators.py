@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.contrib import messages
+from .models import CentroDeReciclaje
 
 
 def unauthenticated_user(view_func):
@@ -26,11 +27,17 @@ def cooperative_verified_required(view_func):
                 return redirect('perfil')
                 
         
-            return view_func(request, *args, **kwargs)
+            
         except:
-            logout(request)
-            messages.error(request,"Se necesita una cooperativa para acceder a este sitio.")
-            return redirect('register')
+            
+            cooperative = CentroDeReciclaje.objects.create(usuario=request.user)
+            messages.success(request, "Cooperativa creada")
+            messages.warning(request,"Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style=\"color:white;text-decoration: underline\" class=\"modal-trigger\" href=\"#cuentaNoVerificadaModal\">Leer Mas.</a>")
+            return redirect("perfil")
+            
+                
+        return view_func(request, *args, **kwargs)
+            
     return wrapper_func
 
 def cooperative_verified_required_for_perfil(view_func):
@@ -41,9 +48,10 @@ def cooperative_verified_required_for_perfil(view_func):
         
             return view_func(request, *args, **kwargs)
         except:
-            logout(request)
-            messages.error(request,"Se necesita una cooperativa para acceder a este sitio.")
-            return redirect('register')
+            cooperative = CentroDeReciclaje.objects.create(usuario=request.user)
+            messages.success(request, "Cooperativa creada")
+            messages.warning(request,"Esta cuenta no esta Verificada como Coperativa o Empresa.  <a style=\"color:white;text-decoration: underline\" class=\"modal-trigger\" href=\"#cuentaNoVerificadaModal\">Leer Mas.</a>")
+            return redirect("perfil")
     return wrapper_func
 
 def orderInteranual(lista):

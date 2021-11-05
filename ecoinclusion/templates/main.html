@@ -16,6 +16,7 @@
     
 </head>
 <body>
+<script type="text/javascript"  src="{% static 'js/map.js' %}"></script>
 
     {% include "navbar.html" %}
 
@@ -23,7 +24,7 @@
 <div id="cuentaNoVerificadaModal" class="modal">
     <div class="modal-content">
         <h4>Cuenta no Verificada</h4>
-        <p>Esta cuenta todavia no ha sido verificada por nuestros administradores. Es decir, tus Puntos de Acopio e Intermediarios no seran visibles al publico.<br>Para acelerar la verificacion <a href="/perfil">Completa los datos de tu perfil</a> o contactenos.</a></p>
+        <p>Esta cuenta todavia no ha sido verificada por nuestros administradores. Es decir, tus Puntos de Acopio e Intermediarios no seran visibles al publico.<br>Para acelerar la verificacion <a href="/perfil">Completa los datos de tu perfil</a></p>
     </div>
     <div class="modal-footer">
         <a class="modal-close waves-effect waves-green btn-flat">Aceptar</a>
@@ -36,8 +37,6 @@
 {% endblock %}
 </main>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-
-<script type="text/javascript"  src="{% static 'js/map.js' %}"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
 <script type="text/javascript"  src="{% static 'js/index.js' %}"></script>

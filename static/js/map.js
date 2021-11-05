@@ -5,7 +5,7 @@ function setForm(name){
   // console.log(document.forms[name].name);
   document.getElementById("current-form").dispatchEvent(new Event("change"))
 }
-function setPoint(lat,lng){
+function setPoint(lat,lng, address){
 
 
   // console.log(lat)
@@ -13,6 +13,7 @@ function setPoint(lat,lng){
   var form = document.forms[document.getElementById("current-form").value]
   form.elements.lat.value = lat;
   form.elements.long.value = lng;
+  form.elements.direccion.value = address;
 }
 
 
@@ -59,7 +60,7 @@ function initAutocomplete() {
     "</div>" +
     '<h4 id="firstHeading" class="firstHeading">' + name + '</h4>' +
     '<div id="bodyContent">' +
-    "<button class='btn btn-small waves-effect waves-light green lighten-1' onclick='setPoint(" + center_marker.getPosition().toJSON().lat + "," + center_marker.getPosition().toJSON().lng + ")'>Guardar esta ubicacion</button>" +
+    "<button class='btn btn-small waves-effect waves-light green lighten-1' onclick='setPoint(" + center_marker.getPosition().toJSON().lat + "," + center_marker.getPosition().toJSON().lng + ",'')'>Guardar esta ubicacion</button>" +
     "</div>" +
   "</div>";
   let infoWindow = new google.maps.InfoWindow({
@@ -90,7 +91,7 @@ function initAutocomplete() {
         // console.log("Returned place contains no geometry");
         return;
       }
-      changePoint(center_marker,place.geometry.location,place.name,infoWindow,map);
+      changePoint(center_marker,place.geometry.location,place.name,infoWindow,map,place);
     });
   });
   google.maps.event.addListener(map, "click", (event) => {
@@ -114,7 +115,7 @@ function changePoint(marker,location,name,infoWindow,map){
     "</div>" +
     '<h4 id="firstHeading" class="firstHeading">' + name + '</h4>' +
     '<div id="bodyContent">' +
-    "<button class='btn btn-small waves-effect waves-light green lighten-1' onclick='setPoint(" + marker.getPosition().toJSON().lat + "," + marker.getPosition().toJSON().lng + ")'>Guardar esta ubicacion</button>" +
+    "<button class='btn btn-small waves-effect waves-light green lighten-1' onclick='setPoint(" + marker.getPosition().toJSON().lat + "," + marker.getPosition().toJSON().lng + ",'')'>Guardar esta ubicacion</button>" +
     "</div>" +
   "</div>";
   infoWindow.setContent(contentString);

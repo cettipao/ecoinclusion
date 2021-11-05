@@ -29,7 +29,7 @@
                                     class="material-icons right">map</i>Seleccionar Ubicacion en el mapa</a>
                         </div>
                         {{form.error}}
-                        <div class="center-align">
+                        <div class="center">
                             <button data-tooltip="'Click' para crear un nuevo punto de acopio." class="btn waves-effect waves-light green tooltipped" type="submit">
                             <i class="material-icons right">create</i>Crear
                             </button>
@@ -109,25 +109,8 @@
                 </div>
             </div>
         </div>
-        <div id="modalmap" class="modal" style="overflow-y: visible;">
-            <div class="modal-content scrollspy" >
-                {% include "googleMaps.html" %}
-            </div>
-            <div class="modal-footer">
-                <a class="modal-close waves-effect btn-flat">Cancelar</a>
-                <a data-tooltip="'Click' para guardar sus cambios" class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                id="ok"><i
-                        class="material-icons right">save</i>Guardar</a>
-            </div>
-        </div>
-        <div id="latlong" class="modal" style="overflow-y: visible;">
-            <div class="modal-content" >
-                Latitud y Longitud actualizados con éxito
-            </div>
-            <div class="modal-footer">
-                <a class="modal-close waves-effect btn-flat" >Aceptar</a>
-            </div>
-        </div>
+        {% include "googleMaps.html" %}
+            
     </div>
 
 

@@ -24,8 +24,8 @@
                             
                         </div>
                         
-                        <div class="center-align">
-                            <button style="width: 20%;" class="btn waves-effect waves-light green" type="submit"
+                        <div class="center">
+                            <button  class="btn waves-effect waves-light green" type="submit"
                             >Actualizar
                             </button>
                         </div>
@@ -35,23 +35,7 @@
         </div>
         
     </div>
-    <div id="modalmap" class="modal" style="overflow-y: visible;">
-        <div class="modal-content" >
-            {% include "googleMaps.html" %}
-        </div>
-        <div class="modal-footer">
-            <a class="modal-close waves-effect btn-flat" >Cancelar</a>
-            <a  class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger" id="ok"
-                        href="#latlong"><i
-                                class="material-icons right">save</i>Guardar</a>
-        </div>
-    </div>
-    <div id="latlong" class="modal" style="overflow-y: visible;">
-        <div class="modal-content" >
-            latitud y longitud actualizados con exito
-        </div>
-        <div class="modal-footer">
-            <a class="modal-close waves-effect btn-flat" >Aceptar</a>
-        </div>
-    </div>
+    
+    {% include "googleMaps.html" %}
+        
 {% endblock %}

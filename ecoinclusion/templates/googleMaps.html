@@ -1,15 +1,26 @@
 
 
                
-<div class="row">
-   
-    <input
-        id="pac-input"
-        class="controls"
-        type="text"
-        placeholder="Search Box"
-        />
-    
-    <div id="map" class="col s12"></div>                               
-    <script src="https://maps.googleapis.com/maps/api/js?key={{google_api_key}}&callback=initAutocomplete&libraries=places,drawing" async></script>
+
+<div id="modalmap" class="modal" style="overflow-y: visible;">
+    <div class="modal-content scrollspy" >
+        <div class="row">
+        
+            <input
+                id="pac-input"
+                class="controls"
+                type="text"
+                placeholder="Search Box"
+                />
+            
+            <div id="map" class="col s12"></div>                               
+            <script src="https://maps.googleapis.com/maps/api/js?key={{google_api_key}}&callback=initAutocomplete&libraries=places,drawing" async></script>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="modal-close waves-effect btn-flat">Cancelar</a>
+        <button data-tooltip="'Click' para guardar sus cambios" class="modal-close btn btn-small waves-effect waves-light green lighten-1  tooltipped"
+        id="ok"><i
+                class="material-icons right">save</i>Guardar</button>
+    </div>
 </div>
