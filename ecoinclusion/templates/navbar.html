@@ -47,14 +47,14 @@
 	{% endif %}
 </ul>
 
-<nav class="white nav-extended" role="navigation">
-	<div class="nav-wrapper ">
-		<a id="logo-container" href="{{home_url}}" class="brand-logo"><img src="{% static '/media/logo-ecoinclusion.png' %}" alt="ecoinclusion" loading="lazy"></a>
+<nav class="white nav"  role="navigation">
+	<div class="nav-wrapper">
+		<div ><a id="logo-container" href="{{home_url}}" class="brand-logo"><img src="{% static '/media/logo_en_linea.png' %}" alt="ecopuntos" loading="lazy" style="margin: 5px;" height="54"></a></div>
 		
 		<ul class="right hide-on-med-and-down">
-			<li><a  class="black-text" href="{{about_url}}"><i class="material-icons left">book</i>Somos</a></li>
-			<li><a  class="black-text" href="/mobile"><i class="material-icons left">smartphone</i>App Movil</a></li>
-		    <li><a class="dropdown-trigger black-text" href="" data-target="dropdown2"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>
+			<li><a style="font-size:150% ;" class="black-text" href="{{about_url}}"><i class="material-icons left">book</i>Somos</a></li>
+			<li><a style="font-size:150% ;" class="black-text" href="/mobile"><i class="material-icons left">smartphone</i>App Movil</a></li>
+		    <li><a style="font-size:150% ;" class="dropdown-trigger black-text" href="" data-target="dropdown2"><i class="material-icons right">arrow_drop_down</i>Cooperativas y Empresas</a></li>
 			{% if request.user.is_authenticated %}
 				<li><a  class="dropdown-trigger black-text" href="" data-target="dropdown4"><i class="material-icons left">tag_faces</i><i class="material-icons right">arrow_drop_down</i>¡Hola {{request.user.username}}!</a></li>
 			{% endif %}
