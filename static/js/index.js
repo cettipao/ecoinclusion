@@ -54,7 +54,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.dropdown-trigger');
     var instances = M.Dropdown.init(elems,{coverTrigger: false});
   });
-
+  document.addEventListener('DOMContentLoaded', function() {
+    var instance = M.Carousel.init({
+        fullWidth: true,
+        indicators: true
+      });
+  });
+  
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {

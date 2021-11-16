@@ -21,7 +21,7 @@ class TipoDeReciclado(models.Model):
 
 class LugarDeReciclado(models.Model):
     nombre = models.CharField(max_length=100)
-    tipo_de_reciclado = models.ManyToManyField("TipoDeReciclado")
+    tipo_de_reciclado = models.ManyToManyField("TipoDeReciclado", blank=True)
     lat = models.DecimalField(max_digits=23, decimal_places=21, null=True, blank=True)
     long = models.DecimalField(max_digits=24, decimal_places=21, null=True, blank=True)
     direccion = models.CharField(max_length=100)

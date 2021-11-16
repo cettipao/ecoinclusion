@@ -73,6 +73,7 @@ class CentroDeReciclajeForm(ModelForm):
             "long",
             "direccion",
             "telefono",
+            "tipo_de_reciclado",
             "horario_apertura",
             "horario_cierre",
         ]
@@ -87,6 +88,7 @@ class CentroDeReciclajeForm(ModelForm):
         self.fields["long"].min_value = -180
         self.fields["nombre"].required = True
         self.fields["telefono"].required = True
+        self.fields["tipo_de_reciclado"].required = True
         self.fields["horario_apertura"].required = True
         self.fields["horario_cierre"].required = True
 
