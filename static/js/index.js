@@ -55,9 +55,11 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Dropdown.init(elems,{coverTrigger: false});
   });
   document.addEventListener('DOMContentLoaded', function() {
-    var instance = M.Carousel.init({
+    var elems = document.querySelectorAll('.carousel');
+    var instances = M.Carousel.init(elems,{
         fullWidth: true,
-        indicators: true
+        indicators: true,
+    
       });
   });
   
