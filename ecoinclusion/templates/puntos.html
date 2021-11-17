@@ -7,7 +7,7 @@
 {% block content %}
     <input type="text" value="formNewPunto" id="current-form" hidden >
     <div class="row">
-        <h3 class="center-align">Puntos de Acopio</h3>
+        <h1 class="center-align">Puntos de Acopio</h1>
         <div class="col s12">
             <ul class="tabs">
                 <li class="tab col s6"><a class="active" href="#administrar">Administrar</a></li>
@@ -15,31 +15,35 @@
             </ul>
         </div>
         <div id="new_object" class="col s12 m12 l12">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title"><b>Crear Punto de Acopio</b></span>
+            <form method="POST"  name="formNewPunto" id="formNewPunto">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title"><b>Crear Punto de Acopio</b></span>
 
-                    <form method="POST"  name="formNewPunto" id="formNewPunto">
-                        {% csrf_token %}
                         
+                        {% csrf_token %}
                         {{form.as_p}}
                         <div class="input-field center">
-                            <a onclick="setForm('formNewPunto')"data-tooltip="'Click' para buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                            href="#modalmap"><i
-                                    class="material-icons right">map</i>Seleccionar Ubicacion en el mapa</a>
+                            <a onclick="setForm('formNewPunto')"data-tooltip="Buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped" href="#modalmap">
+                                <i class="material-icons right">map</i>
+                                Seleccionar Ubicacion en el mapa
+                            </a>
                         </div>
                         {{form.error}}
-                        <div class="center">
-                            <button data-tooltip="'Click' para crear un nuevo punto de acopio." class="btn waves-effect waves-light green tooltipped" type="submit">
-                            <i class="material-icons right">create</i>Crear
-                            </button>
-                        </div>
-
-                    </form>
                     
+                    </div>
+                    <div class="card-action right-align">
+                    <button data-tooltip="Crear nuevo punto de acopio" class="btn waves-effect waves-light green tooltipped" type="submit">
+                            <i class="material-icons right">add</i>Crear
+                        </button>
+                    </div>
                 </div>
+                
+                            
+
+                
             </div>
-        </div>
+        </form>
         <div id="administrar" class="col s12 m12 l12">
             <div class="card">
                 <div class="card-content">
@@ -47,9 +51,8 @@
                     <table class="responsive-table highlight">
                         <thead>
                         <tr>
-                            <th>Punto de Acopio</th>
-                            <th>Latitud</th>
-                            <th>Longitud</th>
+                            <th>Nombre</th>
+                            <th>Direccion</th>
                             <th>Tipo de Reciclado</th>
                             <th>Intermediarios</th>
                             <th></th>
@@ -61,44 +64,51 @@
                         {% for i in puntos_form %}
                             <tr>
                                 <td>{{ i.object.nombre }}</td>
-                                <td>{{ i.object.lat }}</td>
-                                <td>{{ i.object.long }}</td>
+                                <td>{{ i.object.direccion }}</td>
                                 <td>{{ i.object.getTiporeciclado }}</td>
                                 <td>{{ i.object.cant_intermediarios }}</td>
                                 <td>
-                                    <a data-tooltip="'Click' para editar el punto de acopio" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                                       href="#modal{{ i.object.id }}"><i
-                                            class="material-icons">edit</i></a>
+                                    <a data-tooltip="Editar" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped" href="#modal{{ i.object.id }}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
                                     <form method="POST" name="form{{ i.object.id }}" id="form{{ i.object.id }}" action="{% url 'updatepunto' i.object.id %}">
                                         <div id="modal{{ i.object.id }}" class="modal" style="overflow-y: visible;">
                                             <div class="modal-content">
-                                                <h6>Editar punto de Acopio '{{ i.object.nombre }}'</h6>
+                                                <h4>Editar punto de Acopio '{{ i.object.nombre }}'</h4>
                                                 {% csrf_token %}
                                                 {{i.form.as_p}}
                                                 <div class="input-field center">
-                                                    <a onclick="setForm('form{{ i.object.id }}')"data-tooltip="'Click' para buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                                                    href="#modalmap"><i
-                                                            class="material-icons right">map</i>seleccionar Ubicacion en el mapa</a>
+                                                    <a onclick="setForm('form{{ i.object.id }}')"data-tooltip="Buscar o seleccionar un punto en el mapa" class="btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped" href="#modalmap">
+                                                        <i class="material-icons right">map</i>
+                                                        Seleccionar ubicacion en el mapa
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="modal-close waves-effect btn-flat">Cancelar</a>
-                                                <button class="waves-effect btn-flat">Guardar</button>
+                                                <button data-tooltip="Guardar cambios" class="modal-close btn waves-effect waves-light green tooltipped" type="submit">
+                                                    <i class="material-icons right">save</i>Guardar
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
                                 </td>
-                                <td><label>
-                                <a data-tooltip="'Click' para eliminar el punto de acopio" href="#modalDelete{{ i.object.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"><i
-                                         class="material-icons">delete</i></a></td>
+                                <td>
+                                    <a data-tooltip="Eliminar" href="#modalDelete{{ i.object.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </td>
                                 <div id="modalDelete{{ i.object.id }}" class="modal">
                                     <div class="modal-content">
-                                        <h4>Eliminar Punto de Acopio</h4><br>
-                                        <p>¿Seguro quiere eliminar el punto {{ punto.nombre }}?</p>
+                                        <h4>Eliminar Punto de Acopio '{{ i.object.nombre }}'</h4><br>
+                                        <p>¿Seguro quiere eliminar el punto de acopio?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a data-tooltip="'Click' para cancelar eliminacion" class="modal-close waves-effect btn-flat tooltipped">Cancelar</a>
-                                        <a data-tooltip="'Click' para eliminar definitivamente al punto" href="{% url 'deletepunto' i.object.id %}" class="waves-effect btn-flat red white-text">Eliminar</a>
+                                        <a data-tooltip="Cancelar" class="modal-close waves-effect btn-flat tooltipped">Cancelar</a>
+                                        <a data-tooltip="Eliminar definitivamente" href="{% url 'deletepunto' i.object.id %}" class="modal-close waves-effect btn-flat red white-text">
+                                            <i class="material-icons right">delete</i>
+                                            Eliminar
+                                        </a>
                                     </div>
                                 </div>
                             </tr>

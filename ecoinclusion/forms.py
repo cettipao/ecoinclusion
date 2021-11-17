@@ -69,13 +69,13 @@ class CentroDeReciclajeForm(ModelForm):
         model = CentroDeReciclaje
         fields = [
             "nombre",
-            "lat",
-            "long",
-            "direccion",
             "telefono",
             "tipo_de_reciclado",
             "horario_apertura",
             "horario_cierre",
+            "direccion",
+            "lat",
+            "long",
         ]
 
     def __init__(self, *args, **kwargs):
@@ -99,7 +99,7 @@ class PuntoDeAcopioForm(ModelForm):
 
     class Meta:
         model = PuntoDeAcopio
-        fields = ["nombre", "lat", "long", "direccion", "tipo_de_reciclado"]
+        fields = ["nombre", "tipo_de_reciclado", "direccion", "lat", "long"]
 
     def __init__(self, *args, **kwargs):
         super(PuntoDeAcopioForm, self).__init__(*args, **kwargs)

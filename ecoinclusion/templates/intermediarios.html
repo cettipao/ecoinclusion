@@ -7,7 +7,7 @@
 {% block content %}        
     <input type="text" id="current-form" hidden >
     <div class="row">
-        <h3 class="center-align">Intermediarios</h3>
+        <h1 class="center-align">Intermediarios</h1>
         <div class="col s12">
             <ul class="tabs">
                 <li class="tab col s6"><a class="active" href="#administrar">Administrar</a></li>
@@ -38,35 +38,42 @@
                                 <td>{{ i.object.getPuntosName }}</td>
                                 <td>{{ i.object.getDias }}</td>
                                 <td>
-                                    <a data-tooltip="'Click' para editar el intermediario" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                                       href="#modal{{ i.object.id }}"><i
-                                            class="material-icons">edit</i></a>
+                                    <a data-tooltip="Editar" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped" href="#modal{{ i.object.id }}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
                                     <form method="POST" name="form{{ punto.id }}" id="form{{ i.object.id }}" action="{% url 'updateintermediario' i.object.id %}">
                                         <div id="modal{{ i.object.id }}" class="modal" style="overflow-y: visible;">
                                             <div class="modal-content">
-                                                <h6>Editar intermediario '{{ i.object.nombre }}'</h6>
+                                                <h4>Editar intermediario '{{ i.object.nombre }}'</h4>
                                                 {% csrf_token %}
                                                 {{i.form.as_p}}
                                                 
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="modal-close waves-effect btn-flat">Cancelar</a>
-                                                <button type="submit" class="waves-effect btn-flat">Guardar</button>
+                                                <button data-tooltip="Guardar cambios" class="modal-close btn waves-effect waves-light green tooltipped" type="submit">
+                                                    <i class="material-icons right">save</i>Guardar
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
                                 </td>
-                                <td><label>
-                                <a data-tooltip="'Click' para eliminar el intermediario" href="#modalDelete{{ i.object.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"><i
-                                         class="material-icons">delete</i></a></td>
+                                <td>
+                                    <a data-tooltip="Eliminar" href="#modalDelete{{ i.object.id }}" class="btn-floating btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </td>
                                 <div id="modalDelete{{ i.object.id }}" class="modal">
                                     <div class="modal-content">
-                                        <h4>Eliminar intermediario</h4><br>
-                                        <p>¿Seguro quiere eliminar el intermediario {{ i.object.nombre }}?</p>
+                                        <h4>Eliminar intermediario '{{ i.object.nombre }}'</h4><br>
+                                        <p>¿Seguro quiere eliminar el intermediario?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a data-tooltip="'Click' para cancelar eliminacion" class="modal-close waves-effect btn-flat tooltipped">Cancelar</a>
-                                        <a data-tooltip="'Click' para eliminar definitivamente al intermediario" href="{% url 'deleteintermediario' i.object.id %}" class="waves-effect btn-flat red white-text">Eliminar</a>
+                                        <a data-tooltip="Cancelar " class="modal-close waves-effect btn-flat tooltipped">Cancelar</a>
+                                        <a data-tooltip="Eliminar definitivamente" href="{% url 'deleteintermediario' i.object.id %}" class="modal-close waves-effect btn-flat red white-text">
+                                            <i class="material-icons right">delete</i>
+                                            Eliminar
+                                        </a>
                                     </div>
                                 </div>
                             </tr>
@@ -79,40 +86,21 @@
             
         </div>
         <div id="new_object" class="col s12 m12 l12">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title"><b>Crear Intermediario</b></span>
-                    <form method="post" name="formNew" id="formNew" >
+            <form method="post" name="formNew" id="formNew" >
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title"><b>Crear Intermediario</b></span>
                         {% csrf_token %}
                         {{form.as_p}}
-                        <div class="center">
-                            <button data-tooltip="'Click' para crear un nuevo punto de acopio." class="btn waves-effect waves-light green tooltipped" type="submit">
-                            <i class="material-icons right">create</i>Crear
-                            </button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="card-action right-align">
+                        <button data-tooltip="Crear nuevo intermediario" class="btn waves-effect waves-light green tooltipped" type="submit">
+                            <i class="material-icons right">add</i>
+                            Crear
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <div id="modalmap" class="modal" style="overflow-y: visible;">
-            <div class="modal-content scrollspy" >
-                {% include "googleMaps.html" %}
-            </div>
-            <div class="modal-footer">
-                <a class="modal-close waves-effect btn-flat">Cancelar</a>
-                <a data-tooltip="'Click' para guardar sus cambios" class="modal-close btn btn-small waves-effect waves-light green lighten-1 modal-trigger tooltipped"
-                href="#latlong"><i
-                        class="material-icons right">save</i>Guardar</a>
-            </div>
-        </div>
-        <div id="latlong" class="modal" style="overflow-y: visible;">
-            <div class="modal-content" >
-                latitud y longitud actualizados con exito
-            </div>
-            <div class="modal-footer">
-                <a class="modal-close waves-effect btn-flat" >Aceptar</a>
-            </div>
+            </form>
         </div>
     </div>
 

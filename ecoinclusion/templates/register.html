@@ -5,72 +5,66 @@ Register
 {% endblock %}
 
 {% block content %}
-<style>
-.outer {
-  display: table;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
 
-}
-
-.middle {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-.inner {
-  margin-left: auto;
-  margin-right: auto;
-  width: 400px;
-  /*whatever width you want*/
-}
-</style>
-<div class="container">
-    <div class="row">
-        <div class="col s12 " >
-            <div class="card ">
-                <div class="container">
+    <div class="row ">
+        <h1 class="center-align">Registrarse</h1>
+        <div class="col s12 m6 l6 offset-m3 offset-l3" >
+            <form method="POST" action="">
+                <div class="card ">
+                    
                     <div class="card-content black-text">
-                        <div class="row center">
-                            <div class="col s12 " >
-                                <span class="flow-text" >Sign up</span>
-                            </div>
+                        
+                        <div class="row valign-wrapper " >
+                            <div class="col s12 m6 l6">
                             
-                        </div>
-                        <div class="row center" >
-                            <div class="col s12">
-                                <form method="POST" action="">
                                     {% csrf_token %}
                                     {{form.as_p}}
                                         
-                                        <div class="row center">
-                                            <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Sign up
-                                                <i class="material-icons right">send</i>
-                                            </button>
-                                        </div>
                                     
-                                </form>
                             </div>
-
+                            <div class="col s12 m6 l6 center">
+                                {% load socialaccount %}
+                                
+                                <div  class="row ">
+                                    <a href="{% provider_login_url 'google' %}" class="btn-large white ">
+                                        <div class="col s2 m2 l2">
+                                            <img length="24px" height="24px" style="vertical-align: middle;" src="{% static '/media/logo-google.png' %}" alt="ecoinclusion" loading="lazy">  
+                                        </div>
+                                        <div class="col s10 m10 l10 center">
+                                            <div style="color:black; font-size: small">
+                                                iniciar con Google
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div  class="row ">
+                                    <a href="{% provider_login_url 'facebook' %}" class="btn-large white ">
+                                        <div class="col s2 m2 l2">
+                                            <img length="24px" height="24px" style="vertical-align: middle;" src="{% static '/media/logo-facebook.png' %}" alt="ecoinclusion" loading="lazy">  
+                                        </div>
+                                        <div class="col s10 m10 l10 center">
+                                            <div style="color:black; font-size: small">
+                                                Iniciar con Facebook
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="card-action">    
-                        
                         <div class="row center">
-                            Ya tienes Cuenta? <a href="{% url 'login' %}" class="ml-2 green-text">Inicia Sesion</a>
+                            ¿Ya tienes Cuenta? <a href="{% url 'login' %}" class="ml-2 green-text">Inicia Sesion</a>
                         </div>
                     </div>
-                        
                     
+                    <div class="card-action right-align">    
+                        <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Sign up
+                            <i class="material-icons right">send</i>
+                        </button>
                         
+                    </div>
                     
                 </div>
-            </div>
+            </form>
         </div>  
     </div>
-</div>
-
 {% endblock %}

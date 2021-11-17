@@ -15,15 +15,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
 </head>
+<body>
+<div id="loader" style="position: absolute;height: 100%;width: 100%;z-index:4" class="valign-wrapper">
+    <div  class="row center">
+        <div class="preloader-wrapper big active"  >
+            <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+            <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+            <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+
+            <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <header>
     {% include "navbar.html" %}
 </header>
-<body>
 
-
-    
 <script type="text/javascript"  src="{% static 'js/map.js' %}"></script>
 <main>
+
+
 <div id="cuentaNoVerificadaModal" class="modal">
     <div class="modal-content">
         <h4>Cuenta no Verificada</h4>
@@ -35,7 +80,6 @@
 </div>
 
 {% block content %}
-<i class="material-icons">message</i>
     
 {% endblock %}
 </main>
@@ -44,7 +88,20 @@
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 <script type="text/javascript" src="{% static 'materialize/js/materialize.min.js' %}"></script>
 <script type="text/javascript"  src="{% static 'js/index.js' %}"></script>
+<script>
+$( document ).ready(function() {
+    document.getElementById("loader").style.visibility = "hidden";
+    console.log( "ready!" );
+});
 
+
+//window.onload = onload;
+window.onbeforeunload = function ()
+{
+    document.getElementById("loader").style.visibility = "visible";
+    console.log( "ready!" );
+};
+</script>
 <style>
 .success{
     background-color: green;
@@ -83,8 +140,6 @@
         {% endfor %}
     {% endfor %}
 {% endif %}
-
-</body>
 <footer  class="page-footer sticky light-green darken-1">
     <div class="container">
         <div class="row">
@@ -106,6 +161,8 @@
         </div>
     </div>
 </footer>
+</body>
+
 
 
 </html>
