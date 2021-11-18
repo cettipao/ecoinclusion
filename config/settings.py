@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os
 
+import os
+import json
+with open('/etc/config.json') as config_file:
+    config = json.load(config_file)
+config = config["ozonizers"]
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -215,3 +219,15 @@ SITE_ID = 7
 LOGIN_URL = "/login/"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = "/dashboard/"
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "ecopuntos.com@gmail.com"
+SERVER_EMAIL = "ecopuntos.com@gmail.com"
+EMAIL_HOST_USER  = "ecopuntos.com@gmail.com"
+EMAIL_HOST_PASSWORD = "Villada2021"

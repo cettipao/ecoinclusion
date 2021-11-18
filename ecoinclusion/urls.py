@@ -24,7 +24,11 @@ from .views import (
     updateIntermediarioView,
     updatePuntoView,
     mobileView,
+    activateView
 )
+#for change the password
+from django.contrib.auth import views as auth_views
+
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
@@ -44,6 +48,7 @@ urlpatterns = [
     path("login/", loginView, name="login"),
     path("somos/", aboutView, name="about"),
     path("register", registerView, name="register"),
+    path('emailVerification/<uidb64>/<token>', activateView, name='emailActivate'),
     path("logout/", logoutView, name="logout"),
     path("perfil/", perfilView, name="perfil"),
     path("mobile/", mobileView, name="mobile"),
@@ -68,4 +73,10 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("api-token-auth/", obtain_auth_token, name="api_token_auth"),
     path("api/register/", RegisterView.as_view(), name="auth_register"),
+
+
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name="password_reset.html"),name='reset_password'),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name="password_reset_sent.html"),name='password_reset_done'),
+    path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_form.html"),name='password_reset_confirm'),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="password_reset_complete.html"),name='password_reset_complete'),
 ]

@@ -5,6 +5,14 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
 
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from .tokens import account_activation_token
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+
+
+
 class TipoDeRecicladoSerializer(serializers.ModelSerializer):
     class Meta:
         model = TipoDeReciclado
@@ -131,6 +139,17 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data["last_name"],
         )
         user.set_password(validated_data["password"])
+        user.is_active = False
         user.save()
+        current_site = "http://ecoinclusion.herokuapp.com"
+        mail_subject = 'Activate your account.'
+        message = render_to_string('email_template.html', {
+                    'user': user,
+                    'domain': current_site,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                })
+        to_email = validated_data["email"]
+        send_mail(mail_subject, message, 'ecopuntos.com@gmail.com', [to_email])
 
         return user
