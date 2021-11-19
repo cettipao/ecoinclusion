@@ -144,7 +144,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.email = ""
         user.save()
         current_site = "http://ecoinclusion.herokuapp.com"
-        mail_subject = 'Activate your account.'
+        mail_subject = 'Activa tu cuenta'
         to_email = validated_data["email"]
         message = render_to_string('email_template.html', {
                     'user': user,

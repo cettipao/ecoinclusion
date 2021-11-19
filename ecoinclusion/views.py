@@ -373,7 +373,7 @@ def registerView(request):
             user.email = ""
             user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your account.'
+            mail_subject = 'Activa tu cuenta'
             to_email = form.cleaned_data.get('email')
             message = render_to_string('email_template.html', {
                         'user': user,
