@@ -140,16 +140,19 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data["password"])
         user.is_active = False
+        user.email = ""
         user.save()
         current_site = "http://ecoinclusion.herokuapp.com"
         mail_subject = 'Activate your account.'
+        to_email = validated_data["email"]
         message = render_to_string('email_template.html', {
                     'user': user,
                     'domain': current_site,
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                     'token': account_activation_token.make_token(user),
+                    'email': to_email,
                 })
-        to_email = validated_data["email"]
+        
         send_mail(mail_subject, message, 'ecopuntos.com@gmail.com', [to_email])
 
         return user

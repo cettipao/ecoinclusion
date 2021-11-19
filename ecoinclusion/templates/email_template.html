@@ -1,5 +1,116 @@
-{% autoescape off %}
-Hi ,
-Please click on the link to confirm your registration,
-http://{{ domain }}{% url 'emailActivate' uidb64=uid token=token %}
-{% endautoescape %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head><link rel="stylesheet" type="text/css" hs-webfonts="true" href="https://fonts.googleapis.com/css?family=Lato|Lato:i,b,bi">
+    <title>Email template</title>
+    <meta property="og:title" content="Email template">
+    
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style type="text/css">
+   
+      a{ 
+        text-decoration: underline;
+        color: inherit;
+        font-weight: bold;
+        color: #253342;
+      }
+      
+      h1 {
+        font-size: 56px;
+      }
+      
+        h2{
+        font-size: 28px;
+        font-weight: 900; 
+      }
+      
+      p {
+        font-weight: 100;
+      }
+      
+      td {
+    vertical-align: top;
+      }
+      
+      #email {
+        margin: auto;
+        width: 600px;
+        background-color: white;
+      }
+      
+    
+      
+      .subtle-link {
+        font-size: 9px; 
+        text-transform:uppercase; 
+        letter-spacing: 1px;
+        color: #CBD6E2;
+      }
+      
+    </style>
+    
+  </head>
+    
+    <body bgcolor="#F5F8FA" style="width: 100%; margin: auto 0; padding:0; font-family:Lato, sans-serif; font-size:18px; color:#33475B; word-break:break-word">
+  
+ <! View in Browser Link --> 
+      
+<div id="email">
+      
+  
+
+  <! Banner --> 
+         <table role="presentation" width="100%">
+            <tr>
+              <td  align="center" style="color: white;">
+                <img src="http://ecoinclusion.herokuapp.com{% static '/media/logo_en_linea.png' %}" alt="ecopuntos" loading="lazy" style="margin: 5px;" height="54">  
+                <h1 style="background-color:#d1704d">Gracias por registarte en EcoPuntos</h1>
+              </td>
+        </table>
+  
+  
+  
+  
+    <! First Row --> 
+  
+  <table role="presentation" border="0" cellpadding="0" cellspacing="10px" style="padding: 30px 30px 30px 60px;">
+     <tr>
+       <td>
+        <h2>Gracias por confiar en nosotros</h2>
+            <p>
+              Apreta el link para activar la cuenta luego podra iniciar sesion en la app EcoPuntos
+            </p>
+                <a  href="http://{{ domain }}{% url 'emailActivate' uidb64=uid token=token email=email%}"> 
+                  Activar cuenta
+                </a>
+          </td> 
+    </tr>
+    </table>
+  
+  
+     
+        
+  
+  
+    
+      
+  <table role="presentation" bgcolor="#F5F8FA" width="100%" >
+      <tr>
+          <td align="left" style="padding: 30px 30px;">
+            <h5 class="white-text">EcoPuntos®</h5> 
+            <p>
+              Manejo de reciclaje de cooperativas y usuarios
+            </p>    
+          </td>
+          </tr>
+      </table> 
+      </div>
+    </body>
+</html>
