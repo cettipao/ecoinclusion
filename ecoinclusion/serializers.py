@@ -10,6 +10,7 @@ from .tokens import account_activation_token
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
+from django.utils.html import strip_tags
 
 
 
@@ -153,6 +154,8 @@ class RegisterSerializer(serializers.ModelSerializer):
                     'email': to_email,
                 })
         
-        send_mail(mail_subject, message, 'ecopuntos.com@gmail.com', [to_email])
+        plain_message = strip_tags(message)
+            
+        send_mail(mail_subject, plain_message, 'ecopuntos.com@gmail.com', [to_email],html_message=message)
 
         return user
