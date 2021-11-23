@@ -10,6 +10,7 @@ from .tokens import account_activation_token
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
+from django.utils.html import strip_tags
 
 
 
@@ -140,16 +141,21 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data["password"])
         user.is_active = False
+        user.email = ""
         user.save()
-        current_site = "http://ecoinclusion.herokuapp.com"
-        mail_subject = 'Activate your account.'
+        current_site = "ecoinclusion.herokuapp.com"
+        mail_subject = 'Activa tu cuenta'
+        to_email = validated_data["email"]
         message = render_to_string('email_template.html', {
                     'user': user,
                     'domain': current_site,
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                     'token': account_activation_token.make_token(user),
+                    'email': to_email,
                 })
-        to_email = validated_data["email"]
-        send_mail(mail_subject, message, 'ecopuntos.com@gmail.com', [to_email])
+        
+        plain_message = strip_tags(message)
+            
+        send_mail(mail_subject, plain_message, 'ecopuntos.com@gmail.com', [to_email],html_message=message)
 
         return user

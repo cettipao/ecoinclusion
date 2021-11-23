@@ -20,6 +20,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.http import HttpResponse
+from django.utils.html import strip_tags
 
 
 # Django rest framework imports
@@ -369,25 +370,29 @@ def registerView(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
+            user.email = ""
             user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your account.'
+            mail_subject = 'Activa tu cuenta'
+            to_email = form.cleaned_data.get('email')
             message = render_to_string('email_template.html', {
                         'user': user,
                         'domain': current_site.domain,
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'token': account_activation_token.make_token(user),
+                        'email': to_email,
                     })
-            to_email = form.cleaned_data.get('email')
-            send_mail(mail_subject, message, 'ecopuntos.com@gmail.com', [to_email])
-            messages.success(request, f'Porfavor confirma tu mail, te hemos enviado una verificacion para el mail')
+            plain_message = strip_tags(message)
+            
+            send_mail(mail_subject, plain_message, 'ecopuntos.com@gmail.com', [to_email],html_message=message)
+            messages.success(request, f'Porfavor confirma tu email, te hemos enviado una verificacion para el email')
             #messages.success(request, "Bienvenido " + username + "!")
             #login(request, user)
             return redirect("login")
     context = {"form": form}
     return render(request, "register.html", context)
 
-def activateView(request, uidb64, token):
+def activateView(request, uidb64, token, email):
     User = get_user_model()
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -396,10 +401,15 @@ def activateView(request, uidb64, token):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
+        user.email = email
         user.save()
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        messages.success(request,"Gracias por la confirmacion del email. Ahora puede iniciar sesion en su cuenta")
+        return redirect("login")
+        
     else:
-        return HttpResponse('Activation link is invalid!')
+        messages.error(request,"El codigo de activacion es invalido, puede que ya confirmaste tu email.")
+        
+        return redirect("login")
 
 
 @login_required
