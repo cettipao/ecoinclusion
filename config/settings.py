@@ -227,4 +227,4 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "ecopuntos.com@gmail.com"
 SERVER_EMAIL = "ecopuntos.com@gmail.com"
 EMAIL_HOST_USER  = "ecopuntos.com@gmail.com"
-EMAIL_HOST_PASSWORD = "fantasticoEcopuntos2021"
+EMAIL_HOST_PASSWORD = "wjjgwtdpzhnyeloe
